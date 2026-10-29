@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme tokens as "R G B" so Tailwind opacity modifiers (bg-surface/80) work. */
+:root {
+  color-scheme: light;
+  --canvas: 250 250 250;
+  --surface: 255 255 255;
+  --subtle: 246 248 250;
+  --line: 229 231 235;
+  --line-strong: 208 215 222;
+  --track: 234 238 242;
+  --grid: 234 234 234;
+  --fg: 10 10 10;
+  --fg-muted: 87 96 106;
+  --fg-subtle: 140 149 159;
+  --primary: 10 10 10;
+  --primary-fg: 255 255 255;
+  --primary-hover: 38 38 38;
+  --brand: 0 135 81;
+  --brand-fg: 0 107 64;
+  --brand-subtle: 230 244 236;
+  --ok: 26 127 55;
+  --ok-subtle: 218 251 225;
+  --ok-line: 172 238 187;
+  --warn: 154 103 0;
+  --warn-subtle: 255 248 197;
+  --warn-line: 245 224 160;
+  --bad: 207 34 46;
+  --bad-subtle: 255 235 233;
+  --bad-line: 255 206 203;
+  --info: 9 105 218;
+  --info-subtle: 221 244 255;
+  --info-line: 182 227 255;
+  --bar-warn: 212 167 44;
+  --shadow: 0 0 0;
+}
+
+.dark {
+  color-scheme: dark;
+  --canvas: 9 9 11;
+  --surface: 17 17 19;
+  --subtle: 24 24 27;
+  --line: 39 39 42;
+  --line-strong: 63 63 70;
+  --track: 39 39 42;
+  --grid: 32 32 36;
+  --fg: 237 237 237;
+  --fg-muted: 161 161 170;
+  --fg-subtle: 113 113 122;
+  --primary: 237 237 237;
+  --primary-fg: 10 10 10;
+  --primary-hover: 255 255 255;
+  --brand: 0 168 98;
+  --brand-fg: 61 214 140;
+  --brand-subtle: 10 46 31;
+  --ok: 63 185 80;
+  --ok-subtle: 15 40 24;
+  --ok-line: 35 90 50;
+  --warn: 210 153 34;
+  --warn-subtle: 45 33 8;
+  --warn-line: 100 72 15;
+  --bad: 248 81 73;
+  --bad-subtle: 55 18 20;
+  --bad-line: 110 35 35;
+  --info: 88 166 255;
+  --info-subtle: 14 35 62;
+  --info-line: 30 75 130;
+  --bar-warn: 210 153 34;
+  --shadow: 0 0 0;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-canvas text-fg;
+    font-size: 14px;
+    line-height: 1.5;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-tight;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--info));
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: rgb(var(--info-line));
+  }
+}
+
+@layer components {
+  .box {
+    @apply rounded-xl border border-line bg-surface shadow-card;
+  }
+
+  .field {
+    @apply block w-full rounded-lg border border-line-strong bg-surface px-3 py-2 text-sm text-fg shadow-input outline-none transition placeholder:text-fg-subtle;
+  }
+
+  .field:focus {
+    border-color: rgb(var(--info));
+    box-shadow: 0 0 0 3px rgb(var(--info) / 0.15);
+  }
+
+  .label {
+    @apply mb-1.5 block text-[13px] font-medium text-fg;
+  }
+
+  .hint {
+    @apply mt-1.5 text-xs text-fg-muted;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+  }
+}
