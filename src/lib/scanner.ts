@@ -13,6 +13,7 @@ import type {
   TechnicalEvidence,
 } from "@/types/audit";
 import { analyzePrivacyPolicy } from "@/lib/policy-analyzer";
+import { fetchSiteIcon } from "@/lib/site-icon";
 import { captureWithBrowser, type BrowserCapture } from "@/lib/browser-capture";
 import { assertPublicUrl, normalizeTargetUrl, safeFetch, ScanAbort } from "@/lib/net-guard";
 import { inspectDomContent, looksBlocked } from "@/lib/page-inspect";
@@ -950,6 +951,11 @@ export async function runWebsiteAudit(rawUrl: string, ai?: AISettings): Promise<
       : { found: false, url: home.policyLink }
     : await fetchPrivacyPolicyPage(finalUrl, home.policyLink);
 
+  // Runs alongside the policy review; a missing icon never fails the scan.
+  const iconPromise = browserCapture?.siteIcon
+    ? Promise.resolve(browserCapture.siteIcon)
+    : fetchSiteIcon(html, finalUrl).catch(() => undefined);
+
   const policy = await analyzePrivacyPolicy({
     found: policyPage.found,
     url: policyPage.url,
@@ -972,6 +978,7 @@ export async function runWebsiteAudit(rawUrl: string, ai?: AISettings): Promise<
   });
 
   const { grade, riskLevel } = computeGradeAndRisk(overallScore);
+  const siteIcon = await iconPromise;
 
   // Plain-language list of what this scan could not see
   const limitations: string[] = [];
@@ -1000,6 +1007,7 @@ export async function runWebsiteAudit(rawUrl: string, ai?: AISettings): Promise<
     id: `ndpa_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`,
     requestedUrl,
     finalUrl,
+    siteIcon,
     scannedAt: new Date().toISOString(),
     score: overallScore,
     grade,

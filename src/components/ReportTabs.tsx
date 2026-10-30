@@ -152,6 +152,18 @@ export function ResultsTab({
           </p>
         </Box>
 
+        {/* AI summary of the privacy policy, when the free daily review ran */}
+        {result.policy.aiSummary && (
+          <div className="flex gap-3 rounded-xl border border-info-line bg-info-subtle p-4">
+            <Bot className="mt-0.5 h-4 w-4 shrink-0 text-info" />
+            <div>
+              <div className="text-[13px] font-semibold text-fg">AI summary of your privacy policy</div>
+              <p className="mt-1 text-[13px] leading-relaxed text-fg">{result.policy.aiSummary}</p>
+              <p className="mt-2 text-2xs text-fg-muted">Written by AI from your policy text. Check it before relying on it.</p>
+            </div>
+          </div>
+        )}
+
         {/* issues */}
         <Box>
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
@@ -666,15 +678,6 @@ export function PolicyTab({
       />
       )}
 
-      {policy.aiSummary && (
-        <div className="flex gap-3 rounded-xl border border-info-line bg-info-subtle p-4">
-          <Bot className="mt-0.5 h-4 w-4 shrink-0 text-info" />
-          <div>
-            <div className="text-[13px] font-semibold text-fg">AI summary</div>
-            <p className="mt-1 text-[13px] leading-relaxed text-fg">{policy.aiSummary}</p>
-          </div>
-        </div>
-      )}
       {policy.aiError && (
         <div className="rounded-lg border border-warn-line bg-warn-subtle px-3.5 py-2.5 text-xs text-warn">
           AI review unavailable, rules engine used instead: {policy.aiError}

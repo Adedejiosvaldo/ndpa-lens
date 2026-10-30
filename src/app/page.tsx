@@ -358,8 +358,13 @@ function ReportHeader({
         </button>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line bg-subtle text-sm font-semibold uppercase text-fg-muted">
-              {host.charAt(0)}
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-line bg-subtle text-sm font-semibold uppercase text-fg-muted">
+              {result.siteIcon ? (
+                // eslint-disable-next-line @next/next/no-img-element -- data URI, no optimisation needed
+                <img src={result.siteIcon} alt="" className="h-6 w-6 object-contain" />
+              ) : (
+                host.charAt(0)
+              )}
             </div>
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">

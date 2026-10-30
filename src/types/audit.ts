@@ -180,6 +180,8 @@ export interface ScanResult {
   id: string;
   requestedUrl: string;
   finalUrl: string;
+  /** The site's favicon as a data URI, fetched by the server during the scan. */
+  siteIcon?: string;
   scannedAt: string;
   score: number;
   grade: "A" | "B" | "C" | "D" | "F";

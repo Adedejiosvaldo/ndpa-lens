@@ -9,6 +9,7 @@ import type {
   PageScan,
 } from "@/types/audit";
 import { checkHost, ScanAbort } from "@/lib/net-guard";
+import { fetchSiteIconInBrowser } from "@/lib/site-icon";
 import { extractReadablePolicyText } from "@/lib/policy-analyzer";
 import {
   ACCEPT_RE,
@@ -44,6 +45,8 @@ export interface BrowserCapture {
   engine: "browser";
   browserChannel: string;
   finalUrl: string;
+  /** Favicon as a data URI, fetched in the scan's browser session. */
+  siteIcon?: string;
   status?: number;
   html: string;
   headers: Record<string, string>;
@@ -639,10 +642,14 @@ export async function captureWithBrowser(targetUrl: string): Promise<BrowserCapt
         notes,
       };
 
+      // Last, after cookies are recorded, so this extra visit can't change the results.
+      const siteIcon = await fetchSiteIconInBrowser(ctx, firstHtml, finalUrl).catch(() => undefined);
+
       return {
         engine: "browser",
         browserChannel: channel,
         finalUrl,
+        siteIcon,
         status,
         html,
         headers,
