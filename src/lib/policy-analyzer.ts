@@ -295,76 +295,105 @@ async function runAIContextualReview(
     ruleStatus: c.status,
   }));
 
-  const prompt = `You are a Nigerian data protection legal analyst auditing a website Privacy Policy against the Nigeria Data Protection Act (NDPA) 2023.
-Review the policy text and evaluate each clause ID below.
-Return strictly valid JSON with this structure:
-{
-  "summary": "2-3 sentence executive assessment of the policy's compliance with NDPA 2023, noting Nigeria/NDPC specificity and key gaps.",
-  "clauses": [
-    {
-      "id": "clause-id",
-      "status": "found" | "partial" | "missing",
-      "note": "1 concise sentence explaining why it passes, is partial, or is missing under NDPA 2023."
-    }
-  ]
-}
+  const prompt = `You are a Nigerian data protection legal analyst auditing a website privacy policy against the Nigeria Data Protection Act (NDPA) 2023.
 
-Clauses to evaluate:
+For each clause below, decide whether the policy covers it: "found" (clearly covered), "partial" (mentioned but incomplete or vague) or "missing". Give one short sentence explaining why, under NDPA 2023.
+
+Also write a 2-3 sentence plain-language summary of how well the policy meets NDPA 2023, noting whether it is specific to Nigeria and the NDPC, and the main gaps.
+
+Answer only with JSON matching the schema you were given. Use the clause ids exactly as listed.
+
+Clauses:
 ${JSON.stringify(clauseList, null, 2)}
 
-Privacy Policy Text:
+Privacy policy text:
 """
 ${truncatedText}
 """`;
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 40000);
-
-  try {
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${settings.apiKey}`,
-        "X-Title": "NDPA Lens",
-      },
-      body: JSON.stringify({
-        model: settings.model,
-        response_format: { type: "json_object" },
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are an NDPA 2023 legal compliance auditor. Always respond with valid JSON only.",
+  // Strict schema: OpenRouter only uses providers that enforce it, so the
+  // reply is always valid JSON in this shape.
+  const schema = {
+    type: "object",
+    additionalProperties: false,
+    required: ["summary", "clauses"],
+    properties: {
+      summary: { type: "string" },
+      clauses: {
+        type: "array",
+        items: {
+          type: "object",
+          additionalProperties: false,
+          required: ["id", "status", "note"],
+          properties: {
+            id: { type: "string", enum: clauses.map((c) => c.id) },
+            status: { type: "string", enum: ["found", "partial", "missing"] },
+            note: { type: "string" },
           },
-          { role: "user", content: prompt },
-        ],
-        temperature: 0.1,
-        // Caps the cost of each review.
-        max_tokens: 1500,
-      }),
-      signal: controller.signal,
-    });
+        },
+      },
+    },
+  };
 
-    if (!res.ok) {
-      throw new Error(`OpenRouter API returned HTTP ${res.status}`);
+  const ask = async (): Promise<AIReviewPayload> => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 35000);
+    try {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${settings.apiKey}`,
+          "X-Title": "NDPA Lens",
+        },
+        body: JSON.stringify({
+          model: settings.model,
+          response_format: {
+            type: "json_schema",
+            json_schema: { name: "policy_review", strict: true, schema },
+          },
+          provider: { require_parameters: true },
+          messages: [
+            { role: "system", content: "You are an NDPA 2023 compliance auditor. Reply with JSON only." },
+            { role: "user", content: prompt },
+          ],
+          temperature: 0.1,
+          // Caps the cost of each review.
+          max_tokens: 2000,
+        }),
+        signal: controller.signal,
+      });
+
+      if (!res.ok) {
+        const detail = await res.text().catch(() => "");
+        console.error("[ai] OpenRouter error", res.status, detail.slice(0, 300));
+        throw new Error(`OpenRouter API returned HTTP ${res.status}`);
+      }
+      const data = await res.json();
+      const choice = data?.choices?.[0];
+      const raw: string = choice?.message?.content || "";
+      if (choice?.finish_reason === "length") throw new Error("AI reply was cut off");
+
+      const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/i, "").trim();
+      const first = cleaned.indexOf("{");
+      const last = cleaned.lastIndexOf("}");
+      if (first === -1 || last === -1) throw new Error("AI reply had no JSON");
+      try {
+        return JSON.parse(cleaned.slice(first, last + 1)) as AIReviewPayload;
+      } catch (err) {
+        console.error("[ai] bad JSON from model:", cleaned.slice(0, 500));
+        throw err;
+      }
+    } finally {
+      clearTimeout(timeout);
     }
-    const data = await res.json();
-    const rawJsonText: string = data?.choices?.[0]?.message?.content || "";
+  };
 
-    const cleaned = rawJsonText
-      .replace(/^```json\s*/i, "")
-      .replace(/```\s*$/i, "")
-      .trim();
-    const firstBrace = cleaned.indexOf("{");
-    const lastBrace = cleaned.lastIndexOf("}");
-    if (firstBrace === -1 || lastBrace === -1) {
-      throw new Error("AI response did not contain valid JSON");
-    }
-
-    return JSON.parse(cleaned.slice(firstBrace, lastBrace + 1)) as AIReviewPayload;
-  } finally {
-    clearTimeout(timeout);
+  // One retry covers the occasional bad or cut-off reply.
+  try {
+    return await ask();
+  } catch {
+    return await ask();
   }
 }
 

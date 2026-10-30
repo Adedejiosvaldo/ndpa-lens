@@ -164,6 +164,17 @@ export function ResultsTab({
           </div>
         )}
 
+        {/* AI didn't run: say why, in plain words */}
+        {!result.policy.aiSummary && (result.policy.aiError || result.policy.aiNotice) && (
+          <div className="flex gap-2.5 rounded-xl border border-line bg-surface px-4 py-3 text-[13px] text-fg-muted">
+            <Bot className="mt-0.5 h-4 w-4 shrink-0" />
+            <span>
+              {result.policy.aiNotice ??
+                "The AI review couldn't finish this time, so these results come from the rules engine only. This scan didn't use up your free daily AI review; try again in a moment."}
+            </span>
+          </div>
+        )}
+
         {/* issues */}
         <Box>
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
@@ -678,17 +689,6 @@ export function PolicyTab({
       />
       )}
 
-      {policy.aiError && (
-        <div className="rounded-lg border border-warn-line bg-warn-subtle px-3.5 py-2.5 text-xs text-warn">
-          AI review unavailable, rules engine used instead: {policy.aiError}
-        </div>
-      )}
-      {policy.aiNotice && (
-        <div className="flex gap-2 rounded-lg border border-line bg-surface px-3.5 py-2.5 text-xs text-fg-muted">
-          <Bot className="mt-px h-3.5 w-3.5 shrink-0" />
-          <span>{policy.aiNotice}</span>
-        </div>
-      )}
 
       <Box>
         <ul className="divide-y divide-line">
