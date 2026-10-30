@@ -65,7 +65,18 @@ DOMAIN=lens.example.com docker compose --profile https up -d --build
 
 Caddy gets and renews the HTTPS certificate automatically. The app is then at `https://lens.example.com` and the API at `https://lens.example.com/api/scan`. You can also put `DOMAIN=` in a `.env` file next to `docker-compose.yml` instead of typing it each time.
 
-**Behind a proxy you already run (Nginx, Apache, a load balancer):**
+**Server already runs a Caddy or Nginx container on ports 80/443:**
+
+1. Find that container's network: `docker inspect <proxy-container> --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}} {{end}}'`
+2. Add to `.env`:
+   ```
+   COMPOSE_FILE=docker-compose.yml:docker-compose.proxy.yml
+   PROXY_NETWORK=<network from step 1>
+   ```
+3. `docker compose up -d --build` (no `--profile https`).
+4. Paste [`deploy/Caddyfile.site`](deploy/Caddyfile.site) into that proxy's Caddyfile and reload it. The app is reachable from the proxy at `ndpa-lens:3000`.
+
+**Behind a proxy you already run on the host (Nginx, Apache, a load balancer):**
 
 ```bash
 docker compose up -d --build        # app listens on 127.0.0.1:3000 only

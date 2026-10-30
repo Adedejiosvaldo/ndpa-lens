@@ -1,0 +1,12 @@
+# Paste this into the Caddyfile of the Caddy you already run, then reload it.
+# Change the domain if yours is different.
+lens.taxcafe.pro {
+	encode zstd gzip
+	reverse_proxy ndpa-lens:3000 {
+		# Scans can take up to two minutes.
+		transport http {
+			read_timeout 180s
+			write_timeout 180s
+		}
+	}
+}
