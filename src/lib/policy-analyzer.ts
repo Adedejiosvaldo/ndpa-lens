@@ -1,6 +1,5 @@
 import * as cheerio from "cheerio";
 import type {
-  AIProvider,
   AISettings,
   ClauseStatus,
   PolicyAnalysis,
@@ -271,36 +270,20 @@ interface AIReviewPayload {
   }>;
 }
 
-function resolveAISettings(ai?: AISettings): {
-  provider: AIProvider;
-  apiKey: string;
-  model: string;
-} | null {
-  const provider =
-    ai?.provider ||
-    ((process.env.AI_PROVIDER as AIProvider | undefined) ?? "openai");
-  const apiKey = (ai?.apiKey || process.env.AI_API_KEY || "").trim();
+export const DEFAULT_AI_MODEL = "anthropic/claude-haiku-5.5";
+
+function resolveAISettings(ai?: AISettings): { apiKey: string; model: string } | null {
+  // The API route passes the server's OpenRouter key only when the visitor
+  // still has their free review for the day.
+  const apiKey = (ai?.apiKey || "").trim();
   if (!apiKey) return null;
-
-  const defaultModels: Record<AIProvider, string> = {
-    openai: "gpt-4o-mini",
-    gemini: "gemini-2.0-flash",
-    anthropic: "claude-3-5-haiku-latest",
-  };
-
-  const model = (
-    ai?.model ||
-    process.env.AI_MODEL ||
-    defaultModels[provider]
-  ).trim();
-
-  return { provider, apiKey, model };
+  return { apiKey, model: (ai?.model || DEFAULT_AI_MODEL).trim() };
 }
 
 async function runAIContextualReview(
   policyText: string,
   clauses: PolicyClause[],
-  settings: { provider: AIProvider; apiKey: string; model: string }
+  settings: { apiKey: string; model: string }
 ): Promise<AIReviewPayload> {
   // Long policies put retention, transfers and complaint routes near the end,
   // so send as much as a small model handles comfortably.
@@ -335,85 +318,39 @@ ${truncatedText}
 """`;
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 18000);
+  const timeout = setTimeout(() => controller.abort(), 40000);
 
   try {
-    let rawJsonText = "";
-
-    if (settings.provider === "openai") {
-      const res = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${settings.apiKey}`,
-        },
-        body: JSON.stringify({
-          model: settings.model,
-          response_format: { type: "json_object" },
-          messages: [
-            {
-              role: "system",
-              content:
-                "You are an NDPA 2023 legal compliance auditor. Always respond with valid JSON only.",
-            },
-            { role: "user", content: prompt },
-          ],
-          temperature: 0.1,
-        }),
-        signal: controller.signal,
-      });
-
-      if (!res.ok) {
-        throw new Error(`OpenAI API returned HTTP ${res.status}`);
-      }
-      const data = await res.json();
-      rawJsonText = data?.choices?.[0]?.message?.content || "";
-    } else if (settings.provider === "gemini") {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-        settings.model
-      )}:generateContent?key=${encodeURIComponent(settings.apiKey)}`;
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.1,
-            responseMimeType: "application/json",
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${settings.apiKey}`,
+        "X-Title": "NDPA Lens",
+      },
+      body: JSON.stringify({
+        model: settings.model,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are an NDPA 2023 legal compliance auditor. Always respond with valid JSON only.",
           },
-        }),
-        signal: controller.signal,
-      });
+          { role: "user", content: prompt },
+        ],
+        temperature: 0.1,
+        // Caps the cost of each review.
+        max_tokens: 1500,
+      }),
+      signal: controller.signal,
+    });
 
-      if (!res.ok) {
-        throw new Error(`Gemini API returned HTTP ${res.status}`);
-      }
-      const data = await res.json();
-      rawJsonText =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    } else if (settings.provider === "anthropic") {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": settings.apiKey,
-          "anthropic-version": "2023-06-01",
-        },
-        body: JSON.stringify({
-          model: settings.model,
-          max_tokens: 1500,
-          temperature: 0.1,
-          messages: [{ role: "user", content: prompt }],
-        }),
-        signal: controller.signal,
-      });
-
-      if (!res.ok) {
-        throw new Error(`Anthropic API returned HTTP ${res.status}`);
-      }
-      const data = await res.json();
-      rawJsonText = data?.content?.[0]?.text || "";
+    if (!res.ok) {
+      throw new Error(`OpenRouter API returned HTTP ${res.status}`);
     }
+    const data = await res.json();
+    const rawJsonText: string = data?.choices?.[0]?.message?.content || "";
 
     const cleaned = rawJsonText
       .replace(/^```json\s*/i, "")

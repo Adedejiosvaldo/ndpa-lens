@@ -680,6 +680,12 @@ export function PolicyTab({
           AI review unavailable, rules engine used instead: {policy.aiError}
         </div>
       )}
+      {policy.aiNotice && (
+        <div className="flex gap-2 rounded-lg border border-line bg-surface px-3.5 py-2.5 text-xs text-fg-muted">
+          <Bot className="mt-px h-3.5 w-3.5 shrink-0" />
+          <span>{policy.aiNotice}</span>
+        </div>
+      )}
 
       <Box>
         <ul className="divide-y divide-line">

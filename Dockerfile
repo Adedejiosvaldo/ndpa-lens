@@ -34,6 +34,9 @@ ENV NODE_ENV=production \
 COPY --from=build --chown=pwuser:pwuser /app/.next/standalone ./
 COPY --from=build --chown=pwuser:pwuser /app/.next/static ./.next/static
 
+# Free AI review counts live here; mount a volume so they survive restarts.
+RUN mkdir -p /app/data && chown pwuser:pwuser /app/data
+
 USER pwuser
 EXPOSE 3000
 

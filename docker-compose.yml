@@ -9,12 +9,16 @@ services:
     ports:
       - "127.0.0.1:${HOST_PORT:-3000}:3000"
     env_file:
+      - path: .env
+        required: false
       - path: .env.local
         required: false
     environment:
       SCAN_RATE_LIMIT: ${SCAN_RATE_LIMIT:-8}
       SCAN_MAX_CONCURRENT: ${SCAN_MAX_CONCURRENT:-2}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-}
+    volumes:
+      - ndpa_data:/app/data
     restart: unless-stopped
 
   # HTTPS on your domain. Start with: docker compose --profile https up -d
@@ -36,5 +40,6 @@ services:
     restart: unless-stopped
 
 volumes:
+  ndpa_data:
   caddy_data:
   caddy_config:

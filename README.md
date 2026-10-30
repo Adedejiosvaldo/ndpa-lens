@@ -40,7 +40,7 @@ pnpm exec playwright install chromium   # only needed if Chrome/Edge isn't insta
 pnpm dev
 ```
 
-Open http://localhost:3000, enter a website, and click **Run audit**. To try the interface without scanning, click **View a sample report**. It uses a fictional company.
+Open http://localhost:3000, enter a website, and click **Run audit**.
 
 For a production build:
 
@@ -94,7 +94,10 @@ Copy `.env.example` to `.env.local`. Every setting is optional.
 
 | Variable | Purpose |
 |---|---|
-| `AI_PROVIDER`, `AI_API_KEY`, `AI_MODEL` | Adds an AI review of the privacy policy on top of the rule-based checks (`openai`, `anthropic` or `gemini`). A key can also be entered in the app. |
+| `OPENROUTER_API_KEY`, `OPENROUTER_MODEL` | Our key for the AI privacy-policy review (one free per person per day). Default model `anthropic/claude-haiku-5.5` (about $0.002 per review). |
+| `AI_FREE_PER_PERSON_PER_DAY` | Free AI reviews per person per rolling 24 hours (default `1`). A person is recognised by a cookie and by a hash of IP, browser and language. |
+| `AI_FREE_PER_IP_PER_DAY` | Free reviews per IP address (default `20`; mobile networks share IPs). |
+| `AI_FREE_TOTAL_PER_DAY` | Free reviews across everyone per day (default `300`, about $0.60/day). This is the hard cap on spend. |
 | `PLAYWRIGHT_CHANNEL` | Browser to use (`chrome`, `msedge`). If not set, the scanner tries Chrome, then Edge, then bundled Chromium. |
 | `SCAN_RATE_LIMIT` | Scans allowed per visitor every 10 minutes (default `8`). |
 | `SCAN_MAX_CONCURRENT` | Scans that can run at the same time (default `2`). |

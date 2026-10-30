@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Bot,
   Check,
-  ChevronDown,
   Cookie,
   FileText,
   Loader2,
@@ -17,7 +16,6 @@ import {
   UserCheck,
   X,
 } from "lucide-react";
-import type { AIProvider } from "@/types/audit";
 import { Badge, Button, cx } from "./ui";
 
 const SUGGESTED = ["paystack.com", "flutterwave.com", "nitda.gov.ng", "moniepoint.com"];
@@ -56,34 +54,29 @@ export const SCAN_STEPS = [
   "Scoring and building remediation documents",
 ];
 
-export interface AiSettingsState {
-  provider: AIProvider;
-  apiKey: string;
-  model: string;
-}
-
 export function Landing({
   urlInput,
   setUrlInput,
   onScan,
-  onLoadSample,
   isScanning,
   scanStage,
   scanError,
-  ai,
-  setAi,
 }: {
   urlInput: string;
   setUrlInput: (v: string) => void;
   onScan: (url?: string) => void;
-  onLoadSample: () => void;
   isScanning: boolean;
   scanStage: number;
   scanError: string | null;
-  ai: AiSettingsState;
-  setAi: React.Dispatch<React.SetStateAction<AiSettingsState>>;
 }) {
-  const [showAi, setShowAi] = React.useState(false);
+  // Whether this server offers a free AI review (one per person per day).
+  const [freeAi, setFreeAi] = React.useState(false);
+  React.useEffect(() => {
+    fetch("/api/ai-status")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => setFreeAi(Boolean(d?.free)))
+      .catch(() => {});
+  }, []);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [inputError, setInputError] = React.useState<string | null>(null);
   const clearInput = () => {
@@ -224,15 +217,6 @@ export function Landing({
                 {s}
               </button>
             ))}
-            <span className="mx-2 text-line-strong">|</span>
-            <button
-              type="button"
-              onClick={onLoadSample}
-              className="inline-flex items-center gap-1 font-medium text-info hover:underline"
-            >
-              View a sample report
-              <ArrowRight className="h-3.5 w-3.5" />
-            </button>
           </div>
         )}
 
@@ -281,75 +265,12 @@ export function Landing({
           </div>
         )}
 
-        {/* AI options */}
-        {!isScanning && (
-          <div className="mx-auto mt-6 max-w-xl text-left">
-            <button
-              type="button"
-              onClick={() => setShowAi((s) => !s)}
-              aria-expanded={showAi}
-              className="mx-auto flex items-center gap-1.5 text-xs font-medium text-fg-muted hover:text-fg"
-            >
-              <Bot className="h-3.5 w-3.5" />
-              AI policy review (optional)
-              <ChevronDown
-                className={cx("h-3.5 w-3.5 transition-transform", showAi && "rotate-180")}
-              />
-            </button>
-            {showAi && (
-              <div className="box mt-3 animate-fade-in p-4">
-                <p className="text-xs text-fg-muted">
-                  The rules engine runs without a key. Add one to get a
-                  plain-language summary and semantic clause checks. Keys stay
-                  in this browser tab and are sent only with the scan request.
-                </p>
-                <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                  <div>
-                    <label className="label" htmlFor="ai-provider">
-                      Provider
-                    </label>
-                    <select
-                      id="ai-provider"
-                      className="field"
-                      value={ai.provider}
-                      onChange={(e) =>
-                        setAi((p) => ({ ...p, provider: e.target.value as AIProvider }))
-                      }
-                    >
-                      <option value="openai">OpenAI</option>
-                      <option value="gemini">Google Gemini</option>
-                      <option value="anthropic">Anthropic</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="label" htmlFor="ai-key">
-                      API key
-                    </label>
-                    <input
-                      id="ai-key"
-                      type="password"
-                      className="field"
-                      value={ai.apiKey}
-                      onChange={(e) => setAi((p) => ({ ...p, apiKey: e.target.value }))}
-                      placeholder="Paste key"
-                    />
-                  </div>
-                  <div>
-                    <label className="label" htmlFor="ai-model">
-                      Model
-                    </label>
-                    <input
-                      id="ai-model"
-                      className="field"
-                      value={ai.model}
-                      onChange={(e) => setAi((p) => ({ ...p, model: e.target.value }))}
-                      placeholder="Default"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+        {/* free AI review note */}
+        {!isScanning && freeAi && (
+          <p className="mx-auto mt-6 flex max-w-xl items-center justify-center gap-1.5 text-xs text-fg-muted">
+            <Bot className="h-3.5 w-3.5" />
+            Includes one free AI review of the privacy policy per day.
+          </p>
         )}
       </section>
 

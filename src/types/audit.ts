@@ -2,7 +2,6 @@ export type PillarId = "transparency" | "rights" | "consent" | "security";
 export type CheckStatus = "pass" | "warning" | "fail" | "info";
 export type ClauseStatus = "found" | "partial" | "missing" | "unavailable";
 export type ScanEngine = "browser" | "static";
-export type AIProvider = "openai" | "gemini" | "anthropic";
 
 export interface PillarResult {
   id: PillarId;
@@ -50,6 +49,8 @@ export interface PolicyAnalysis {
   source: "rules" | "rules+ai";
   aiSummary?: string;
   aiError?: string;
+  /** Why the free AI review was skipped (daily limit reached, etc.). */
+  aiNotice?: string;
 }
 
 export interface DetectedTracker {
@@ -196,15 +197,14 @@ export interface ScanResult {
   evidence?: ScanEvidence;
 }
 
+/** The server's OpenRouter key and model. Never comes from the browser. */
 export interface AISettings {
-  provider: AIProvider;
-  apiKey?: string;
+  apiKey: string;
   model?: string;
 }
 
 export interface ScanRequest {
   url: string;
-  ai?: AISettings;
 }
 
 export interface RemediationProfile {

@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import type { ScanRequest } from "@/types/audit";
+import type { AISettings, ScanRequest } from "@/types/audit";
 import { runWebsiteAudit } from "@/lib/scanner";
 import { ScanAbort } from "@/lib/net-guard";
+import { clientIp, identify, quotaCookie, reserve, type QuotaIdentity } from "@/lib/ai-quota";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -16,11 +17,6 @@ const MAX_CONCURRENT = Number(process.env.SCAN_MAX_CONCURRENT ?? 2);
 
 const recent = new Map<string, number[]>();
 let running = 0;
-
-function clientKey(request: Request): string {
-  const fwd = request.headers.get("x-forwarded-for");
-  return (fwd?.split(",")[0] || request.headers.get("x-real-ip") || "local").trim();
-}
 
 function rateLimited(key: string): number | null {
   const now = Date.now();
@@ -61,6 +57,22 @@ function corsHeaders(request: Request): Record<string, string> {
   };
 }
 
+/*
+ * Our OpenRouter key, used for one free AI review per person per day
+ * (see lib/ai-quota.ts). Without it, scans run on the rules engine only.
+ */
+const SERVER_AI: AISettings | null = process.env.OPENROUTER_API_KEY?.trim()
+  ? {
+      apiKey: process.env.OPENROUTER_API_KEY.trim(),
+      model: process.env.OPENROUTER_MODEL?.trim() || undefined,
+    }
+  : null;
+
+function isHttps(request: Request): boolean {
+  const proto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+  return proto ? proto === "https" : new URL(request.url).protocol === "https:";
+}
+
 export function OPTIONS(request: Request) {
   return new Response(null, { status: 204, headers: corsHeaders(request) });
 }
@@ -82,7 +94,7 @@ async function handleScan(request: Request): Promise<Response> {
     return NextResponse.json({ error: "Please provide a valid website URL to scan." }, { status: 400 });
   }
 
-  const retryAfter = rateLimited(clientKey(request));
+  const retryAfter = rateLimited(clientIp(request));
   if (retryAfter !== null) {
     return NextResponse.json(
       { error: `You've run a lot of scans. Try again in about ${Math.ceil(retryAfter / 60)} minute(s).` },
@@ -96,11 +108,34 @@ async function handleScan(request: Request): Promise<Response> {
     );
   }
 
+  // One AI review per person per day on our key.
+  let ai: AISettings | undefined;
+  let identity: QuotaIdentity | null = null;
+  let release: (() => void) | null = null;
+  let aiNotice: string | undefined;
+  if (SERVER_AI) {
+    identity = identify(request);
+    const claim = reserve(identity);
+    if (claim.ok) {
+      ai = SERVER_AI;
+      release = claim.release;
+    } else {
+      aiNotice = claim.message;
+    }
+  }
+
   running += 1;
   try {
-    const result = await runWebsiteAudit(body.url, body.ai);
-    return NextResponse.json(result);
+    const result = await runWebsiteAudit(body.url, ai);
+    // Only count it if the AI actually reviewed something (no policy = no review).
+    if (release && result.policy.source !== "rules+ai") release();
+    if (aiNotice && result.policy.found) result.policy.aiNotice = aiNotice;
+
+    const response = NextResponse.json(result);
+    if (identity?.newCookie) response.headers.append("Set-Cookie", quotaCookie(identity, isHttps(request)));
+    return response;
   } catch (error) {
+    release?.();
     if (error instanceof ScanAbort) {
       return NextResponse.json({ error: error.message }, { status: error.status });
     }

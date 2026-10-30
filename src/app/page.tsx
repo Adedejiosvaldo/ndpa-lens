@@ -21,7 +21,7 @@ import {
   evaluateDcpmiTierAndDeadlines,
 } from "@/lib/gaid-assessment";
 import { GaidAssessmentTab, InternalAuditWorksheetTab } from "@/components/GaidAndAuditTabs";
-import { Landing, SCAN_STEPS, type AiSettingsState } from "@/components/Landing";
+import { Landing, SCAN_STEPS } from "@/components/Landing";
 import { RemediationTab, ResultsTab } from "@/components/ReportTabs";
 import {
   Badge,
@@ -70,7 +70,6 @@ export default function Page() {
   const [isScanning, setIsScanning] = useState(false);
   const [scanStage, setScanStage] = useState(0);
   const [scanError, setScanError] = useState<string | null>(null);
-  const [ai, setAi] = useState<AiSettingsState>({ provider: "openai", apiKey: "", model: "" });
 
   const [step, setStep] = useState<Step>("results");
 
@@ -150,9 +149,6 @@ export default function Page() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           url,
-          ai: ai.apiKey.trim()
-            ? { provider: ai.provider, apiKey: ai.apiKey.trim(), model: ai.model.trim() || undefined }
-            : undefined,
         }),
       });
       const data = await res.json();
@@ -208,12 +204,9 @@ export default function Page() {
           urlInput={urlInput}
           setUrlInput={setUrlInput}
           onScan={runScan}
-          onLoadSample={() => openReport(SAMPLE)}
           isScanning={isScanning}
           scanStage={scanStage}
           scanError={scanError}
-          ai={ai}
-          setAi={setAi}
         />
       )}
 
