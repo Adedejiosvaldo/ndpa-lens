@@ -53,12 +53,13 @@ pnpm start
 
 The deploy setup lives in `deploy/` and follows the same layout as azaman-engine. On the VPS, azaman-engine's Caddy (`deploy-caddy-1`) owns ports 80/443 and serves both sites. This app has no Caddy of its own and publishes no host port. It joins Caddy's Docker network (`deploy_default`), and Caddy forwards `lens.taxcafe.pro` to `ndpa-lens:3000`.
 
-On the VPS, from the repo root:
+On the VPS, from the repo root, run one command:
 
 ```bash
-cp deploy/.env.example deploy/.env   # then set OPENROUTER_API_KEY
-docker compose -f deploy/docker-compose.yml up -d --build
+git pull && bash deploy/deploy.sh
 ```
+
+It asks for the OpenRouter key once, adds the site to Caddy if needed (checking the config before reloading), builds and starts the app, then checks DNS and HTTPS. It is safe to run again after every update.
 
 The `lens.taxcafe.pro` site block lives in azaman-engine's `deploy/Caddyfile`. After changing it, recreate that Caddy (`docker compose -f deploy/docker-compose.yml up -d --force-recreate caddy` in the azaman-engine folder).
 
