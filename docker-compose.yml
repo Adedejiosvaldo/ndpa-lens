@@ -4,12 +4,37 @@ services:
     image: ndpa-lens:latest
     init: true
     shm_size: "1gb"
+    # Only reachable from this machine. The public goes through Caddy (below)
+    # or your own Nginx/Apache pointing at 127.0.0.1:${HOST_PORT:-3000}.
     ports:
-      - "${HOST_PORT:-3000}:3000"
+      - "127.0.0.1:${HOST_PORT:-3000}:3000"
     env_file:
       - path: .env.local
         required: false
     environment:
       SCAN_RATE_LIMIT: ${SCAN_RATE_LIMIT:-8}
       SCAN_MAX_CONCURRENT: ${SCAN_MAX_CONCURRENT:-2}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-}
     restart: unless-stopped
+
+  # HTTPS on your domain. Start with: docker compose --profile https up -d
+  caddy:
+    image: caddy:2.8.4-alpine
+    profiles: ["https"]
+    depends_on:
+      - ndpa-lens
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -51,11 +51,29 @@ pnpm start
 
 ## Deploy with Docker
 
-The image has Chromium and its system libraries built in, and nothing in it is tied to a domain. Put it behind any reverse proxy (Nginx, Caddy, Traefik, a cloud load balancer) that serves your domain and forwards to port 3000.
+The image has Chromium and its system libraries built in, and nothing in it is tied to a domain. The site and its API (`/api/scan`) are served from the same address, so whatever domain you use covers both.
+
+**On your own domain with HTTPS (e.g. `lens.example.com`):**
+
+1. At your DNS provider, add an `A` record for `lens.example.com` pointing at the server's public IP.
+2. Open ports 80 and 443 on the server.
+3. Run:
 
 ```bash
-docker compose up -d --build        # uses docker-compose.yml, reads .env.local if present
+DOMAIN=lens.example.com docker compose --profile https up -d --build
 ```
+
+Caddy gets and renews the HTTPS certificate automatically. The app is then at `https://lens.example.com` and the API at `https://lens.example.com/api/scan`. You can also put `DOMAIN=` in a `.env` file next to `docker-compose.yml` instead of typing it each time.
+
+**Behind a proxy you already run (Nginx, Apache, a load balancer):**
+
+```bash
+docker compose up -d --build        # app listens on 127.0.0.1:3000 only
+```
+
+Point your proxy at `http://127.0.0.1:3000`, pass the `X-Forwarded-For` header, and allow at least 180 seconds before timing out.
+
+**Calling the API from another website:** set `ALLOWED_ORIGINS` to that site's address (comma-separated for several, e.g. `https://example.com`). Leave it empty if only this app's own pages call the API.
 
 Or without Compose:
 

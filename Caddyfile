@@ -1,0 +1,13 @@
+# Caddy gets and renews HTTPS certificates automatically for every name in DOMAIN.
+# DOMAIN can hold several names, e.g. "lens.example.com, api.example.com".
+{$DOMAIN} {
+	encode zstd gzip
+
+	reverse_proxy ndpa-lens:3000 {
+		# Scans can take up to two minutes.
+		transport http {
+			read_timeout 180s
+			write_timeout 180s
+		}
+	}
+}

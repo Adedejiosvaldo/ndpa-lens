@@ -37,7 +37,41 @@ function rateLimited(key: string): number | null {
   return null;
 }
 
+/*
+ * Other websites may call this API only if their origin is listed in
+ * ALLOWED_ORIGINS (comma-separated, e.g. "https://example.com,https://app.example.com").
+ * Leave it empty to allow only this app's own pages (same origin, no CORS needed).
+ */
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "")
+  .split(",")
+  .map((o) => o.trim().replace(/\/$/, ""))
+  .filter(Boolean);
+
+function corsHeaders(request: Request): Record<string, string> {
+  const origin = request.headers.get("origin");
+  if (!origin) return {};
+  const allowed = ALLOWED_ORIGINS.includes("*") || ALLOWED_ORIGINS.includes(origin);
+  if (!allowed) return {};
+  return {
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes("*") ? "*" : origin,
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Max-Age": "86400",
+    Vary: "Origin",
+  };
+}
+
+export function OPTIONS(request: Request) {
+  return new Response(null, { status: 204, headers: corsHeaders(request) });
+}
+
 export async function POST(request: Request) {
+  const response = await handleScan(request);
+  for (const [k, v] of Object.entries(corsHeaders(request))) response.headers.set(k, v);
+  return response;
+}
+
+async function handleScan(request: Request): Promise<Response> {
   let body: Partial<ScanRequest>;
   try {
     body = (await request.json()) as Partial<ScanRequest>;
