@@ -257,7 +257,7 @@ function buildChecksAndPillars(params: {
     ],
     recommendation:
       "Explicitly state each category of personal data collected, the specific purpose, and which of the 6 NDPA Section 25 lawful bases applies.",
-    legalReference: "NDPA 2023 ss. 25(1), 27(1)(b)–(d)",
+    legalReference: "NDPA 2023 ss. 25(1), 27(1)(b)–(c); GAID 2025 Art. 27(3)",
   });
 
   const nigeriaClause = getClause("nigeria-law-reference");
@@ -344,7 +344,7 @@ function buildChecksAndPillars(params: {
       : ["No reference to 'NDPC' or 'Nigeria Data Protection Commission' found."],
     recommendation:
       "Include a dedicated clause informing Nigerian data subjects of their right to lodge a complaint with the Nigeria Data Protection Commission (NDPC) at info@ndpc.gov.ng.",
-    legalReference: "NDPA 2023 ss. 27(1)(g), 46",
+    legalReference: "NDPA 2023 ss. 27(1)(f), 46",
   });
 
   const transferClause = getClause("cross-border-transfer");
@@ -409,7 +409,7 @@ function buildChecksAndPillars(params: {
       : ["No retention period or deletion schedule found."],
     recommendation:
       "Specify concrete retention periods for each category of personal data or the criteria used to determine when data is deleted or anonymized.",
-    legalReference: "NDPA 2023 ss. 24(1)(d), 27(1)(f)",
+    legalReference: "NDPA 2023 ss. 24(1)(d), 27(1)(e)",
   });
 
   // =========================================================================
@@ -475,6 +475,11 @@ function buildChecksAndPillars(params: {
       score = 5;
       status = "warning";
       summary = "The banner has a Reject option, but visitors have to scroll to see it. GAID 2025 requires it to be visible without scrolling.";
+    } else if (consent.bannerBottomOnly) {
+      score = 6;
+      status = "warning";
+      summary =
+        "The banner has Accept and Reject, but it sits in a strip at the bottom of the screen. GAID 2025 Art. 7(l) says a bottom notice can be missed and expects it over the middle or side of the page.";
     }
     checks.push({
       id: "cookie-consent-banner",
@@ -487,13 +492,20 @@ function buildChecksAndPillars(params: {
       evidence: [
         `Banner visible on first visit: ${consent.bannerVisible ? "Yes" : "No"}`,
         `Visible without scrolling: ${consent.bannerAboveFold ? "Yes" : "No"}`,
+        `Placement: ${
+          !consent.bannerAboveFold
+            ? "Not on the first screen"
+            : consent.bannerBottomOnly
+            ? "Bottom strip only"
+            : "Covers the middle or side of the screen"
+        }`,
         `Reject button: ${consent.rejectFound ? `Yes ("${consent.rejectLabel}")` : "Not found"}`,
         `Accept button: ${consent.acceptFound ? `Yes ("${consent.acceptLabel}")` : "Not found"}`,
         `Consent tool in page source: ${consent.cmpDetected || "None recognised"}`,
       ],
       recommendation:
-        "Show a banner on first visit, visible without scrolling, with equally prominent Accept and Reject buttons. Load nothing non-essential until the visitor chooses.",
-      legalReference: "NDPA 2023 ss. 25(1)(a), 26; GAID 2025 Art. 19",
+        "Show a banner on first visit, over the middle or side of the screen (not a bottom strip), with equally prominent Accept and Reject buttons. Load nothing non-essential until the visitor chooses.",
+      legalReference: "NDPA 2023 ss. 25(1)(a), 26; GAID 2025 Arts. 7(l), 19",
     });
   }
 
@@ -599,7 +611,7 @@ function buildChecksAndPillars(params: {
   if (preCheckedForms.length > 0) {
     formScore = 0;
     formStatus = "fail";
-    formSummary = `${preCheckedForms.length} form(s) contain pre-checked consent checkboxes, violating NDPA Section 26(3).`;
+    formSummary = `${preCheckedForms.length} form(s) contain pre-checked consent checkboxes, violating NDPA Section 26(7)(a).`;
   } else if (unconsentedSensitiveForms.length > 0) {
     formScore = 2;
     formStatus = "warning";

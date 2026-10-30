@@ -101,6 +101,8 @@ export interface ConsentTest {
   bannerVisible: boolean;
   /** Banner is on screen without scrolling (GAID 2025 Art. 19). */
   bannerAboveFold: boolean;
+  /** Banner sits only in a strip at the bottom of the screen (GAID 2025 Art. 7(l)). */
+  bannerBottomOnly?: boolean;
   rejectFound: boolean;
   /** The Reject test itself couldn't run (slow page, crash). */
   rejectTestFailed?: boolean;

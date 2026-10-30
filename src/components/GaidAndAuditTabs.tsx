@@ -65,6 +65,7 @@ const ITEM_COPY: Record<string, string> = {
   consent_named_purpose: "We tell people exactly what each permission is for",
   consent_easy_withdrawal: "People can say no, or change their mind, as easily as saying yes",
   consent_parental_minors: "We get a parent's permission for children (if we have child users)",
+  consent_age_verification: "We check age and the parent's permission, for example with a government ID (if we have child users)",
   consent_audit_log: "We keep a record of who agreed to what, and when",
   dsr_published_channel: "People know how to contact us about their data (form or email)",
   dsr_access: "We can send someone a copy of their data",
@@ -135,9 +136,9 @@ const TIER_COPY: Record<string, { headline: string; body: string; tone: Tone }> 
 };
 
 const SECTOR_OPTIONS: Array<{ value: DcpmiSector; label: string; hint: string }> = [
-  { value: "uhl", label: "Bank, telecom, insurer or payment company", hint: "Also oil & gas, power distribution, large tech platforms" },
-  { value: "ehl", label: "Government, university or hospital", hint: "Also microfinance and mortgage banks" },
-  { value: "ohl", label: "School, clinic or small business", hint: "Also vendors serving larger firms" },
+  { value: "uhl", label: "Bank, telecom, insurer, fintech or payment company", hint: "Also oil & gas, power distribution, multinationals, public social media or email apps, device makers" },
+  { value: "ehl", label: "Government body, university or hospital", hint: "Also microfinance and mortgage banks. Hospitals: secondary or tertiary care" },
+  { value: "ohl", label: "School, training provider, clinic or lab", hint: "Also primary health centres, hotels and guest houses under 50 suites, processors handling sensitive data of 200+ people commercially" },
   { value: "other", label: "None of these", hint: "" },
 ];
 
@@ -436,7 +437,7 @@ export function GaidAssessmentTab({ result, gaidInput, setGaidInput }: GaidTabPr
                             />
                           </label>
                           {g.metaField.key === "dsrResponseDays" && dsrTooSlow && (
-                            <Warn>The law expects an answer within 30 days.</Warn>
+                            <Warn>The Act requires answers without unreasonable delay (s. 34(1)). Most organisations aim for 30 days or less.</Warn>
                           )}
                           {g.metaField.key === "policyLastUpdated" &&
                             olderThan12Months(gaidInput.policyLastUpdated) && (

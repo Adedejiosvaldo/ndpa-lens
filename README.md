@@ -49,6 +49,27 @@ pnpm build
 pnpm start
 ```
 
+## Deploy with Docker
+
+The image has Chromium and its system libraries built in, and nothing in it is tied to a domain. Put it behind any reverse proxy (Nginx, Caddy, Traefik, a cloud load balancer) that serves your domain and forwards to port 3000.
+
+```bash
+docker compose up -d --build        # uses docker-compose.yml, reads .env.local if present
+```
+
+Or without Compose:
+
+```bash
+docker build -t ndpa-lens .
+docker run -d --name ndpa-lens --init --shm-size=1g -p 3000:3000 \
+  --env-file .env.local ndpa-lens
+```
+
+- `--shm-size=1g` and `--init` matter: Chromium crashes with Docker's default 64 MB shared memory, and `--init` cleans up exited browser processes.
+- Set `HOST_PORT` to publish on a different host port with Compose.
+- The rate limit reads the visitor's address from `X-Forwarded-For`. Make sure your proxy sets it and that port 3000 isn't reachable directly from the internet.
+- Keep the `PLAYWRIGHT_VERSION` build argument in the `Dockerfile` equal to the `playwright` version in `pnpm-lock.yaml`.
+
 ## Configuration
 
 Copy `.env.example` to `.env.local`. Every setting is optional.
@@ -89,4 +110,10 @@ Built with Next.js 15, React 19, TypeScript, Tailwind CSS and Playwright.
 
 ## Sources
 
-NDPC tiers, fees and deadlines come from the NDPC registration guidance notice and summaries of the GAID 2025. The NDPC sometimes moves deadlines (for example, the 2025 returns were extended to 30 May 2026). Always confirm current requirements on [ndpc.gov.ng](https://ndpc.gov.ng) or with a licensed DPCO.
+Legal references were checked against the official texts published by the NDPC (checked 30 October 2026):
+
+- [Nigeria Data Protection Act, 2023](https://ndpc.gov.ng/wp-content/uploads/2024/03/Nigeria_Data_Protection_Act_2023.pdf) (Gazette No. 119, Vol. 110)
+- [GAID 2025](https://ndpc.gov.ng/wp-content/uploads/2025/07/NDP-ACT-GAID-2025-MARCH-20TH.pdf) (NDPC/NDP ACT-GAID/01/2025, issued 20 March 2025), including Schedule 7 on tiers and registration fees
+- [Guidance Notice on Registration, February 2024](https://ndpc.gov.ng/wp-content/uploads/2024/03/registration.pdf) (replaced by GAID Schedule 7)
+
+The NDPC sometimes moves deadlines (for example, the 2025 returns were extended to 30 May 2026). Always confirm current requirements on [ndpc.gov.ng](https://ndpc.gov.ng) or with a licensed DPCO.

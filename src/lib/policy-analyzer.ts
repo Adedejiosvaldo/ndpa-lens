@@ -40,7 +40,7 @@ export const NDPA_CLAUSE_RULES: ClauseRule[] = [
     title: "Categories of Personal Data Collected",
     description:
       "Specifies the types of personal data collected directly, automatically, or from third parties.",
-    legalReference: "NDPA 2023 s. 27(1)(b)",
+    legalReference: "GAID 2025 Art. 27(3)(c)",
     strongPatterns: [
       /(categories|types)\s+of\s+(personal\s+)?(data|information)\s+(we\s+)?collect/i,
       /information\s+we\s+collect\s+(includes|about\s+you|from\s+you)/i,
@@ -56,7 +56,7 @@ export const NDPA_CLAUSE_RULES: ClauseRule[] = [
     title: "Purpose & Lawful Basis for Processing",
     description:
       "Explains specific purposes for processing and maps them to lawful bases under NDPA (consent, contract, legal obligation, legitimate interest, vital interest, or public interest).",
-    legalReference: "NDPA 2023 ss. 25(1), 27(1)(c)",
+    legalReference: "NDPA 2023 ss. 25(1), 27(1)(b)",
     strongPatterns: [
       /lawful\s+bas(is|es)\s+(for|of)\s+processing/i,
       /legal\s+bas(is|es)\s+(for|to)\s+process/i,
@@ -91,7 +91,7 @@ export const NDPA_CLAUSE_RULES: ClauseRule[] = [
     title: "Recipients & Third-Party Disclosures",
     description:
       "Identifies third parties, processors, service providers, or categories of recipients with whom personal data is shared.",
-    legalReference: "NDPA 2023 s. 27(1)(d)",
+    legalReference: "NDPA 2023 s. 27(1)(c)",
     strongPatterns: [
       /(sharing|disclosure)\s+of\s+(your\s+)?(personal\s+)?(data|information)/i,
       /(who\s+we\s+share|third[- ]party\s+(service\s+providers|recipients|processors))/i,
@@ -122,7 +122,7 @@ export const NDPA_CLAUSE_RULES: ClauseRule[] = [
     title: "Data Retention Period or Criteria",
     description:
       "States how long personal data will be stored or the criteria used to determine retention periods.",
-    legalReference: "NDPA 2023 ss. 24(1)(d), 27(1)(f)",
+    legalReference: "NDPA 2023 ss. 24(1)(d), 27(1)(e)",
     strongPatterns: [
       /data\s+retention/i,
       /retain\s+(your\s+)?(personal\s+)?(data|information)\s+for\s+as\s+long\s+as/i,
@@ -138,7 +138,7 @@ export const NDPA_CLAUSE_RULES: ClauseRule[] = [
     title: "Right to Lodge a Complaint with the NDPC",
     description:
       "Explicitly informs data subjects of their right to complain to the Nigeria Data Protection Commission (NDPC) or supervisory authority.",
-    legalReference: "NDPA 2023 ss. 27(1)(g), 46",
+    legalReference: "NDPA 2023 ss. 27(1)(f), 46",
     // Only naming the NDPC itself counts. Mentioning the Act is a separate check.
     strongPatterns: [/nigeria\s+data\s+protection\s+commission/i, /\bndpc\b/i],
     partialPatterns: [
@@ -165,7 +165,7 @@ export const NDPA_CLAUSE_RULES: ClauseRule[] = [
     title: "Automated Decision-Making & Profiling Disclosure",
     description:
       "Discloses the existence of automated decision-making or profiling and the right to human intervention.",
-    legalReference: "NDPA 2023 ss. 27(1)(h), 37",
+    legalReference: "NDPA 2023 ss. 27(1)(g), 37",
     strongPatterns: [
       /automated\s+(decision[- ]making|processing)/i,
       /solely\s+automated.*(profiling|decision)/i,

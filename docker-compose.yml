@@ -1,0 +1,15 @@
+services:
+  ndpa-lens:
+    build: .
+    image: ndpa-lens:latest
+    init: true
+    shm_size: "1gb"
+    ports:
+      - "${HOST_PORT:-3000}:3000"
+    env_file:
+      - path: .env.local
+        required: false
+    environment:
+      SCAN_RATE_LIMIT: ${SCAN_RATE_LIMIT:-8}
+      SCAN_MAX_CONCURRENT: ${SCAN_MAX_CONCURRENT:-2}
+    restart: unless-stopped

@@ -102,7 +102,7 @@ export const SAMPLE_AUDITS: Record<string, ScanResult> = {
         ],
         recommendation:
           "Explicitly state each category of personal data collected, the specific purpose, and which of the 6 NDPA Section 25 lawful bases applies.",
-        legalReference: "NDPA 2023 ss. 25(1), 27(1)(b)–(d)",
+        legalReference: "NDPA 2023 ss. 25(1), 27(1)(b)–(c); GAID 2025 Art. 27(3)",
       },
       {
         id: "nigeria-specific-policy",
@@ -150,7 +150,7 @@ export const SAMPLE_AUDITS: Record<string, ScanResult> = {
         ],
         recommendation:
           "Include a dedicated clause informing Nigerian data subjects of their right to lodge a complaint with the Nigeria Data Protection Commission (NDPC) at info@ndpc.gov.ng.",
-        legalReference: "NDPA 2023 ss. 27(1)(g), 46",
+        legalReference: "NDPA 2023 ss. 27(1)(f), 46",
       },
       {
         id: "cross-border-transfer-disclosure",
@@ -182,7 +182,7 @@ export const SAMPLE_AUDITS: Record<string, ScanResult> = {
         ],
         recommendation:
           "Specify concrete retention periods for each category of personal data or the criteria used to determine when data is deleted or anonymized.",
-        legalReference: "NDPA 2023 ss. 24(1)(d), 27(1)(f)",
+        legalReference: "NDPA 2023 ss. 24(1)(d), 27(1)(e)",
       },
       {
         id: "cookie-consent-banner",
@@ -354,7 +354,7 @@ export const SAMPLE_AUDITS: Record<string, ScanResult> = {
           status: "found",
           description:
             "Specifies the types of personal data collected directly, automatically, or from third parties.",
-          legalReference: "NDPA 2023 s. 27(1)(b)",
+          legalReference: "GAID 2025 Art. 27(3)(c)",
           evidence:
             "...Categories of Personal Data We Collect: full name, email address, phone number, BVN verification token, and device telemetry...",
         },
@@ -364,7 +364,7 @@ export const SAMPLE_AUDITS: Record<string, ScanResult> = {
           status: "partial",
           description:
             "Explains specific purposes for processing and maps them to lawful bases under NDPA (consent, contract, legal obligation, legitimate interest, vital interest, or public interest).",
-          legalReference: "NDPA 2023 ss. 25(1), 27(1)(c)",
+          legalReference: "NDPA 2023 ss. 25(1), 27(1)(b)",
           evidence:
             "...How we use your personal information: to process merchant settlements, verify identity, and improve our checkout experience...",
         },
@@ -384,7 +384,7 @@ export const SAMPLE_AUDITS: Record<string, ScanResult> = {
           status: "found",
           description:
             "Identifies third parties, processors, service providers, or categories of recipients with whom personal data is shared.",
-          legalReference: "NDPA 2023 s. 27(1)(d)",
+          legalReference: "NDPA 2023 s. 27(1)(c)",
           evidence:
             "...We share personal data only with licensed payment switches, identity verification partners, and cloud infrastructure processors...",
         },
@@ -404,7 +404,7 @@ export const SAMPLE_AUDITS: Record<string, ScanResult> = {
           status: "partial",
           description:
             "States how long personal data will be stored or the criteria used to determine retention periods.",
-          legalReference: "NDPA 2023 ss. 24(1)(d), 27(1)(f)",
+          legalReference: "NDPA 2023 ss. 24(1)(d), 27(1)(e)",
           evidence:
             "...how long we keep your data: we keep your information for as long as necessary to provide our services...",
         },
@@ -414,7 +414,7 @@ export const SAMPLE_AUDITS: Record<string, ScanResult> = {
           status: "missing",
           description:
             "Explicitly informs data subjects of their right to complain to the Nigeria Data Protection Commission (NDPC) or supervisory authority.",
-          legalReference: "NDPA 2023 ss. 27(1)(g), 46",
+          legalReference: "NDPA 2023 ss. 27(1)(f), 46",
         },
         {
           id: "nigeria-law-reference",
@@ -432,7 +432,7 @@ export const SAMPLE_AUDITS: Record<string, ScanResult> = {
           status: "missing",
           description:
             "Discloses the existence of automated decision-making or profiling and the right to human intervention.",
-          legalReference: "NDPA 2023 ss. 27(1)(h), 37",
+          legalReference: "NDPA 2023 ss. 27(1)(g), 37",
         },
       ],
     },

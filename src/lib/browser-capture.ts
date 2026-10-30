@@ -215,14 +215,19 @@ async function screenshot(page: Page, label: string): Promise<EvidenceScreenshot
  * Looks for a cookie banner that is actually on screen, including ones
  * inside shadow DOM or a consent iframe.
  */
-async function inspectBanner(page: Page): Promise<{ visible: boolean; aboveFold: boolean }> {
+async function inspectBanner(
+  page: Page
+): Promise<{ visible: boolean; aboveFold: boolean; bottomOnly: boolean }> {
   return page
     .evaluate(() => {
       const vh = window.innerHeight;
       const vw = window.innerWidth;
       const KEY = /cookie|consent|gdpr|cmp|onetrust|cookiebot|didomi|usercentrics|cky-|qc-cmp/i;
       const TEXT = /cookie|consent|tracking technolog/i;
-      const out = { visible: false, aboveFold: false };
+      const out = { visible: false, aboveFold: false, bottomOnly: false };
+      // GAID 2025 Art. 7(l): the notice should cover the middle, left or right of the
+      // page. Track whether any banner element reaches the middle or is a tall side panel.
+      let prominent = false;
 
       const consider = (el: Element, needText: boolean) => {
         const r = el.getBoundingClientRect();
@@ -235,6 +240,7 @@ async function inspectBanner(page: Page): Promise<{ visible: boolean; aboveFold:
         }
         out.visible = true;
         if (r.top < vh && r.bottom > 0 && r.left < vw && r.right > 0) out.aboveFold = true;
+        if ((r.top < vh / 2 && r.bottom > vh / 2) || r.height >= vh * 0.4) prominent = true;
       };
 
       const walk = (root: Document | ShadowRoot) => {
@@ -254,9 +260,10 @@ async function inspectBanner(page: Page): Promise<{ visible: boolean; aboveFold:
         });
       };
       walk(document);
+      out.bottomOnly = out.aboveFold && !prominent;
       return out;
     })
-    .catch(() => ({ visible: false, aboveFold: false }));
+    .catch(() => ({ visible: false, aboveFold: false, bottomOnly: false }));
 }
 
 /** Finds a visible button or link whose name matches, in any frame (shadow DOM included). */
@@ -616,6 +623,7 @@ export async function captureWithBrowser(targetUrl: string): Promise<BrowserCapt
         tested: true,
         bannerVisible,
         bannerAboveFold,
+        bannerBottomOnly: banner.bottomOnly,
         rejectFound: reject.found,
         rejectTestFailed: Boolean(reject.error),
         acceptFound: accept.found,

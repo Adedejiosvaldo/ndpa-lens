@@ -2,7 +2,7 @@ import type { ScanResult } from "@/types/audit";
 
 export type DcpmiTierCode = "STANDARD" | "OHL" | "EHL" | "UHL";
 
-/** Sector lists from the NDPC registration guidance. "" = not answered. */
+/** Sector lists from GAID 2025 Schedule 7 (Guidance Notice of 19 Dec 2024). "" = not answered. */
 export type DcpmiSector = "" | "uhl" | "ehl" | "ohl" | "other";
 
 export interface DcpmiAssessmentInput {
@@ -66,31 +66,37 @@ export const GAID_CHECKLIST_GROUPS: GaidChecklistGroup[] = [
       {
         id: "consent_banner_every_page",
         label: "We have a cookie / consent banner on every public-facing page.",
-        citation: "NDPA s. 26(1)",
+        citation: "NDPA s. 26; GAID 2025 Arts. 7(l), 19",
         autoDetected: true,
       },
       {
         id: "consent_named_purpose",
         label: "Each consent option lists a specific, named purpose.",
-        citation: "NDPA ss. 25(1)(a), 27(1)(c)",
+        citation: "NDPA ss. 25(1)(a), 27(1)(b)",
       },
       {
         id: "consent_easy_withdrawal",
         label:
           "Users can withdraw consent as easily as they gave it (Section 26).",
-        citation: "NDPA s. 26(4)",
+        citation: "NDPA s. 35(2)",
       },
       {
         id: "consent_parental_minors",
         label:
           "Where applicable, we collect parental consent for minors (Section 31).",
-        citation: "NDPA s. 31",
+        citation: "NDPA s. 31(1)",
+      },
+      {
+        id: "consent_age_verification",
+        label:
+          "Where applicable, we verify age and parental consent using appropriate means, such as government-approved ID (Section 31(2)–(3)).",
+        citation: "NDPA s. 31(2)–(3)",
       },
       {
         id: "consent_audit_log",
         label:
           "We keep an audit log of every consent decision (who, when, what, version).",
-        citation: "NDPA s. 26(2)",
+        citation: "NDPA s. 26(1)",
       },
     ],
   },
@@ -99,12 +105,12 @@ export const GAID_CHECKLIST_GROUPS: GaidChecklistGroup[] = [
     title: "Data Subject Rights",
     citation: "NDPA Part VI (Sections 34–38)",
     description:
-      "Published DSR intake channels, statutory rights fulfilment capabilities, and 30-day response SLA.",
+      "Published DSR intake channels, the ability to honour each right, and a prompt response time.",
     metaField: {
       key: "dsrResponseDays",
       label: "Typical DSR response time (days)",
       type: "number",
-      guidance: "Statutory guidance: ≤ 30 days",
+      guidance: "The Act says \"without unreasonable delay\" (s. 34(1)). 30 days is a common benchmark.",
     },
     items: [
       {
@@ -156,13 +162,13 @@ export const GAID_CHECKLIST_GROUPS: GaidChecklistGroup[] = [
       {
         id: "dpia_documents_risks",
         label: "Each DPIA documents identified risks to data subjects.",
-        citation: "NDPA s. 28(4)(b)",
+        citation: "NDPA s. 28(4)(c)",
       },
       {
         id: "dpia_mitigation_measures",
         label:
           "Each DPIA includes mitigation measures and residual-risk acceptance.",
-        citation: "NDPA s. 28(4)(c)",
+        citation: "NDPA s. 28(4)(d)",
       },
     ],
   },
@@ -193,7 +199,7 @@ export const GAID_CHECKLIST_GROUPS: GaidChecklistGroup[] = [
       {
         id: "breach_register",
         label: "We maintain a breach register with all incidents and actions.",
-        citation: "NDPA s. 40(5)",
+        citation: "NDPA s. 40(8)",
       },
     ],
   },
@@ -220,14 +226,14 @@ export const GAID_CHECKLIST_GROUPS: GaidChecklistGroup[] = [
         id: "policy_reachable_every_page",
         label:
           "The privacy policy is reachable from every page (usually footer).",
-        citation: "NDPA s. 27(2)",
+        citation: "NDPA s. 27(3); GAID 2025 Art. 7(k)–(m)",
         autoDetected: true,
       },
       {
         id: "policy_covers_s27_disclosures",
         label:
           "The policy covers every Section 27(1) disclosure (lawful basis, retention, rights, NDPC complaint route).",
-        citation: "NDPA s. 27(1)(a)–(h)",
+        citation: "NDPA s. 27(1)(a)–(g)",
         autoDetected: true,
       },
     ],
@@ -276,14 +282,14 @@ export const GAID_CHECKLIST_GROUPS: GaidChecklistGroup[] = [
         id: "xborder_ndpc_approval",
         label:
           "Where required, we have obtained NDPC approval (BCRs, codes of conduct, certifications).",
-        citation: "NDPA s. 41(2)",
+        citation: "NDPA s. 42(5)",
       },
     ],
   },
   {
     id: "ropa",
     title: "Record of Processing Activities (RoPA)",
-    citation: "NDPA Section 24(3)",
+    citation: "NDPA s. 24(3); GAID 2025 Art. 13",
     description:
       "Comprehensive inventory of processing operations, data categories, recipients, and retention schedules.",
     metaField: {
@@ -401,7 +407,7 @@ export const CAR_DEADLINE_OVERRIDES: Record<number, string> = {
   2026: "2026-05-30", // 2025 returns, extended by NDPC notice
 };
 
-/** Registration fees from the NDPC Guidance Notice on registration (2024). */
+/** Registration fees from GAID 2025 Schedule 7, para 3. */
 export const REGISTRATION_FEES: Record<Exclude<DcpmiTierCode, "STANDARD">, string> = {
   UHL: "₦250,000",
   EHL: "₦100,000",
@@ -457,16 +463,18 @@ export function evaluateDcpmiTierAndDeadlines(
   const subtitles: Record<DcpmiTierCode, string> = {
     STANDARD:
       "Processes personal data of 200 or fewer people in 6 months and is not in a listed sector.",
-    OHL: "More than 200 people in 6 months, or a listed OHL sector (e.g. schools, SMEs, vendors to larger firms).",
+    OHL: "More than 200 people in 6 months, or a listed OHL sector (e.g. schools, training providers, primary health centres, labs, small hotels).",
     EHL: "More than 1,000 people in 6 months, or a listed EHL sector (e.g. government bodies, microfinance, universities, hospitals).",
-    UHL: "More than 5,000 people in 6 months, or a listed UHL sector (e.g. banks, telecoms, insurers, payment companies).",
+    UHL: "More than 5,000 people in 6 months, or a listed UHL sector (e.g. banks, telecoms, insurers, fintechs, payment companies).",
   };
 
   const obligations: string[] = [];
   if (!majorImportance) {
     obligations.push(
       "Comply with NDPA 2023 principles, publish a privacy notice (s. 27) and honour data subject rights (ss. 34–38).",
-      "Report personal data breaches likely to cause risk to the NDPC within 72 hours (s. 40)."
+      "Report personal data breaches likely to cause risk to the NDPC within 72 hours (s. 40(2)).",
+      "Carry out an internal compliance audit within 15 months of starting business and every year after (GAID 2025 Art. 7(b)). You do not file it with the NDPC.",
+      "Check the sector list too: under GAID 2025 Schedule 7 para 1(1)(c), an organisation that keeps a filing system of personal data and works in aviation, communication, education, electric power, export/import, finance, health, hospitality, insurance, oil and gas, tourism, e-commerce or public service is designated of major importance."
     );
   } else {
     obligations.push(
@@ -474,7 +482,8 @@ export function evaluateDcpmiTierAndDeadlines(
         REGISTRATION_FEES[tier as Exclude<DcpmiTierCode, "STANDARD">]
       }).`,
       "Designate a Data Protection Officer and notify the NDPC of their contact details (NDPA s. 32; GAID 2025 Art. 11).",
-      "Notify the NDPC of significant changes to your registration details within 60 days (GAID 2025 Art. 9(4))."
+      "Notify the NDPC of significant changes to your registration details within 60 days (GAID 2025 Art. 9(4)).",
+      "Have your DPO prepare a data protection report every six months for management, kept with your record of processing (GAID 2025 Art. 13)."
     );
     if (files) {
       obligations.push(

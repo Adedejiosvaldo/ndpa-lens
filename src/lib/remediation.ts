@@ -109,7 +109,7 @@ export function buildInternalAuditSections(
             "Requires internal verification of timestamped consent logs in backend database or CMP.",
           compliant: "Verify",
           gapIdentified:
-            "Maintain auditable timestamp, policy version, and opt-in state records (NDPA s. 26(2)).",
+            "Maintain auditable timestamp, policy version, and opt-in state records (NDPA s. 26(1): the controller must prove consent).",
           source: "manual",
         },
         {
@@ -131,7 +131,7 @@ export function buildInternalAuditSections(
           gapIdentified:
             result.technical.bannerDetected && result.technical.bannerHasReject
               ? "None"
-              : "Add an equal-prominence 'Reject Non-Essential' button and persistent privacy settings trigger (NDPA s. 26(4)).",
+              : "Add an equal-prominence 'Reject Non-Essential' button and persistent privacy settings trigger (NDPA s. 35(2); GAID 2025 Art. 19(6)).",
           source: "automated",
         },
         {
@@ -183,7 +183,7 @@ export function buildInternalAuditSections(
           gapIdentified:
             categoriesClause?.status === "found"
               ? "None"
-              : "Enumerate all personal data categories collected directly and automatically (NDPA s. 27(1)(b)).",
+              : "Enumerate all personal data categories collected directly and automatically (GAID 2025 Art. 27(3)(c)).",
           source: "automated",
         },
         {
@@ -197,7 +197,7 @@ export function buildInternalAuditSections(
           gapIdentified:
             purposeClause?.status === "found"
               ? "None"
-              : "Clearly state specific processing purposes and corresponding lawful bases (NDPA s. 27(1)(c)).",
+              : "Clearly state specific processing purposes and corresponding lawful bases (NDPA s. 27(1)(b)).",
           source: "automated",
         },
         {
@@ -211,7 +211,7 @@ export function buildInternalAuditSections(
           gapIdentified:
             sharingClause?.status === "found"
               ? "None"
-              : "Disclose categories of third-party recipients and data processors (NDPA s. 27(1)(d)).",
+              : "Disclose categories of third-party recipients and data processors (NDPA s. 27(1)(c)).",
           source: "automated",
         },
         {
@@ -225,7 +225,7 @@ export function buildInternalAuditSections(
           gapIdentified:
             retentionClause?.status === "found"
               ? "None"
-              : "Specify concrete retention timelines or disposal criteria (NDPA ss. 24(1)(d), 27(1)(f)).",
+              : "Specify concrete retention timelines or disposal criteria (NDPA ss. 24(1)(d), 27(1)(e)).",
           source: "automated",
         },
         {
@@ -301,7 +301,7 @@ export function buildInternalAuditSections(
             "Requires operational verification of DSAR SLA tracking and response logs.",
           compliant: "Verify",
           gapIdentified:
-            "Enforce a 30-day statutory SLA for acknowledging and fulfilling data subject requests.",
+            "Set and track a response target (30 days is common practice) so requests are answered without unreasonable delay (NDPA s. 34(1)).",
           source: "manual",
         },
         {
@@ -374,7 +374,7 @@ export function buildInternalAuditSections(
             "Requires verification of DPO certifications and NDPC-accredited continuous professional development.",
           compliant: "Verify",
           gapIdentified:
-            "Ensure the DPO holds demonstrably verifiable expertise in Nigerian data protection law and practices (NDPA s. 32(2)).",
+            "Ensure the DPO holds demonstrably verifiable expertise in Nigerian data protection law and practices (NDPA s. 32(1)).",
           source: "manual",
         },
         {
@@ -404,7 +404,7 @@ export function buildInternalAuditSections(
             "Requires verification of database, object storage, and backup encryption (e.g., AES-256 / KMS).",
           compliant: "Verify",
           gapIdentified:
-            "Enforce encryption at rest across all production databases, backups, and file stores (NDPA s. 39(2)(a)).",
+            "Enforce encryption at rest across all production databases, backups, and file stores (NDPA s. 39(2)(b)).",
           source: "manual",
         },
         {
@@ -479,7 +479,7 @@ export function buildInternalAuditSections(
             "Requires verification of annual VAPT (Vulnerability Assessment and Penetration Testing) reports.",
           compliant: "Verify",
           gapIdentified:
-            "Schedule and document regular vulnerability assessments and penetration testing (NDPA s. 39(2)(d)).",
+            "Schedule and document regular vulnerability assessments and penetration testing (NDPA s. 39(2)(e)–(f)).",
           source: "manual",
         },
       ],
@@ -574,7 +574,7 @@ export function buildInternalAuditSections(
             "Requires legal verification of signed Data Processing Agreements (DPAs) with all vendors.",
           compliant: "Verify",
           gapIdentified:
-            "Execute written Data Processing Agreements (DPAs) with every third-party processor as mandated by NDPA Section 29(2).",
+            "Execute written Data Processing Agreements (DPAs) with every third-party processor as required by NDPA Section 29(2) and GAID 2025 Art. 34.",
           source: "manual",
         },
         {
@@ -949,20 +949,20 @@ For any questions, requests to exercise your statutory rights, or data protectio
 - **Email:** ${email}
 - **Jurisdiction:** Federal Republic of Nigeria (${country})
 
-## 2. Categories of Personal Data We Collect (NDPA s. 27(1)(b))
+## 2. Categories of Personal Data We Collect (GAID 2025 Art. 27(3)(c))
 We collect and process only personal data that is adequate, relevant, and limited to what is necessary:
 - **Information You Provide Directly:** ${formFieldsLine}.
 - **Technical & Device Data:** IP address, browser type, operating system, referring URLs, and security session identifiers.
 - **Cookies & Telemetry (Subject to Prior Consent):** Analytics and performance identifiers only when you provide affirmative opt-in consent.
 
-## 3. Purposes & Lawful Bases for Processing (NDPA ss. 25(1), 27(1)(c))
+## 3. Purposes & Lawful Bases for Processing (NDPA ss. 25(1), 27(1)(b))
 Under Section 25 of the NDPA 2023, we process your personal data under the following lawful bases:
 1. **Consent (s. 25(1)(a)):** For non-essential cookies, marketing communications, and optional analytics. You may withdraw consent at any time.
 2. **Performance of a Contract (s. 25(1)(b)(i)):** To deliver products, services, or account functionality you request.
 3. **Legal Obligation (s. 25(1)(b)(ii)):** To comply with Nigerian statutory, tax, regulatory, or AML/CFT obligations.
 4. **Legitimate Interests (s. 25(1)(b)(v)):** For platform security, fraud prevention, and service reliability, provided such interests do not override your fundamental rights.
 
-## 4. Third-Party Recipients & Processors (NDPA ss. 27(1)(d), 29)
+## 4. Third-Party Recipients & Processors (NDPA ss. 27(1)(c), 29)
 We engage vetted Data Processors bound by written Data Processing Agreements (DPAs) under NDPA Section 29. Based on our current technical stack, third-party integrations include:
 ${trackerDisclosureList}
 
@@ -971,7 +971,7 @@ We never sell your personal data to third-party data brokers.
 ## 5. Cross-Border Transfers of Personal Data (NDPA Part VIII, ss. 41–43)
 Where personal data is transferred outside **${country}** (for example, to cloud infrastructure or analytics processors), **${org}** ensures that the recipient jurisdiction provides an adequate level of protection as determined by the Nigeria Data Protection Commission (NDPC), or that appropriate safeguards (such as Standard Data Protection Clauses or binding corporate agreements under Section 41) are in place.
 
-## 6. Data Retention Period (NDPA ss. 24(1)(d), 27(1)(f))
+## 6. Data Retention Period (NDPA ss. 24(1)(d), 27(1)(e))
 We retain personal data for **${retention}**. Once the purpose of processing has been fulfilled and statutory obligations expire, personal data is securely deleted or irreversibly anonymized.
 
 ## 7. Your Rights as a Data Subject (NDPA Part VI, ss. 34–38)
@@ -982,11 +982,11 @@ Under the Nigeria Data Protection Act 2023, you have the right to:
 - **Restriction & Objection (ss. 34, 36):** Object to processing (including direct marketing) or request restriction of processing.
 - **Data Portability (s. 38):** Receive your personal data in a structured, commonly used, machine-readable format.
 - **Automated Decision-Making (s. 37):** Not be subject to a decision based solely on automated processing or profiling that produces legal or similarly significant effects without human intervention.
-- **Withdrawal of Consent (s. 26(4)):** Withdraw your consent at any time without affecting the lawfulness of prior processing.
+- **Withdrawal of Consent (ss. 26(4), 35):** Withdraw your consent at any time without affecting the lawfulness of prior processing.
 
 To exercise any of these rights, email **${email}**. We respond to verified requests within 30 days.
 
-## 8. Right to Lodge a Complaint with the NDPC (NDPA ss. 27(1)(g), 46)
+## 8. Right to Lodge a Complaint with the NDPC (NDPA ss. 27(1)(f), 46)
 If you believe that our processing of your personal data infringes the Nigeria Data Protection Act 2023, you have the statutory right to lodge a complaint with the supervisory authority:
 - **Regulator:** Nigeria Data Protection Commission (NDPC)
 - **Website:** https://ndpc.gov.ng
@@ -995,12 +995,14 @@ If you believe that our processing of your personal data infringes the Nigeria D
 
   const bannerContent = `<!-- NDPA 2023 Affirmative Cookie Consent Banner (Section 26 Compliant) -->
 <!-- Equal prominence for "Reject Non-Essential" and "Accept All"; blocks trackers until opt-in -->
+<!-- Shown in the middle of the screen: GAID 2025 Art. 7(l) treats a bottom-of-page notice as not transparent -->
+<!-- Add a footer link that calls window.ndpaOpenSettings() so visitors can change their choice (GAID Art. 19(7)(e)) -->
 <div
   id="ndpa-consent-banner"
   role="dialog"
   aria-live="polite"
   aria-label="Cookie and Data Privacy Consent"
-  style="position:fixed;bottom:1.25rem;left:1.25rem;right:1.25rem;max-width:44rem;margin:0 auto;background:#14231c;color:#f7f8f4;padding:1.25rem 1.5rem;border-radius:1rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);z-index:9999;font-family:system-ui,-apple-system,sans-serif;display:none;border:1px solid rgba(255,255,255,0.14);"
+  style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:calc(100% - 2.5rem);max-width:36rem;max-height:calc(100vh - 2.5rem);overflow:auto;background:#14231c;color:#f7f8f4;padding:1.25rem 1.5rem;border-radius:1rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);z-index:9999;font-family:system-ui,-apple-system,sans-serif;display:none;border:1px solid rgba(255,255,255,0.14);"
 >
   <div style="display:flex;flex-direction:column;gap:0.875rem;">
     <div>
@@ -1008,7 +1010,7 @@ If you believe that our processing of your personal data infringes the Nigeria D
         Your Privacy Choices (NDPA 2023)
       </strong>
       <p style="margin:0;font-size:0.875rem;line-height:1.5;color:#d5f0e1;">
-        ${org} uses strictly necessary cookies to keep this site secure and reliable. With your affirmative consent, we also use analytics cookies to improve our services. You can reject non-essential cookies at any time. Read our
+        ${org} uses strictly necessary cookies to keep this site secure and reliable. With your affirmative consent, we also use analytics cookies to improve our services. You can change your choice at any time using the "Cookie settings" link at the bottom of every page. Read our
         <a href="/privacy-policy" style="color:#6ee7b7;text-decoration:underline;">Privacy Notice</a>.
       </p>
     </div>
@@ -1086,13 +1088,18 @@ If you believe that our processing of your personal data infringes the Nigeria D
     activateDeferredScripts();
   }
 
+  // Lets visitors withdraw or change consent later, e.g. from a footer "Cookie settings" link.
+  window.ndpaOpenSettings = function () {
+    if (banner) banner.style.display = "block";
+  };
+
   if (btnAccept) btnAccept.addEventListener("click", function () { saveConsent(true); });
   if (btnReject) btnReject.addEventListener("click", function () { saveConsent(false); });
 })();
 </script>`;
 
   const formContent = `<!-- NDPA 2023 Form Consent & Point-of-Collection Notice (Sections 26 & 27) -->
-<!-- Never pre-check consent checkboxes (NDPA s. 26(3)) -->
+<!-- Never pre-check consent checkboxes (NDPA s. 26(7)(a)) -->
 <div class="ndpa-form-consent" style="margin-top:1rem;padding:0.875rem 1rem;border:1px solid #d5f0e1;background:#f7f8f4;border-radius:0.625rem;font-size:0.875rem;color:#14231c;">
   <label style="display:flex;align-items:flex-start;gap:0.625rem;cursor:pointer;line-height:1.45;">
     <input

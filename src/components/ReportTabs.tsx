@@ -758,7 +758,7 @@ export function TelemetryTab({ result }: { result: ScanResult }) {
               Trackers <Counter>{result.trackers.length}</Counter>
             </span>
           }
-          description="Non-essential trackers need opt-in consent and must be named as recipients (NDPA ss. 26, 27(1)(d))."
+          description="Non-essential trackers need opt-in consent and must be named as recipients (NDPA ss. 26, 27(1)(c))."
         />
         {result.trackers.length === 0 ? (
           <EmptyState icon={ShieldCheck} title="No known trackers on first load" />
