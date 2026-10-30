@@ -1,0 +1,39 @@
+# Usage (on the VPS, from the repo root):
+#   cp deploy/.env.example deploy/.env   # then fill it in
+#   docker compose -f deploy/docker-compose.yml up -d --build
+#
+# There is no Caddy here. The Caddy from azaman-engine (container deploy-caddy-1)
+# owns ports 80/443 and serves lens.taxcafe.pro by forwarding to ndpa-lens:3000
+# over its Docker network.
+
+# Without this, the project would be named "deploy" (the folder name), the same
+# as azaman-engine's, and the two apps' containers would get mixed up.
+name: ndpa-lens
+
+services:
+  ndpa-lens:
+    build: ..
+    restart: unless-stopped
+    init: true            # reaps exited browser processes
+    shm_size: "1gb"       # Chromium crashes with Docker's 64 MB default
+    mem_limit: 2g
+    env_file:
+      - path: .env
+        required: false
+    expose:
+      - "3000"            # reachable by Caddy only; no host port published
+    volumes:
+      - ndpa_data:/app/data   # free AI review counts
+    networks:
+      default:
+      proxy:
+        aliases: [ndpa-lens]
+
+networks:
+  proxy:
+    # azaman-engine's network (its compose project is "deploy").
+    external: true
+    name: ${PROXY_NETWORK:-deploy_default}
+
+volumes:
+  ndpa_data:

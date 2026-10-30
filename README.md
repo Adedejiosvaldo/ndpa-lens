@@ -51,52 +51,19 @@ pnpm start
 
 ## Deploy with Docker
 
-The image has Chromium and its system libraries built in, and nothing in it is tied to a domain. The site and its API (`/api/scan`) are served from the same address, so whatever domain you use covers both.
+The deploy setup lives in `deploy/` and follows the same layout as azaman-engine. On the VPS, azaman-engine's Caddy (`deploy-caddy-1`) owns ports 80/443 and serves both sites. This app has no Caddy of its own and publishes no host port. It joins Caddy's Docker network (`deploy_default`), and Caddy forwards `lens.taxcafe.pro` to `ndpa-lens:3000`.
 
-**On your own domain with HTTPS (e.g. `lens.example.com`):**
-
-1. At your DNS provider, add an `A` record for `lens.example.com` pointing at the server's public IP.
-2. Open ports 80 and 443 on the server.
-3. Run:
+On the VPS, from the repo root:
 
 ```bash
-DOMAIN=lens.example.com docker compose --profile https up -d --build
+cp deploy/.env.example deploy/.env   # then set OPENROUTER_API_KEY
+docker compose -f deploy/docker-compose.yml up -d --build
 ```
 
-Caddy gets and renews the HTTPS certificate automatically. The app is then at `https://lens.example.com` and the API at `https://lens.example.com/api/scan`. You can also put `DOMAIN=` in a `.env` file next to `docker-compose.yml` instead of typing it each time.
+The `lens.taxcafe.pro` site block lives in azaman-engine's `deploy/Caddyfile`. After changing it, recreate that Caddy (`docker compose -f deploy/docker-compose.yml up -d --force-recreate caddy` in the azaman-engine folder).
 
-**Server already runs a Caddy or Nginx container on ports 80/443:**
-
-1. Find that container's network: `docker inspect <proxy-container> --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}} {{end}}'`
-2. Add to `.env`:
-   ```
-   COMPOSE_FILE=docker-compose.yml:docker-compose.proxy.yml
-   PROXY_NETWORK=<network from step 1>
-   ```
-3. `docker compose up -d --build` (no `--profile https`).
-4. Paste [`deploy/Caddyfile.site`](deploy/Caddyfile.site) into that proxy's Caddyfile and reload it. The app is reachable from the proxy at `ndpa-lens:3000`.
-
-**Behind a proxy you already run on the host (Nginx, Apache, a load balancer):**
-
-```bash
-docker compose up -d --build        # app listens on 127.0.0.1:3000 only
-```
-
-Point your proxy at `http://127.0.0.1:3000`, pass the `X-Forwarded-For` header, and allow at least 180 seconds before timing out.
-
-**Calling the API from another website:** set `ALLOWED_ORIGINS` to that site's address (comma-separated for several, e.g. `https://example.com`). Leave it empty if only this app's own pages call the API.
-
-Or without Compose:
-
-```bash
-docker build -t ndpa-lens .
-docker run -d --name ndpa-lens --init --shm-size=1g -p 3000:3000 \
-  --env-file .env.local ndpa-lens
-```
-
-- `--shm-size=1g` and `--init` matter: Chromium crashes with Docker's default 64 MB shared memory, and `--init` cleans up exited browser processes.
-- Set `HOST_PORT` to publish on a different host port with Compose.
-- The rate limit reads the visitor's address from `X-Forwarded-For`. Make sure your proxy sets it and that port 3000 isn't reachable directly from the internet.
+- Start azaman-engine first: its network must exist before this app can join it.
+- The compose file sets `name: ndpa-lens`. Without it, Docker would name the project after the `deploy` folder and mix it up with azaman-engine's containers.
 - Keep the `PLAYWRIGHT_VERSION` build argument in the `Dockerfile` equal to the `playwright` version in `pnpm-lock.yaml`.
 
 ## Configuration
