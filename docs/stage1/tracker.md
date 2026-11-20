@@ -8,11 +8,11 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 ## Phase 0 — Setup
 
 - [x] **00** [Write the Stage 1 planning docs](steps/00-planning-docs.md) — done 2026-11-20 — planning docs written
-- [x] **01** [Merge `feat/reports-ci-ux` into `main`](steps/01-merge-reports-branch.md) — done 2026-11-20 — PR #1 merged, CI green, nothing deployed
+- [x] **01** [Merge `feat/reports-ci-ux` into `main`](steps/01-merge-reports-branch.md) — done 2026-11-20 — PR #1 merged; typecheck/build green, image build on `main` fails (see Added steps); nothing deployed
 
 ## Phase 1 — Foundations
 
-- [ ] **02** [Monorepo skeleton (pnpm + Turborepo)](steps/02-monorepo-skeleton.md) — todo
+- [x] **02** [Monorepo skeleton (pnpm + Turborepo)](steps/02-monorepo-skeleton.md) — done 2026-11-20 — workspace + turbo, app moved to `apps/legacy-scanner`, CI reduced to typecheck/build
 - [ ] **03** [`packages/schema` shared Zod types](steps/03-schema-package.md) — todo
 - [ ] **04** [Local dev infrastructure](steps/04-dev-infra.md) — todo
 - [ ] **05** [`apps/api` NestJS skeleton](steps/05-api-skeleton.md) — todo
@@ -82,3 +82,5 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 ## Added steps
 
 _Out-of-scope work found during a step goes here, with a reason._
+
+- [ ] **01a** Fix the Docker image build — found in Step 01. On `main`, the **Build and push image** job fails at `RUN corepack enable` (exit 127): the `mcr.microsoft.com/playwright:v1.64.1-noble` base image has no corepack. The likely fix is to install pnpm directly (`npm i -g pnpm@11.5.2`, matching `packageManager`). The same Dockerfile is used by `deploy/deploy.sh`, so manual VPS builds are probably broken too. Deferred by the owner on 2026-11-20 together with all VPS, image and deploy work. **Do it in Step 33.**
