@@ -16,7 +16,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [ ] **03** [`packages/schema` shared Zod types](steps/03-schema-package.md) — done 2026-11-20 — `@ndpa/schema` (zod 4, ESM+CJS), 10 tests
 - [ ] **04** [Local dev infrastructure](steps/04-dev-infra.md) — done 2026-11-20 — `pnpm dev:infra`: Postgres 16, Redis 7 AOF, SeaweedFS S3 (MinIO images gone), Mailpit
 - [ ] **05** [`apps/api` NestJS skeleton](steps/05-api-skeleton.md) — done 2026-11-20 — NestJS 12 (ESM, Express, SWC), health, problem+json, OpenAPI 3.1, pino, Drizzle `withOrg`; 14 Testcontainers tests
-- [ ] **06** [DB schema v1 and row-level security](steps/06-db-schema-rls.md) — todo
+- [ ] **06** [DB schema v1 and row-level security](steps/06-db-schema-rls.md) — done 2026-11-20 — 9 identity/tenancy tables (Better Auth-shaped), `ndpa_api`/`ndpa_auth` roles, RLS + append-only audit log; 13 RLS tests
 - [ ] **07** [Auth core: sign-up, verify, login, reset, sessions](steps/07-auth-core.md) — todo
 - [ ] **08** [TOTP MFA and recovery codes](steps/08-mfa.md) — todo
 - [ ] **09** [Organisations, members, roles and tenant harness](steps/09-orgs-roles.md) — todo
