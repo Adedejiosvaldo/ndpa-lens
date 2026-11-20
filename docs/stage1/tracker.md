@@ -8,7 +8,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 ## Phase 0 — Setup
 
 - [x] **00** [Write the Stage 1 planning docs](steps/00-planning-docs.md) — done 2026-11-20 — planning docs written
-- [ ] **01** [Merge `feat/reports-ci-ux` into `main`](steps/01-merge-reports-branch.md) — todo
+- [ ] **01** [Merge `feat/reports-ci-ux` into `main`](steps/01-merge-reports-branch.md) — in progress (feat/reports-ci-ux)
 
 ## Phase 1 — Foundations
 
