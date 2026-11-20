@@ -26,7 +26,7 @@ Land the shareable reports, live progress and CI/CD work, so Stage 1 starts from
 - Existing branch as is
 
 ## Acceptance
-- [x] PR merged, `main` CI green
+- [x] PR merged; `main` typecheck and build green (image build fails, see below)
 - [x] Nothing deployed unless the owner chose to
 
 ## Verification
@@ -38,4 +38,5 @@ Done 2026-11-20.
 - Opened PR #1 (https://github.com/Adedejiosvaldo/ndpa-lens/pull/1) and merged it into `main` as a merge commit, so the branch history is kept.
 - Proof: the first run of the workflow on GitHub (run 44788160005) passed **Typecheck and build** in 1m10s. **Build and push image** and **Deploy to VPS** were skipped, as expected on a PR.
 - The repo has no Actions variables or secrets (`gh variable list` and `gh secret list` are empty). Pushes to `main` will build and push the GHCR image, but deploy stays skipped until `VPS_HOST` is set.
+- After the merge, the `main` run passed **Typecheck and build**, but **Build and push image** failed at `RUN corepack enable` (exit 127). The Playwright 1.64.1 base image has no corepack. Nothing was pushed or deployed. Logged as step 01a under Added steps in `tracker.md`; deferred by the owner.
 - Not verified: the deploy job and live progress through Caddy (both owner tasks on the tracker).

@@ -15,7 +15,8 @@ Run the whole system safely on the VPS, with evidence and backups off the box.
 - R2 bucket; WAL-G PITR plus nightly pg_dump to R2
 - SOPS + age secrets
 - Terraform for Cloudflare (DNS, R2, WAF); bootstrap script
-- CI: build all images to GHCR; deploy with health check and automatic rollback
+- CI: build all images to GHCR; deploy with health check and automatic rollback (the old image/deploy jobs are at commit 26c4faf)
+- Fix the image build (step 01a: no corepack in the Playwright base image) and update the legacy scanner's Dockerfile, `deploy/` and `outputFileTracingRoot` for the monorepo layout, if the legacy app is still running by then
 
 **Out**
 - —

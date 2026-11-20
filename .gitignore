@@ -8,3 +8,4 @@ out/
 *.tsbuildinfo
 data/
 docker-compose.override.yml
+.turbo/
