@@ -1,5 +1,6 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
+import type { Tx } from "../db/db.service.js";
 import { auditLog } from "../db/schema.js";
 import { AUTH_DB } from "../auth/auth-db.js";
 
@@ -23,6 +24,23 @@ export class AuditService {
   private readonly logger = new Logger(AuditService.name);
 
   constructor(@Inject(AUTH_DB) private readonly db: NodePgDatabase) {}
+
+  /**
+   * Org-scoped event inside the caller's withOrg() transaction, so it commits or
+   * rolls back with the change it describes. RLS checks org_id.
+   */
+  async recordInOrg(tx: Tx, orgId: string, e: Omit<AuditEvent, "orgId">): Promise<void> {
+    await tx.insert(auditLog).values({
+      action: e.action,
+      actorType: e.actorType ?? "user",
+      actorUserId: e.actorUserId ?? null,
+      orgId,
+      targetType: e.targetType,
+      targetId: e.targetId,
+      ip: e.ip ?? null,
+      metadata: e.metadata ?? {},
+    });
+  }
 
   async record(e: AuditEvent): Promise<void> {
     try {

@@ -156,7 +156,7 @@ describe("AUTH-05 mandatory for Owners and Platform Admins", () => {
   });
 
   it("lets other users stay without MFA, or turn it off", async () => {
-    const c = await signedInUser(t, "analyst@a.test");
+    const c = await signedInUser(t, "analyst@a.test", { organisation: false });
     expect((await c.get("/v1/_test/secure")).status).toBe(200);
     await enrol(c);
     expect((await c.post("/v1/auth/mfa/disable", { password: PASSWORD })).status).toBe(200);

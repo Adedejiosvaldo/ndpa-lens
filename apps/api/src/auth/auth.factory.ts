@@ -7,6 +7,7 @@ import type { AuditService } from "../audit/audit.service.js";
 import type { AppConfig } from "../config/config.js";
 import { accounts, sessions, twoFactors, users, verifications } from "../db/schema.js";
 import type { Mailer } from "../mail/mail.service.js";
+import type { SignupContext } from "./signup-context.js";
 import * as T from "../mail/templates.js";
 
 /** Header carrying the client IP as resolved by Express "trust proxy". Set by us, never by the client. */
@@ -28,6 +29,7 @@ export interface AuthDeps {
   db: NodePgDatabase;
   mailer: Mailer;
   audit: AuditService;
+  signup: SignupContext;
 }
 
 /**
@@ -35,7 +37,7 @@ export interface AuthDeps {
  * Its own HTTP handler is never mounted, so every auth route follows the PRD
  * paths, problem+json errors, CSRF and rate-limit rules.
  */
-export function createAuth({ config, db, mailer, audit }: AuthDeps) {
+export function createAuth({ config, db, mailer, audit, signup }: AuthDeps) {
   const web = (path: string, token?: string) =>
     `${config.WEB_URL}${path}${token ? `?token=${encodeURIComponent(token)}` : ""}`;
 
@@ -99,6 +101,7 @@ export function createAuth({ config, db, mailer, audit }: AuthDeps) {
       user: {
         create: {
           after: async (user) => {
+            signup.markCreated(user.id);
             await audit.record({ action: "auth.signup", actorUserId: user.id, targetType: "user", targetId: user.id });
           },
         },

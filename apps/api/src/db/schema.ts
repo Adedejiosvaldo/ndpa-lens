@@ -177,6 +177,8 @@ export const invitations = pgTable(
     email: citext("email").notNull(),
     role: memberRole("role").notNull(),
     status: invitationStatus("status").notNull().default("pending"),
+    /** SHA-256 of the secret half of the emailed token (`<orgId>.<secret>`). */
+    tokenHash: text("token_hash").notNull().unique(),
     expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
     inviterId: uuid("inviter_id")
       .notNull()
@@ -184,6 +186,34 @@ export const invitations = pgTable(
     createdAt: createdAt(),
   },
   (t) => [index("invitations_org_idx").on(t.organizationId), index("invitations_email_idx").on(t.email)],
+);
+
+export const transferStatus = pgEnum("transfer_status", ["pending", "accepted", "cancelled"]);
+
+/** Ownership transfer: the new Owner must accept (PRD §2). */
+export const ownershipTransfers = pgTable(
+  "ownership_transfers",
+  {
+    id: id(),
+    orgId: uuid("org_id")
+      .notNull()
+      .references(() => organisations.id, { onDelete: "cascade" }),
+    fromUserId: uuid("from_user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    toUserId: uuid("to_user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    status: transferStatus("status").notNull().default("pending"),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: createdAt(),
+    decidedAt: timestamp("decided_at", { withTimezone: true }),
+  },
+  (t) => [
+    index("ownership_transfers_org_idx").on(t.orgId),
+    // At most one pending transfer per org.
+    uniqueIndex("ownership_transfers_one_pending_uq").on(t.orgId).where(sql`status = 'pending'`),
+  ],
 );
 
 /** Append-only (no UPDATE/DELETE grant). org_id is null for account-level events such as login. */

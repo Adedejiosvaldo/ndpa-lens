@@ -59,8 +59,8 @@ beforeAll(async () => {
   ]);
   const week = new Date(Date.now() + 7 * 864e5);
   await db.insert(invitations).values([
-    { organizationId: ids.orgA, email: "new@a.test", role: "analyst", expiresAt: week, inviterId: ids.alice },
-    { organizationId: ids.orgB, email: "new@b.test", role: "viewer", expiresAt: week, inviterId: ids.bob },
+    { organizationId: ids.orgA, email: "new@a.test", role: "analyst", expiresAt: week, inviterId: ids.alice, tokenHash: "a".repeat(64) },
+    { organizationId: ids.orgB, email: "new@b.test", role: "viewer", expiresAt: week, inviterId: ids.bob, tokenHash: "b".repeat(64) },
   ]);
   await db.insert(auditLog).values([
     { orgId: ids.orgA, actorUserId: ids.alice, actorType: "user", action: "org.created" },
@@ -77,7 +77,7 @@ describe("migrations", () => {
   it("are idempotent: a second run is a no-op", async () => {
     await runMigrations(deps.ownerUrl);
     const r = await owner.query("select count(*)::int as n from drizzle.__drizzle_migrations");
-    expect(r.rows[0].n).toBe(3);
+    expect(r.rows[0].n).toBe(5);
   });
 
   it("generate uuid v7 ids", async () => {

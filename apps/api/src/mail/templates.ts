@@ -27,3 +27,17 @@ export function accountLocked(name: string, resetLink: string) {
     text: `Hello ${name},\n\nThere were 5 failed sign-in attempts on your account, so we've paused sign-in for 15 minutes.\n\nIf this was you, wait 15 minutes and try again, or reset your password: ${resetLink}\nIf it wasn't you, reset your password now.\n`,
   };
 }
+
+export function invitation(inviter: string, org: string, role: string, link: string, days: number) {
+  return {
+    subject: `${inviter} invited you to ${org} on NDPA Lens`,
+    text: `Hello,\n\n${inviter} has invited you to join ${org} on NDPA Lens as ${role === "admin" ? "an" : "a"} ${role}.\n\nAccept the invitation: ${link}\n\nSign in (or create an account) with this email address. The link expires in ${days} days.\n`,
+  };
+}
+
+export function ownershipTransfer(name: string, org: string, link: string) {
+  return {
+    subject: `You've been asked to become an Owner of ${org}`,
+    text: `Hello ${name},\n\nThe Owner of ${org} wants to transfer ownership to you on NDPA Lens. Owners manage billing and can delete the organisation, and must use two-factor authentication.\n\nReview and accept: ${link}\n\nThe request expires in 7 days.\n`,
+  };
+}

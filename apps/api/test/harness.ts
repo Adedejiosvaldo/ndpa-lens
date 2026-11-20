@@ -6,6 +6,7 @@ import { AppModule } from "../src/app.module.js";
 import { PwnedPasswords } from "../src/auth/pwned.js";
 import type { AppConfig } from "../src/config/config.js";
 import { Mailer, type MailMessage } from "../src/mail/mail.service.js";
+import { totp } from "./totp.js";
 
 export class Outbox extends Mailer {
   readonly sent: MailMessage[] = [];
@@ -109,12 +110,50 @@ export class Client {
   }
 }
 
-/** Sign up, verify and return a signed-in client. */
-export async function signedInUser(t: TestApp, email: string, password = "a-long-safe-passphrase-1", ip?: string) {
-  const c = new Client(t.app, ip);
-  await c.post("/v1/auth/signup", { name: email.split("@")[0], email, password });
+export const orgFor = (email: string) => ({
+  legalName: `${email.split("@")[0]} Partners Ltd`,
+  tradingName: `${email.split("@")[0]} Partners`,
+  address: "1 Marina, Lagos",
+  phone: "+234 801 234 5678",
+});
+
+/**
+ * Sign up, verify and return a signed-in client. Every sign-up creates an
+ * organisation with the user as Owner (ORG-01), so these users need MFA for
+ * org routes; `withMfa` enrols them.
+ */
+export async function signedInUser(
+  t: TestApp,
+  email: string,
+  opts: { password?: string; ip?: string; organisation?: boolean } = {},
+) {
+  const password = opts.password ?? "a-long-safe-passphrase-1";
+  const c = new Client(t.app, opts.ip);
+  await c.post("/v1/auth/signup", {
+    name: email.split("@")[0],
+    email,
+    password,
+    ...(opts.organisation === false ? {} : { organisation: orgFor(email) }),
+  });
   const token = t.outbox.token(email, /Confirm your email/);
   const res = await c.post("/v1/auth/verify-email", { token });
   if (res.status !== 200) throw new Error(`verify failed: ${res.status} ${JSON.stringify(res.body)}`);
   return c;
+}
+
+/** Enrol TOTP for a signed-in client; returns the key and recovery codes. */
+export async function enrolMfa(c: Client, password = "a-long-safe-passphrase-1") {
+  const res = await c.post("/v1/auth/mfa/enrol", { password });
+  if (res.status !== 200) throw new Error(`enrol failed: ${res.status} ${JSON.stringify(res.body)}`);
+  const confirm = await c.post("/v1/auth/mfa/confirm", { code: totp(res.body.manualKey) });
+  if (confirm.status !== 200) throw new Error(`confirm failed: ${confirm.status} ${JSON.stringify(confirm.body)}`);
+  return res.body as { manualKey: string; recoveryCodes: string[]; otpauthUri: string };
+}
+
+/** A DPCO founder: signed up with an organisation (Owner) and enrolled in MFA. */
+export async function ownerWithMfa(t: TestApp, email: string) {
+  const c = await signedInUser(t, email);
+  await enrolMfa(c);
+  const me = await c.get("/v1/me");
+  return { client: c, userId: me.body.user.id as string, orgId: me.body.memberships[0].orgId as string };
 }

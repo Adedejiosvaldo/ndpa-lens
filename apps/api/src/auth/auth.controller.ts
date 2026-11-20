@@ -19,6 +19,7 @@ import { CSRF_COOKIE, newCsrfToken } from "./csrf.js";
 import { authHeaders, clientIp, forwardCookies } from "./http.js";
 import { LOGIN_MAX_FAILURES, LoginLimiter } from "./login-limiter.js";
 import { PwnedPasswords } from "./pwned.js";
+import { SignupContext } from "./signup-context.js";
 import { AllowWithoutMfa, type AuthContext, CurrentAuth, SessionGuard } from "./session.guard.js";
 
 const ACCEPTED = { status: "accepted" } as const;
@@ -34,6 +35,7 @@ export class AuthController {
     private readonly pwned: PwnedPasswords,
     private readonly mailer: Mailer,
     private readonly audit: AuditService,
+    private readonly signupContext: SignupContext,
   ) {}
 
   /** Issue a CSRF token: HttpOnly cookie + the same value in the body for the X-CSRF-Token header. */
@@ -54,11 +56,15 @@ export class AuthController {
   @HttpCode(202)
   async signup(@Body(new ZodPipe(SignUpBody)) body: z.infer<typeof SignUpBody>, @Req() req: Request) {
     await this.rejectBreached(body.password, "password");
+    const { organisation, ...account } = body;
+    let createdUserId: string | undefined;
     try {
-      await this.auth.api.signUpEmail({ body, headers: authHeaders(req) });
+      ({ createdUserId } = await this.signupContext.run(() => this.auth.api.signUpEmail({ body: account, headers: authHeaders(req) })));
     } catch (err) {
       fromAuthError(err);
     }
+    // Only a brand-new account gets an organisation (ORG-01). The response is identical either way.
+    if (createdUserId && organisation) await this.signupContext.afterNewUser(createdUserId, organisation);
     return ACCEPTED;
   }
 
