@@ -21,6 +21,6 @@ The Stage 1 build (see `PRD.md`) is split into numbered steps in `steps/`. Progr
 5. Go straight on to the next step. The owner decided on 20 Nov 2026 not to be asked "go" between steps. Stop only for owner decisions (money, legal, security trade-offs, missing credentials, anything hard to undo) or 👤 steps. VPS, image and deploy work waits until Step 33.
 
 ## Conventions
-- Decisions already made: pnpm + Turborepo monorepo in this repo; NestJS API; Drizzle ORM (RLS via `set_config('app.org_id')` per request transaction); Better Auth with organisation and two-factor plugins; Zod in `packages/schema`; BullMQ; Playwright; R2 in production and MinIO in dev.
+- Decisions already made: pnpm + Turborepo monorepo in this repo; NestJS API; Drizzle ORM (RLS via `set_config('app.org_id')` per request transaction); Better Auth with organisation and two-factor plugins; Zod in `packages/schema`; BullMQ; Playwright; R2 in production and SeaweedFS (S3 API) in dev.
 - Requirement IDs (AUTH-01, C-07…) go in commit messages and test names so they can be traced back to the PRD.
 - Copy is British English. Show money in ₦ (stored in kobo), dates like 20 Nov 2026, and times in WAT (Africa/Lagos).

@@ -1,0 +1,9 @@
+{
+  "identities": [
+    {
+      "name": "ndpa-dev",
+      "credentials": [{ "accessKey": "ndpa-dev-access", "secretKey": "ndpa-dev-secret-change-me" }],
+      "actions": ["Admin", "Read", "List", "Tagging", "Write"]
+    }
+  ]
+}
