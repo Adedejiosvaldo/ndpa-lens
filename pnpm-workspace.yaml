@@ -8,3 +8,5 @@ allowBuilds:
   cpu-features: false
   ssh2: false
   protobufjs: false
+  # Install-time telemetry from swagger-ui-dist; never run it.
+  "@scarf/scarf": false
