@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { Marked } from "marked";
 import {
   AlertTriangle,
   ArrowRight,
@@ -13,6 +14,8 @@ import {
   Download,
   ExternalLink,
   FileCode2,
+  FileDown,
+  Loader2,
   FileText,
   Inbox,
   Info,
@@ -22,6 +25,7 @@ import {
   XCircle,
 } from "lucide-react";
 import type {
+  AuditCheck,
   CheckStatus,
   PillarId,
   RemediationProfile,
@@ -71,15 +75,77 @@ const RISK_TONE: Record<ScanResult["riskLevel"], Tone> = {
 /* ================================================================== */
 
 type IssueFilter = "open" | "pass" | "all";
+type DocId = RemediationArtifact["id"];
+type Effort = "Quick" | "Medium" | "Bigger";
+
+/** Which ready-made document fixes each check, and roughly how much work it is. */
+const FIX_GUIDE: Record<string, { doc?: DocId; effort: Effort }> = {
+  "privacy-notice-availability": { doc: "policy", effort: "Medium" },
+  "dpo-controller-disclosure": { doc: "policy", effort: "Quick" },
+  "processing-purpose-lawful-basis": { doc: "policy", effort: "Medium" },
+  "nigeria-specific-policy": { doc: "policy", effort: "Medium" },
+  "data-subject-rights-notice": { doc: "policy", effort: "Quick" },
+  "ndpc-redress-notice": { doc: "policy", effort: "Quick" },
+  "cross-border-transfer-disclosure": { doc: "policy", effort: "Medium" },
+  "data-retention-schedule": { doc: "policy", effort: "Medium" },
+  "cookie-consent-banner": { doc: "banner", effort: "Medium" },
+  "pre-consent-tracking": { doc: "banner", effort: "Bigger" },
+  "reject-respected": { doc: "banner", effort: "Bigger" },
+  "form-consent-controls": { doc: "form", effort: "Quick" },
+  "transport-encryption-https": { doc: "headers", effort: "Medium" },
+  "http-security-headers": { doc: "headers", effort: "Quick" },
+  "cookie-security-flags": { doc: "headers", effort: "Quick" },
+  "third-party-surface-exposure": { effort: "Bigger" },
+};
+
+const EFFORT_COST: Record<Effort, number> = { Quick: 1, Medium: 2, Bigger: 3 };
+const EFFORT_HINT: Record<Effort, string> = {
+  Quick: "Quick fix: a text or settings change",
+  Medium: "Medium: an afternoon of work",
+  Bigger: "Bigger job: needs your web developer",
+};
+const DOC_SHORT: Record<DocId, string> = {
+  "internal-audit": "readiness report",
+  policy: "privacy policy",
+  banner: "cookie banner",
+  form: "consent checkbox",
+  headers: "security settings",
+};
+
+function guideFor(id: string): { doc?: DocId; effort: Effort } {
+  return FIX_GUIDE[id] ?? { effort: "Medium" };
+}
+
+/** Best value first: failures, then most points regained per unit of effort. */
+export function topFixes(checks: AuditCheck[], n: number): AuditCheck[] {
+  const value = (c: AuditCheck) =>
+    ((c.status === "fail" ? 2 : 1) * (c.maxScore - c.score)) / EFFORT_COST[guideFor(c.id).effort];
+  return checks
+    .filter((c) => c.status === "fail" || c.status === "warning")
+    .sort((a, b) => value(b) - value(a))
+    .slice(0, n);
+}
+
+function FixButton({ doc, onFix, primary }: { doc?: DocId; onFix: (d: DocId) => void; primary?: boolean }) {
+  if (!doc) return null;
+  return (
+    <Button size="sm" variant={primary ? "primary" : "secondary"} onClick={() => onFix(doc)} className="no-print">
+      Get the {DOC_SHORT[doc]}
+      <ArrowRight className="h-3.5 w-3.5" />
+    </Button>
+  );
+}
 
 const STATUS_RANK: Record<CheckStatus, number> = { fail: 0, warning: 1, info: 2, pass: 3 };
 
 export function ResultsTab({
   result,
   linkable,
+  onFix,
 }: {
   result: ScanResult;
   linkable: boolean;
+  onFix: (doc: DocId) => void;
 }) {
   const [filter, setFilter] = useState<IssueFilter>("open");
   const [pillar, setPillar] = useState<PillarId | null>(null);
@@ -105,11 +171,16 @@ export function ResultsTab({
     );
   const pillarLabel = result.pillars.find((p) => p.id === pillar)?.label;
   const clausesFound = result.policy.clauses.filter((c) => c.status === "found").length;
+  const firstFixes = topFixes(result.checks, 3);
+  const limitedScan = result.metadata.engine !== "browser";
+  const limitations = result.metadata.limitations ?? [];
 
   return (
     <div className="grid gap-6 lg:grid-cols-3">
       <div className="min-w-0 space-y-6 lg:col-span-2">
-        <ScanLimits result={result} />
+        {limitedScan && <ScanLimits result={result} />}
+
+        {result.previous && <Comparison result={result} />}
 
         {/* score */}
         <Box>
@@ -145,10 +216,40 @@ export function ResultsTab({
               </div>
             </div>
           </div>
-          <p className="border-t border-line px-5 py-3 text-2xs leading-relaxed text-fg-muted">
-            Based only on what your public website shows. This is not a compliance audit or legal advice.
-            Organisations that must file a yearly audit (Compliance Audit Return) file it through an NDPC-licensed
-            DPCO.
+          {firstFixes.length > 0 && (
+            <div className="border-t border-line">
+              <div className="flex flex-wrap items-baseline justify-between gap-2 px-5 pt-4">
+                <h3 className="text-sm font-semibold text-fg">Fix these first</h3>
+                <span className="text-2xs text-fg-muted">Most points for the least work</span>
+              </div>
+              <ol className="mt-2 divide-y divide-line">
+                {firstFixes.map((c, i) => {
+                  const g = guideFor(c.id);
+                  return (
+                    <li key={c.id} className="flex flex-wrap items-center gap-x-3 gap-y-2 px-5 py-3">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-track text-2xs font-semibold tabular-nums text-fg">
+                        {i + 1}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-[13px] font-medium text-fg">{c.title}</div>
+                        <div className="mt-0.5 flex flex-wrap gap-x-3 text-2xs text-fg-muted">
+                          <span className="tabular-nums text-ok">+{c.maxScore - c.score} points</span>
+                          <span title={EFFORT_HINT[g.effort]}>{g.effort} fix</span>
+                        </div>
+                      </div>
+                      {g.doc && (
+                        <div className="w-full pl-8 sm:w-auto sm:pl-0">
+                          <FixButton doc={g.doc} onFix={onFix} />
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          )}
+          <p className="border-t border-line px-5 py-2.5 text-2xs text-fg-muted">
+            Based only on what the public website shows.
           </p>
         </Box>
 
@@ -225,6 +326,19 @@ export function ResultsTab({
                       <div className="min-w-0 flex-1">
                         <div className="text-[13px] font-semibold text-fg">{c.title}</div>
                         <p className="mt-0.5 text-xs text-fg-muted">{c.summary}</p>
+                        {isOpenIssue(c.status) && (
+                          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                            <Badge tone={c.status === "fail" ? "bad" : "warn"}>
+                              {c.status === "fail" ? "Must fix" : "Should fix"}
+                            </Badge>
+                            <Badge tone="neutral">
+                              <span title={EFFORT_HINT[guideFor(c.id).effort]}>{guideFor(c.id).effort} fix</span>
+                            </Badge>
+                            <span className="text-2xs tabular-nums text-fg-subtle">
+                              +{c.maxScore - c.score} pts if fixed
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <ChevronRight
                         className={cx(
@@ -256,11 +370,16 @@ export function ResultsTab({
                             ))}
                           </ul>
                         </div>
-                        <div className="flex flex-wrap gap-x-4 text-2xs text-fg-subtle">
-                          <span className="font-mono">{c.legalReference}</span>
-                          <span className="tabular-nums">
-                            {c.score}/{c.maxScore} points
-                          </span>
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                          <div className="flex flex-wrap gap-x-4 text-2xs text-fg-subtle">
+                            <span className="font-mono">{c.legalReference}</span>
+                            <span className="tabular-nums">
+                              {c.score}/{c.maxScore} points
+                            </span>
+                          </div>
+                          {isOpenIssue(c.status) && (
+                            <FixButton doc={guideFor(c.id).doc} onFix={onFix} primary />
+                          )}
                         </div>
                       </div>
                     )}
@@ -309,6 +428,19 @@ export function ResultsTab({
           >
             <EvidencePanel result={result} />
           </Disclosure>
+          {!limitedScan && limitations.length > 0 && (
+            <Disclosure
+              title="What this scan can't see"
+              description="Limits of checking a website from the outside."
+              meta={`${limitations.length} note(s)`}
+            >
+              <ul className="list-disc space-y-1 pl-5 text-xs text-fg-muted">
+                {limitations.map((l) => (
+                  <li key={l}>{l}</li>
+                ))}
+              </ul>
+            </Disclosure>
+          )}
         </div>
       </div>
 
@@ -371,6 +503,64 @@ export function ResultsTab({
           </dl>
         </Box>
       </aside>
+    </div>
+  );
+}
+
+export function Comparison({ result }: { result: ScanResult }) {
+  const prev = result.previous!;
+  const delta = result.score - prev.score;
+  const isOpen = (s?: CheckStatus) => s === "fail" || s === "warning";
+  const before = new Map(prev.checks.map((c) => [c.id, c.status]));
+  const fixed = result.checks.filter((c) => !isOpen(c.status) && isOpen(before.get(c.id)));
+  const fresh = result.checks.filter((c) => isOpen(c.status) && before.has(c.id) && !isOpen(before.get(c.id)));
+  const tone: Tone = delta > 0 ? "ok" : delta < 0 ? "bad" : "neutral";
+  return (
+    <Box>
+      <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+        <div>
+          <div className="text-2xs font-semibold uppercase tracking-wider text-fg-muted">
+            Since the scan on {new Date(prev.scannedAt).toLocaleDateString()}
+          </div>
+          <div className="mt-1 flex items-center gap-2 text-sm text-fg">
+            <span className="tabular-nums text-fg-muted">{prev.score}</span>
+            <ArrowRight className="h-3.5 w-3.5 text-fg-subtle" />
+            <span className="text-lg font-semibold tabular-nums">{result.score}</span>
+            <span className={cx("text-sm font-semibold tabular-nums", toneText[tone])}>
+              {delta > 0 ? `+${delta}` : delta === 0 ? "no change" : delta}
+            </span>
+          </div>
+        </div>
+        <a
+          href={`?report=${encodeURIComponent(prev.shareId)}`}
+          className="no-print text-xs font-medium text-info hover:underline"
+        >
+          Open the earlier report
+        </a>
+      </div>
+      <div className="grid gap-4 border-t border-line px-5 py-4 sm:grid-cols-2">
+        <ChangeList title="Fixed" tone="ok" items={fixed.map((c) => c.title)} empty="Nothing fixed since then." />
+        <ChangeList title="New problems" tone="bad" items={fresh.map((c) => c.title)} empty="None." />
+      </div>
+    </Box>
+  );
+}
+
+function ChangeList({ title, tone, items, empty }: { title: string; tone: Tone; items: string[]; empty: string }) {
+  return (
+    <div>
+      <div className={cx("text-xs font-semibold", toneText[tone])}>
+        {title} <span className="tabular-nums">({items.length})</span>
+      </div>
+      {items.length === 0 ? (
+        <p className="mt-1 text-xs text-fg-subtle">{empty}</p>
+      ) : (
+        <ul className="mt-1 space-y-0.5 text-xs text-fg">
+          {items.map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -442,7 +632,7 @@ function consentMeta(result: ScanResult): string {
   return c.trackersAfterReject.length + c.cookiesAfterReject.length === 0 ? "Reject works" : "Reject ignored";
 }
 
-function ConsentTestPanel({ result }: { result: ScanResult }) {
+export function ConsentTestPanel({ result }: { result: ScanResult }) {
   const c = result.technical.consentTest;
   if (!c?.tested) {
     return (
@@ -516,7 +706,7 @@ const PAGE_KIND_LABEL: Record<string, string> = {
   other: "Other page",
 };
 
-function PagesPanel({ result, linkable }: { result: ScanResult; linkable: boolean }) {
+export function PagesPanel({ result, linkable }: { result: ScanResult; linkable: boolean }) {
   const pages = result.pages ?? [];
   if (pages.length === 0) {
     return <p className="text-[13px] text-fg-muted">Only the homepage was downloaded. No other pages were visited.</p>;
@@ -924,6 +1114,42 @@ function Table({ head, rows }: { head: string[]; rows: React.ReactNode[][] }) {
 /* Remediation                                                         */
 /* ================================================================== */
 
+/*
+ * Our documents include text taken from the scanned site (titles, evidence),
+ * so raw HTML is shown as text and only http(s)/mailto links are kept.
+ */
+const safeMarked = new Marked({
+  gfm: true,
+  renderer: {
+    html({ text }) {
+      return escapeHtml(text);
+    },
+    link({ href, tokens }) {
+      const label = this.parser.parseInline(tokens);
+      if (!/^(https?:|mailto:)/i.test(href)) return label;
+      return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+    },
+    image({ text }) {
+      return escapeHtml(text);
+    },
+  },
+});
+
+function escapeHtml(s: string): string {
+  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+}
+
+const renderCache = new Map<string, string>();
+function renderMarkdown(md: string): string {
+  let html = renderCache.get(md);
+  if (!html) {
+    html = safeMarked.parse(md, { async: false }) as string;
+    if (renderCache.size > 20) renderCache.clear();
+    renderCache.set(md, html);
+  }
+  return html;
+}
+
 const DOC_COPY: Record<
   RemediationArtifact["id"],
   { title: string; about: string; how: string; dev?: boolean }
@@ -962,15 +1188,18 @@ export function RemediationTab({
   artifacts,
   profile,
   setProfile,
+  activeId,
+  setActiveId,
 }: {
   artifacts: RemediationArtifact[];
   profile: RemediationProfile;
   setProfile: React.Dispatch<React.SetStateAction<RemediationProfile>>;
+  activeId: RemediationArtifact["id"];
+  setActiveId: (id: RemediationArtifact["id"]) => void;
 }) {
-  const [activeId, setActiveId] = useState<RemediationArtifact["id"]>(
-    artifacts[0]?.id ?? "internal-audit"
-  );
   const [copied, setCopied] = useState(false);
+  const [mode, setMode] = useState<"preview" | "source">("preview");
+  const [saving, setSaving] = useState(false);
   const active = useMemo(
     () => artifacts.find((a) => a.id === activeId) ?? artifacts[0],
     [artifacts, activeId]
@@ -995,6 +1224,24 @@ export function RemediationTab({
   ) => setProfile((p) => ({ ...p, [k]: e.target.value }));
 
   if (!active) return null;
+  const isDoc = active.language === "markdown";
+  const title = DOC_COPY[active.id]?.title ?? active.title;
+
+  const downloadDocx = async () => {
+    setSaving(true);
+    try {
+      const { markdownToDocx } = await import("@/lib/markdown-docx");
+      const blob = await markdownToDocx(active.content, title);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = active.filename.replace(/\.md$/, ".docx");
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
@@ -1086,20 +1333,44 @@ export function RemediationTab({
               <span className="text-fg-subtle">·</span>
               <span className="text-fg-muted tabular-nums">{lineCount} lines</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              {isDoc && (
+                <SegmentedControl
+                  ariaLabel="Document view"
+                  value={mode}
+                  onChange={setMode}
+                  options={[
+                    { id: "preview", label: "Preview" },
+                    { id: "source", label: "Markdown" },
+                  ]}
+                />
+              )}
               <Button size="sm" icon={copied ? Check : Copy} onClick={copy}>
                 {copied ? "Copied" : "Copy"}
               </Button>
-              <Button
-                size="sm"
-                variant="primary"
-                icon={Download}
-                onClick={() =>
-                  downloadBlob(active.content, active.filename, "text/plain;charset=utf-8")
-                }
-              >
-                Download
-              </Button>
+              {isDoc ? (
+                <>
+                  <Button
+                    size="sm"
+                    icon={Download}
+                    onClick={() => downloadBlob(active.content, active.filename, "text/markdown;charset=utf-8")}
+                  >
+                    .md
+                  </Button>
+                  <Button size="sm" variant="primary" icon={saving ? Loader2 : FileDown} onClick={downloadDocx} disabled={saving}>
+                    Word (.docx)
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  size="sm"
+                  variant="primary"
+                  icon={Download}
+                  onClick={() => downloadBlob(active.content, active.filename, "text/plain;charset=utf-8")}
+                >
+                  Download
+                </Button>
+              )}
             </div>
           </div>
           <div className="border-b border-line px-4 py-3">
@@ -1113,9 +1384,17 @@ export function RemediationTab({
               {DOC_COPY[active.id]?.how ?? active.subtitle}
             </div>
           </div>
-          <pre className="max-h-[640px] overflow-auto whitespace-pre-wrap break-words bg-[#0d1117] p-4 font-mono text-xs leading-relaxed text-[#e6edf3]">
-            <code>{active.content}</code>
-          </pre>
+          {isDoc && mode === "preview" ? (
+            <div
+              className="doc-preview max-h-[720px] overflow-auto bg-surface px-6 py-5 sm:px-10 sm:py-8"
+              // Rendered with raw HTML escaped and unsafe links dropped (see renderMarkdown).
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(active.content) }}
+            />
+          ) : (
+            <pre className="max-h-[640px] overflow-auto whitespace-pre-wrap break-words bg-[#0d1117] p-4 font-mono text-xs leading-relaxed text-[#e6edf3]">
+              <code>{active.content}</code>
+            </pre>
+          )}
         </Box>
       </div>
     </div>

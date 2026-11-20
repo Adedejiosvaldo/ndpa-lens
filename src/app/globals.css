@@ -142,11 +142,154 @@
   }
 }
 
+.print-only {
+  display: none;
+}
+
 @media print {
-  .no-print {
+  @page {
+    margin: 14mm 12mm;
+  }
+  /* Always print in light colours, whatever theme is on screen. */
+  :root,
+  .dark {
+    color-scheme: light;
+    --canvas: 255 255 255;
+    --surface: 255 255 255;
+    --subtle: 246 248 250;
+    --line: 220 223 228;
+    --line-strong: 208 215 222;
+    --track: 234 238 242;
+    --fg: 10 10 10;
+    --fg-muted: 70 78 88;
+    --fg-subtle: 120 128 138;
+    --ok: 26 127 55;
+    --ok-subtle: 218 251 225;
+    --ok-line: 172 238 187;
+    --warn: 154 103 0;
+    --warn-subtle: 255 248 197;
+    --warn-line: 245 224 160;
+    --bad: 207 34 46;
+    --bad-subtle: 255 235 233;
+    --bad-line: 255 206 203;
+    --info: 9 105 218;
+    --info-subtle: 221 244 255;
+    --info-line: 182 227 255;
+    --bar-warn: 212 167 44;
+  }
+  .no-print,
+  .screen-only {
     display: none !important;
+  }
+  .print-only {
+    display: block !important;
   }
   body {
     background: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
+  .box {
+    box-shadow: none;
+  }
+  .avoid-break {
+    break-inside: avoid;
+  }
+  .avoid-break-after {
+    break-after: avoid;
+  }
+  /* Scroll boxes would cut content off on paper. */
+  .print-only .max-h-80,
+  .print-only .overflow-auto,
+  .print-only .overflow-x-auto {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .print-only table {
+    min-width: 0 !important;
+  }
+  .print-only td {
+    white-space: normal !important;
+    word-break: break-word;
+  }
+}
+
+/* Rendered Markdown documents (privacy policy, readiness report) */
+.doc-preview {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgb(var(--fg));
+}
+.doc-preview > * + * {
+  margin-top: 0.75em;
+}
+.doc-preview h1 {
+  font-size: 1.6em;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.doc-preview h2 {
+  margin-top: 1.8em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid rgb(var(--line));
+  font-size: 1.2em;
+  font-weight: 650;
+}
+.doc-preview h3 {
+  margin-top: 1.4em;
+  font-size: 1.02em;
+  font-weight: 650;
+}
+.doc-preview ul,
+.doc-preview ol {
+  padding-left: 1.4em;
+}
+.doc-preview ul {
+  list-style: disc;
+}
+.doc-preview ol {
+  list-style: decimal;
+}
+.doc-preview li + li {
+  margin-top: 0.25em;
+}
+.doc-preview a {
+  color: rgb(var(--info));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.doc-preview code {
+  border-radius: 4px;
+  background: rgb(var(--subtle));
+  padding: 0.1em 0.35em;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.88em;
+}
+.doc-preview blockquote {
+  border-left: 3px solid rgb(var(--warn-line));
+  background: rgb(var(--warn-subtle));
+  padding: 0.6em 1em;
+  border-radius: 0 6px 6px 0;
+}
+.doc-preview hr {
+  border-color: rgb(var(--line));
+  margin: 1.5em 0;
+}
+.doc-preview table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.92em;
+}
+.doc-preview th,
+.doc-preview td {
+  border: 1px solid rgb(var(--line));
+  padding: 0.4em 0.7em;
+  text-align: left;
+  vertical-align: top;
+}
+.doc-preview th {
+  background: rgb(var(--subtle));
+  font-weight: 600;
 }
