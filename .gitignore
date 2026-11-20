@@ -9,3 +9,4 @@ out/
 data/
 docker-compose.override.yml
 .turbo/
+dist/

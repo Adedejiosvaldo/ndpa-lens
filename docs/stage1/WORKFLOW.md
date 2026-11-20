@@ -17,8 +17,8 @@ The Stage 1 build (see `PRD.md`) is split into numbered steps in `steps/`. Progr
 1. Run every command under **Verification** and confirm every **Acceptance** item.
 2. Fill the step file's **Notes**: what changed, the proof (commands and results), what wasn't verified, open risks.
 3. Tick the step in `tracker.md` with the date and a one-line result.
-4. Commit on the step branch and open a PR. Merge only when the owner says so.
-5. **Stop and report.** Don't start the next step in the same go.
+4. Commit on the step branch, open a PR, and merge it once CI is green.
+5. Go straight on to the next step. The owner decided on 20 Nov 2026 not to be asked "go" between steps. Stop only for owner decisions (money, legal, security trade-offs, missing credentials, anything hard to undo) or 👤 steps. VPS, image and deploy work waits until Step 33.
 
 ## Conventions
 - Decisions already made: pnpm + Turborepo monorepo in this repo; NestJS API; Drizzle ORM (RLS via `set_config('app.org_id')` per request transaction); Better Auth with organisation and two-factor plugins; Zod in `packages/schema`; BullMQ; Playwright; R2 in production and MinIO in dev.
