@@ -15,7 +15,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [x] **02** [Monorepo skeleton (pnpm + Turborepo)](steps/02-monorepo-skeleton.md) — done 2026-11-20 — workspace + turbo, app moved to `apps/legacy-scanner`, CI reduced to typecheck/build
 - [ ] **03** [`packages/schema` shared Zod types](steps/03-schema-package.md) — done 2026-11-20 — `@ndpa/schema` (zod 4, ESM+CJS), 10 tests
 - [ ] **04** [Local dev infrastructure](steps/04-dev-infra.md) — done 2026-11-20 — `pnpm dev:infra`: Postgres 16, Redis 7 AOF, SeaweedFS S3 (MinIO images gone), Mailpit
-- [ ] **05** [`apps/api` NestJS skeleton](steps/05-api-skeleton.md) — todo
+- [ ] **05** [`apps/api` NestJS skeleton](steps/05-api-skeleton.md) — done 2026-11-20 — NestJS 12 (ESM, Express, SWC), health, problem+json, OpenAPI 3.1, pino, Drizzle `withOrg`; 14 Testcontainers tests
 - [ ] **06** [DB schema v1 and row-level security](steps/06-db-schema-rls.md) — todo
 - [ ] **07** [Auth core: sign-up, verify, login, reset, sessions](steps/07-auth-core.md) — todo
 - [ ] **08** [TOTP MFA and recovery codes](steps/08-mfa.md) — todo

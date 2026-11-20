@@ -3,3 +3,8 @@ packages:
   - "packages/*"
 allowBuilds:
   esbuild: true
+  "@swc/core": true
+  # Optional native add-ons pulled in by testcontainers (SSH docker hosts); not needed.
+  cpu-features: false
+  ssh2: false
+  protobufjs: false
