@@ -1,0 +1,83 @@
+# Local services for Stage 1 development. Start with `pnpm dev:infra`.
+# Dev-only credentials; never reuse them anywhere else.
+#
+#   Postgres   localhost:5432   ndpa / ndpa  (db: ndpa)
+#   Redis      localhost:6379   AOF on (PRD §10)
+#   S3 (R2)    localhost:8333   SeaweedFS S3 API, bucket "ndpa-evidence", private
+#   Mailpit    localhost:1025   SMTP; web UI http://localhost:8025
+#
+# S3 stand-in: MinIO's public images are no longer pullable, so SeaweedFS's S3
+# gateway plays Cloudflare R2 locally. The app only uses the S3 API (AWS SDK v3
+# with a custom endpoint), so production R2 needs no code change.
+
+name: ndpa-dev
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ndpa
+      POSTGRES_PASSWORD: ndpa
+      POSTGRES_DB: ndpa
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ndpa -d ndpa"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports: ["127.0.0.1:6379:6379"]
+    volumes: [redisdata:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  s3:
+    image: chrislusf/seaweedfs:4.54
+    command: ["server", "-dir=/data", "-s3", "-s3.port=8333", "-s3.config=/etc/seaweedfs/s3.json"]
+    ports: ["127.0.0.1:8333:8333"]
+    volumes:
+      - s3data:/data
+      - ./s3.json:/etc/seaweedfs/s3.json:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8333/healthz || exit 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+  s3-init:
+    image: amazon/aws-cli:2.27.0
+    depends_on:
+      s3: { condition: service_healthy }
+    environment:
+      AWS_ACCESS_KEY_ID: ndpa-dev-access
+      AWS_SECRET_ACCESS_KEY: ndpa-dev-secret-change-me
+      AWS_DEFAULT_REGION: auto
+    entrypoint: ["sh", "-c"]
+    command:
+      - aws --endpoint-url http://s3:8333 s3api head-bucket --bucket ndpa-evidence 2>/dev/null
+        || aws --endpoint-url http://s3:8333 s3 mb s3://ndpa-evidence
+    restart: "no"
+    profiles: [setup]
+
+  mailpit:
+    image: axllent/mailpit:v1.27
+    ports:
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"
+    healthcheck:
+      test: ["CMD", "/mailpit", "readyz"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pgdata:
+  redisdata:
+  s3data:

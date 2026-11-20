@@ -12,7 +12,7 @@ A DPCO can submit their licence and set up the branding their packs will carry.
 **In**
 - `POST /v1/orgs/{orgId}/licence` (Owner) sets status to pending
 - `PUT /branding`: logo PNG or SVG up to 1 MB (SVG sanitised), firm name, primary colour, contact block, licence number
-- S3 client in a shared package (MinIO in dev); pre-signed 5-minute URLs
+- S3 client in a shared package (SeaweedFS in dev); pre-signed 5-minute URLs
 - Settings UI with a live pack-cover preview
 - Audit log entries
 
