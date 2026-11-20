@@ -4,6 +4,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from "@nestjs/core";
 import { LoggerModule } from "nestjs-pino";
 import { IdempotencyInterceptor } from "./common/idempotency.js";
 import { ProblemFilter } from "./common/problem.filter.js";
+import { AuthModule } from "./auth/auth.module.js";
 import { APP_CONFIG, type AppConfig } from "./config/config.js";
 import { DbService } from "./db/db.service.js";
 import { HealthController } from "./health/health.controller.js";
@@ -33,6 +34,7 @@ export class AppModule {
             ...(config.NODE_ENV === "development" ? { transport: { target: "pino-pretty" } } : {}),
           },
         }),
+        AuthModule,
       ],
       controllers: [HealthController],
       providers: [

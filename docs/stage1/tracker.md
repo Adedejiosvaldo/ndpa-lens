@@ -17,7 +17,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [ ] **04** [Local dev infrastructure](steps/04-dev-infra.md) — done 2026-11-20 — `pnpm dev:infra`: Postgres 16, Redis 7 AOF, SeaweedFS S3 (MinIO images gone), Mailpit
 - [ ] **05** [`apps/api` NestJS skeleton](steps/05-api-skeleton.md) — done 2026-11-20 — NestJS 12 (ESM, Express, SWC), health, problem+json, OpenAPI 3.1, pino, Drizzle `withOrg`; 14 Testcontainers tests
 - [ ] **06** [DB schema v1 and row-level security](steps/06-db-schema-rls.md) — done 2026-11-20 — 9 identity/tenancy tables (Better Auth-shaped), `ndpa_api`/`ndpa_auth` roles, RLS + append-only audit log; 13 RLS tests
-- [ ] **07** [Auth core: sign-up, verify, login, reset, sessions](steps/07-auth-core.md) — todo
+- [ ] **07** [Auth core: sign-up, verify, login, reset, sessions](steps/07-auth-core.md) — done 2026-11-20 — Better Auth (server-side), argon2id, HIBP, verify/login/reset/sessions, Redis login limits, CSRF; 24 auth tests
 - [ ] **08** [TOTP MFA and recovery codes](steps/08-mfa.md) — todo
 - [ ] **09** [Organisations, members, roles and tenant harness](steps/09-orgs-roles.md) — todo
 - [ ] **10** [`apps/web` shell and auth UI](steps/10-web-shell.md) — todo
@@ -82,5 +82,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 ## Added steps
 
 _Out-of-scope work found during a step goes here, with a reason._
+
+- [ ] **07a** Global API rate limit, 300 requests a minute per session (PRD §8 conventions). Found in Step 07, which only rate-limits login and the email endpoints. Do it before Step 35's security gate.
 
 - [ ] **01a** Fix the Docker image build — found in Step 01. On `main`, the **Build and push image** job fails at `RUN corepack enable` (exit 127): the `mcr.microsoft.com/playwright:v1.64.1-noble` base image has no corepack. The likely fix is to install pnpm directly (`npm i -g pnpm@11.5.2`, matching `packageManager`). The same Dockerfile is used by `deploy/deploy.sh`, so manual VPS builds are probably broken too. Deferred by the owner on 2026-11-20 together with all VPS, image and deploy work. **Do it in Step 33.**
