@@ -18,7 +18,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [ ] **05** [`apps/api` NestJS skeleton](steps/05-api-skeleton.md) — done 2026-11-20 — NestJS 12 (ESM, Express, SWC), health, problem+json, OpenAPI 3.1, pino, Drizzle `withOrg`; 14 Testcontainers tests
 - [ ] **06** [DB schema v1 and row-level security](steps/06-db-schema-rls.md) — done 2026-11-20 — 9 identity/tenancy tables (Better Auth-shaped), `ndpa_api`/`ndpa_auth` roles, RLS + append-only audit log; 13 RLS tests
 - [ ] **07** [Auth core: sign-up, verify, login, reset, sessions](steps/07-auth-core.md) — done 2026-11-20 — Better Auth (server-side), argon2id, HIBP, verify/login/reset/sessions, Redis login limits, CSRF; 24 auth tests
-- [ ] **08** [TOTP MFA and recovery codes](steps/08-mfa.md) — todo
+- [ ] **08** [TOTP MFA and recovery codes](steps/08-mfa.md) — done 2026-11-20 — TOTP + 10 recovery codes, sign-in second step, mandatory for Owners/Platform Admins; 9 MFA tests
 - [ ] **09** [Organisations, members, roles and tenant harness](steps/09-orgs-roles.md) — todo
 - [ ] **10** [`apps/web` shell and auth UI](steps/10-web-shell.md) — todo
 - [ ] **11** [HTML mocks of the key screens](steps/11-ui-mocks.md) — todo

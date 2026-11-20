@@ -9,11 +9,12 @@ import { memberships, organisations, users } from "../db/schema.js";
 import { AUTH_DB } from "./auth-db.js";
 import { type Auth, BETTER_AUTH } from "./auth.factory.js";
 import { authHeaders, clientIp } from "./http.js";
-import { type AuthContext, CurrentAuth, SessionGuard } from "./session.guard.js";
+import { AllowWithoutMfa, type AuthContext, CurrentAuth, SessionGuard } from "./session.guard.js";
 
 @ApiTags("me")
 @Controller("me")
 @UseGuards(SessionGuard)
+@AllowWithoutMfa()
 export class MeController {
   constructor(
     @Inject(BETTER_AUTH) private readonly auth: Auth,

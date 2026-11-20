@@ -9,11 +9,12 @@ import { BETTER_AUTH, createAuth } from "./auth.factory.js";
 import { CsrfMiddleware } from "./csrf.js";
 import { LoginLimiter } from "./login-limiter.js";
 import { MeController } from "./me.controller.js";
+import { MfaController } from "./mfa.controller.js";
 import { HibpPwnedPasswords, PwnedPasswords } from "./pwned.js";
 import { SessionGuard } from "./session.guard.js";
 
 @Module({
-  controllers: [AuthController, MeController],
+  controllers: [AuthController, MeController, MfaController],
   providers: [
     authDbProvider,
     AuditService,

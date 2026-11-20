@@ -44,7 +44,7 @@ export class AppModule {
         { provide: APP_FILTER, useClass: ProblemFilter },
         { provide: APP_INTERCEPTOR, useClass: IdempotencyInterceptor },
       ],
-      exports: [APP_CONFIG, DbService, RedisService],
+      exports: [APP_CONFIG, DbService, RedisService, AuthModule],
     };
   }
 }

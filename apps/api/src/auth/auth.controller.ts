@@ -19,7 +19,7 @@ import { CSRF_COOKIE, newCsrfToken } from "./csrf.js";
 import { authHeaders, clientIp, forwardCookies } from "./http.js";
 import { LOGIN_MAX_FAILURES, LoginLimiter } from "./login-limiter.js";
 import { PwnedPasswords } from "./pwned.js";
-import { type AuthContext, CurrentAuth, SessionGuard } from "./session.guard.js";
+import { AllowWithoutMfa, type AuthContext, CurrentAuth, SessionGuard } from "./session.guard.js";
 
 const ACCEPTED = { status: "accepted" } as const;
 
@@ -114,9 +114,12 @@ export class AuthController {
       });
       await this.limiter.reset(body.email);
       forwardCookies(headers, res);
-      await this.audit.record({ action: "auth.login", actorUserId: response.user.id, ip });
-      const u = response.user;
-      return { user: { id: u.id, name: u.name, email: u.email, emailVerified: u.emailVerified } };
+      // AUTH-05: password was right but a second factor is due. No session yet;
+      // a short-lived two-factor cookie carries the pending sign-in.
+      if ("twoFactorRedirect" in response && response.twoFactorRedirect) return { mfaRequired: true };
+      const u = (response as { user: { id: string; name: string; email: string; emailVerified: boolean } }).user;
+      await this.audit.record({ action: "auth.login", actorUserId: u.id, ip });
+      return { mfaRequired: false, user: { id: u.id, name: u.name, email: u.email, emailVerified: u.emailVerified } };
     } catch (err) {
       const failures = await this.limiter.fail(body.email, ip);
       const [user] = await this.db.select({ id: users.id, name: users.name }).from(users).where(eq(users.email, body.email));
@@ -132,6 +135,7 @@ export class AuthController {
   @Post("logout")
   @HttpCode(204)
   @UseGuards(SessionGuard)
+  @AllowWithoutMfa()
   async logout(@CurrentAuth() a: AuthContext, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const { headers } = await this.auth.api.signOut({ headers: authHeaders(req), returnHeaders: true });
     forwardCookies(headers, res);

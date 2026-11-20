@@ -1,10 +1,11 @@
 import { hash as argonHash, verify as argonVerify } from "@node-rs/argon2";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { twoFactor } from "better-auth/plugins";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { AuditService } from "../audit/audit.service.js";
 import type { AppConfig } from "../config/config.js";
-import { accounts, sessions, users, verifications } from "../db/schema.js";
+import { accounts, sessions, twoFactors, users, verifications } from "../db/schema.js";
 import type { Mailer } from "../mail/mail.service.js";
 import * as T from "../mail/templates.js";
 
@@ -44,7 +45,7 @@ export function createAuth({ config, db, mailer, audit }: AuthDeps) {
     basePath: "/v1/auth",
     secret: config.BETTER_AUTH_SECRET,
     trustedOrigins: [config.WEB_URL],
-    database: drizzleAdapter(db, { provider: "pg", schema: { users, sessions, accounts, verifications } }),
+    database: drizzleAdapter(db, { provider: "pg", schema: { users, sessions, accounts, verifications, twoFactors } }),
     user: {
       modelName: "users",
       additionalFields: {
@@ -103,6 +104,17 @@ export function createAuth({ config, db, mailer, audit }: AuthDeps) {
         },
       },
     },
+    plugins: [
+      // AUTH-05: TOTP + 10 recovery codes. Secret and codes are stored encrypted
+      // with BETTER_AUTH_SECRET. No "trust this device": every sign-in asks.
+      twoFactor({
+        issuer: "NDPA Lens",
+        schema: { twoFactor: { modelName: "twoFactors" } },
+        backupCodeOptions: { amount: 10, length: 10, storeBackupCodes: "encrypted" },
+        accountLockout: { enabled: true, maxFailedAttempts: 5, durationSeconds: 15 * 60 },
+        twoFactorCookieMaxAge: 10 * 60,
+      }),
+    ],
     rateLimit: { enabled: false }, // our LoginLimiter owns rate limiting
     advanced: {
       useSecureCookies: true, // AUTH-06: Secure; HttpOnly and SameSite=Lax are Better Auth defaults
