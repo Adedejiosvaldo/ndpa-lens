@@ -26,12 +26,16 @@ Land the shareable reports, live progress and CI/CD work, so Stage 1 starts from
 - Existing branch as is
 
 ## Acceptance
-- [ ] PR merged, `main` CI green
-- [ ] Nothing deployed unless the owner chose to
+- [x] PR merged, `main` CI green
+- [x] Nothing deployed unless the owner chose to
 
 ## Verification
 - `gh pr checks <n>`
 - `gh run list --branch main`
 
 ## Notes
-_Fill in when done: what changed, proof (commands and results), what wasn't verified, open risks._
+Done 2026-11-20.
+- Opened PR #1 (https://github.com/Adedejiosvaldo/ndpa-lens/pull/1) and merged it into `main` as a merge commit, so the branch history is kept.
+- Proof: the first run of the workflow on GitHub (run 44788160005) passed **Typecheck and build** in 1m10s. **Build and push image** and **Deploy to VPS** were skipped, as expected on a PR.
+- The repo has no Actions variables or secrets (`gh variable list` and `gh secret list` are empty). Pushes to `main` will build and push the GHCR image, but deploy stays skipped until `VPS_HOST` is set.
+- Not verified: the deploy job and live progress through Caddy (both owner tasks on the tracker).
