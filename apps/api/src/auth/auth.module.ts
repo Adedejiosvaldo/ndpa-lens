@@ -12,6 +12,7 @@ import { MeController } from "./me.controller.js";
 import { MfaController } from "./mfa.controller.js";
 import { HibpPwnedPasswords, PwnedPasswords } from "./pwned.js";
 import { SessionGuard } from "./session.guard.js";
+import { SignupContext } from "./signup-context.js";
 
 @Module({
   controllers: [AuthController, MeController, MfaController],
@@ -20,16 +21,17 @@ import { SessionGuard } from "./session.guard.js";
     AuditService,
     LoginLimiter,
     SessionGuard,
+    SignupContext,
     { provide: Mailer, useClass: SmtpMailer },
     { provide: PwnedPasswords, useClass: HibpPwnedPasswords },
     {
       provide: BETTER_AUTH,
-      inject: [APP_CONFIG, AUTH_DB, Mailer, AuditService],
-      useFactory: (config: AppConfig, db: NodePgDatabase, mailer: Mailer, audit: AuditService) =>
-        createAuth({ config, db, mailer, audit }),
+      inject: [APP_CONFIG, AUTH_DB, Mailer, AuditService, SignupContext],
+      useFactory: (config: AppConfig, db: NodePgDatabase, mailer: Mailer, audit: AuditService, signup: SignupContext) =>
+        createAuth({ config, db, mailer, audit, signup }),
     },
   ],
-  exports: [BETTER_AUTH, AUTH_DB, AuditService, SessionGuard, Mailer],
+  exports: [BETTER_AUTH, AUTH_DB, AuditService, SessionGuard, Mailer, SignupContext],
 })
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {

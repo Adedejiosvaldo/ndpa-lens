@@ -4,7 +4,7 @@ import request from "supertest";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { HibpPwnedPasswords } from "../src/auth/pwned.js";
 import { seedPlatformAdmin } from "../src/scripts/seed-platform-admin.js";
-import { Client, createTestApp, signedInUser, type TestApp } from "./harness.js";
+import { Client, createTestApp, orgFor, signedInUser, type TestApp } from "./harness.js";
 import { type Deps, startDeps, stopDeps } from "./setup.js";
 
 const PASSWORD = "a-long-safe-passphrase-1";
@@ -69,28 +69,33 @@ describe("CSRF (PRD §8)", () => {
 
 describe("AUTH-01 sign-up", () => {
   it("requires at least 12 characters", async () => {
-    const res = await new Client(t.app).post("/v1/auth/signup", { name: "S", email: "short@a.test", password: "elevenchars" });
+    const res = await new Client(t.app).post("/v1/auth/signup", { name: "S", email: "short@a.test", password: "elevenchars", organisation: orgFor("short@a.test") });
     expect(res.status).toBe(400);
     expect(res.body.code).toBe("validation_failed");
     expect(res.body.errors[0].path).toBe("password");
   });
 
   it("rejects breached passwords", async () => {
-    const res = await new Client(t.app).post("/v1/auth/signup", { name: "B", email: "breach@a.test", password: "password123456" });
+    const res = await new Client(t.app).post("/v1/auth/signup", { name: "B", email: "breach@a.test", password: "password123456", organisation: orgFor("breach@a.test") });
     expect(res.status).toBe(400);
     expect(res.body.errors[0].message).toMatch(/data breach/);
   });
 
   it("answers the same for new and existing emails (no enumeration)", async () => {
     const c = new Client(t.app);
-    const first = await c.post("/v1/auth/signup", { name: "Ada", email: "ada@a.test", password: PASSWORD });
-    const again = await c.post("/v1/auth/signup", { name: "Ada", email: "ada@a.test", password: PASSWORD });
+    const first = await c.post("/v1/auth/signup", { name: "Ada", email: "ada@a.test", password: PASSWORD, organisation: orgFor("ada@a.test") });
+    const again = await c.post("/v1/auth/signup", { name: "Ada", email: "ada@a.test", password: PASSWORD, organisation: orgFor("ada@a.test") });
     expect(first.status).toBe(202);
     expect(again.status).toBe(202);
     expect(again.body).toEqual(first.body);
     expect(again.headers["set-cookie"]).toBeUndefined();
     const subjects = t.outbox.to("ada@a.test").map((m) => m.subject);
     expect(subjects).toEqual(["Confirm your email for NDPA Lens", "You already have an NDPA Lens account"]);
+    // ORG-01: one organisation, created only by the first (genuine) sign-up.
+    const orgs = await owner.query(
+      "select o.legal_name, m.role from memberships m join organisations o on o.id = m.org_id join users u on u.id = m.user_id where u.email = 'ada@a.test'",
+    );
+    expect(orgs.rows).toEqual([{ legal_name: "ada Partners Ltd", role: "owner" }]);
   });
 
   it("hashes passwords with argon2id", async () => {
@@ -104,7 +109,7 @@ describe("AUTH-01 sign-up", () => {
 describe("AUTH-02 email verification", () => {
   it("verifies, signs in and sets a secure session cookie", async () => {
     const c = new Client(t.app);
-    await c.post("/v1/auth/signup", { name: "Vee", email: "vee@a.test", password: PASSWORD });
+    await c.post("/v1/auth/signup", { name: "Vee", email: "vee@a.test", password: PASSWORD, organisation: orgFor("vee@a.test") });
     const before = await c.get("/v1/me");
     expect(before.status).toBe(401);
 
@@ -118,7 +123,7 @@ describe("AUTH-02 email verification", () => {
     const me = await c.get("/v1/me");
     expect(me.status).toBe(200);
     expect(me.body.user).toMatchObject({ email: "vee@a.test", emailVerified: true, isPlatformAdmin: false });
-    expect(await audit("vee@a.test")).toEqual(["auth.signup", "auth.email_verified"]);
+    expect(await audit("vee@a.test")).toEqual(["auth.signup", "org.created", "auth.email_verified"]);
   });
 
   it("rejects a bad token", async () => {
