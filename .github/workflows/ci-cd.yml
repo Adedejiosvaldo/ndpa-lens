@@ -1,0 +1,106 @@
+# Checks every push and PR. On main it also builds the Docker image, pushes it
+# to GitHub Container Registry, and deploys it to the VPS over SSH.
+#
+# One-time setup (repo Settings > Secrets and variables > Actions):
+#   Variables:  VPS_HOST       server IP or hostname (deploy is skipped while unset)
+#               VPS_USER       SSH user, e.g. "deploy" (must be able to run docker)
+#               VPS_APP_DIR    repo checkout on the server (default: ~/ndpa-lens)
+#   Secrets:    VPS_SSH_KEY    private key whose public half is in the user's authorized_keys
+#               VPS_SSH_PORT   optional, defaults to 22
+
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Never cancel a deploy halfway; superseded PR runs can go.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Typecheck and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm build
+
+  image:
+    name: Build and push image
+    needs: check
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.name.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: name
+        # GHCR needs a lower-case repository name.
+        run: echo "image=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ steps.name.outputs.image }}:${{ github.sha }}
+            ${{ steps.name.outputs.image }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Deploy to VPS
+    needs: image
+    if: vars.VPS_HOST != ''
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://lens.taxcafe.pro
+    steps:
+      - uses: appleboy/ssh-action@v1.2.0
+        env:
+          NDPA_IMAGE: ${{ needs.image.outputs.image }}:${{ github.sha }}
+          GHCR_USER: ${{ github.actor }}
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APP_DIR: ${{ vars.VPS_APP_DIR || '~/ndpa-lens' }}
+          SHA: ${{ github.sha }}
+        with:
+          host: ${{ vars.VPS_HOST }}
+          username: ${{ vars.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 22 }}
+          envs: NDPA_IMAGE,GHCR_USER,GHCR_TOKEN,APP_DIR,SHA
+          command_timeout: 15m
+          script: |
+            set -eu
+            case "$APP_DIR" in "~/"*) APP_DIR="$HOME/${APP_DIR#\~/}" ;; esac
+            cd "$APP_DIR"
+            git fetch -q origin main
+            git checkout -q main
+            git merge -q --ff-only "$SHA"
+            # Short-lived token: only valid for this run, then removed from the server.
+            echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+            trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT
+            NDPA_IMAGE="$NDPA_IMAGE" bash deploy/deploy.sh

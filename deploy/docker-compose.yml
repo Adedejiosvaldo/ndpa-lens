@@ -12,6 +12,8 @@ name: ndpa-lens
 
 services:
   ndpa-lens:
+    # CI sets NDPA_IMAGE to the image it pushed to GHCR; by hand it builds locally.
+    image: ${NDPA_IMAGE:-ndpa-lens:local}
     build: ..
     restart: unless-stopped
     init: true            # reaps exited browser processes
@@ -23,7 +25,7 @@ services:
     expose:
       - "3000"            # reachable by Caddy only; no host port published
     volumes:
-      - ndpa_data:/app/data   # free AI review counts
+      - ndpa_data:/app/data   # free AI review counts and saved reports
     networks:
       default:
       proxy:
