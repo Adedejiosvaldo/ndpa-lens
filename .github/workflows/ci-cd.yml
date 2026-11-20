@@ -1,4 +1,4 @@
-# Checks every push and PR: typecheck and build for every workspace package.
+# Checks every push and PR: typecheck, build and test for every workspace package.
 #
 # Image build and VPS deploy are on hold until Stage 1 Step 33 (production
 # infra). The previous image/deploy jobs are in git history (commit 26c4faf)
@@ -33,3 +33,4 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm build
+      - run: pnpm test
