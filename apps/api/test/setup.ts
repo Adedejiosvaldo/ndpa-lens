@@ -32,19 +32,27 @@ export async function startDeps(): Promise<Deps> {
   await runMigrations(ownerUrl);
   await configureRoles(ownerUrl, PASSWORDS);
   const apiUrl = asRole(ownerUrl, "ndpa_api", PASSWORDS.api);
+  const authUrl = asRole(ownerUrl, "ndpa_auth", PASSWORDS.auth);
   return {
     pg,
     redis,
     ownerUrl,
     apiUrl,
-    authUrl: asRole(ownerUrl, "ndpa_auth", PASSWORDS.auth),
+    authUrl,
     config: {
       NODE_ENV: "test",
       PORT: 0,
       LOG_LEVEL: "silent",
       DATABASE_URL: apiUrl,
+      AUTH_DATABASE_URL: authUrl,
       REDIS_URL: redis.getConnectionUrl(),
-      WEB_URL: "http://localhost:3000",
+      WEB_URL: "http://web.test",
+      API_URL: "http://api.test",
+      BETTER_AUTH_SECRET: "test-secret-0123456789-0123456789-abcdef",
+      SMTP_URL: "smtp://127.0.0.1:1",
+      EMAIL_FROM: "NDPA Lens <no-reply@ndpa.test>",
+      // Tests simulate client IPs with X-Forwarded-For.
+      TRUST_PROXY: true,
     },
   };
 }
