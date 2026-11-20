@@ -28,7 +28,9 @@ It is built for Nigerian businesses, the Data Protection Officers (DPOs) who loo
 
 - A website readiness score with pass, warning and fail checks, each with evidence and a fix.
 - Evidence for the record: screenshots before and after clicking Reject, and a timed network log.
-- Draft documents: a readiness report, a privacy policy, cookie banner code, a consent checkbox, and security header settings.
+- Draft documents: a readiness report, a privacy policy, cookie banner code, a consent checkbox, and security header settings. The report and policy can be previewed and downloaded as Word (.docx).
+- A "Fix these first" list: the open issues that win back the most points for the least work, each linked to the document that fixes it.
+- A shareable link for every report (kept 30 days), a full print / PDF version, and **Rescan**, which scans again and shows what was fixed and what's new since the earlier report.
 
 ## Quick start
 
@@ -61,11 +63,35 @@ git pull && bash deploy/deploy.sh
 
 It asks for the OpenRouter key once, adds the site to Caddy if needed (checking the config before reloading), builds and starts the app, then checks DNS and HTTPS. It is safe to run again after every update.
 
+Scan progress is streamed to the browser as server-sent events. Add `flush_interval -1` inside the `reverse_proxy ndpa-lens:3000 { … }` block so Caddy passes each step through as it happens. Without it, scans still work, but the progress list may only update at the end.
+
 The `lens.taxcafe.pro` site block lives in azaman-engine's `deploy/Caddyfile`. After changing it, recreate that Caddy (`docker compose -f deploy/docker-compose.yml up -d --force-recreate caddy` in the azaman-engine folder).
 
 - Start azaman-engine first: its network must exist before this app can join it.
 - The compose file sets `name: ndpa-lens`. Without it, Docker would name the project after the `deploy` folder and mix it up with azaman-engine's containers.
 - Keep the `PLAYWRIGHT_VERSION` build argument in the `Dockerfile` equal to the `playwright` version in `pnpm-lock.yaml`.
+
+### Automatic deploys (GitHub Actions)
+
+`.github/workflows/ci-cd.yml` runs on every push and pull request:
+
+1. **Check:** `pnpm typecheck` and `pnpm build`. Runs on pull requests too.
+2. **Image:** on `main` only, builds the Docker image and pushes it to `ghcr.io/<owner>/ndpa-lens`, tagged with the commit SHA and `latest`.
+3. **Deploy:** connects to the VPS over SSH, moves the checkout to that commit, pulls the image and runs `deploy/deploy.sh`. The job fails if the new container doesn't become healthy.
+
+Deploy is skipped until it is configured. Set these up once in the repo under **Settings → Secrets and variables → Actions**:
+
+| Kind | Name | Value |
+|---|---|---|
+| Variable | `VPS_HOST` | Server IP or hostname |
+| Variable | `VPS_USER` | SSH user that can run `docker` |
+| Variable | `VPS_APP_DIR` | Repo checkout on the server (default `~/ndpa-lens`) |
+| Secret | `VPS_SSH_KEY` | Private key for that user (use a key made only for deploys) |
+| Secret | `VPS_SSH_PORT` | Optional, default `22` |
+
+Run `bash deploy/deploy.sh` by hand once first, so `deploy/.env` holds the OpenRouter key. CI never asks for it.
+
+**Roll back:** on the VPS, run `NDPA_IMAGE=ghcr.io/<owner>/ndpa-lens:<older-sha> bash deploy/deploy.sh`.
 
 ## Configuration
 
@@ -80,6 +106,8 @@ Copy `.env.example` to `.env.local`. Every setting is optional.
 | `PLAYWRIGHT_CHANNEL` | Browser to use (`chrome`, `msedge`). If not set, the scanner tries Chrome, then Edge, then bundled Chromium. |
 | `SCAN_RATE_LIMIT` | Scans allowed per visitor every 10 minutes (default `8`). |
 | `SCAN_MAX_CONCURRENT` | Scans that can run at the same time (default `2`). |
+| `REPORT_TTL_DAYS` | Days a saved report stays reachable by its link (default `30`). Reports live in `data/reports/`. |
+| `REPORT_MAX_COUNT` | Most reports kept on disk; the oldest are deleted first (default `5000`). |
 
 ## Good to know
 

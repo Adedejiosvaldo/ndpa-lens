@@ -9,6 +9,7 @@ import type {
   PillarId,
   PillarResult,
   PolicyAnalysis,
+  ScanProgress,
   ScanResult,
   TechnicalEvidence,
 } from "@/types/audit";
@@ -865,7 +866,11 @@ function computeGradeAndRisk(score: number): {
   return { grade: "F", riskLevel: "Critical" };
 }
 
-export async function runWebsiteAudit(rawUrl: string, ai?: AISettings): Promise<ScanResult> {
+export async function runWebsiteAudit(
+  rawUrl: string,
+  ai?: AISettings,
+  onProgress: ScanProgress = () => {}
+): Promise<ScanResult> {
   const startTime = Date.now();
   const requestedUrl = normalizeTargetUrl(rawUrl);
   await assertPublicUrl(requestedUrl);
@@ -873,12 +878,13 @@ export async function runWebsiteAudit(rawUrl: string, ai?: AISettings): Promise<
   let browserCapture: BrowserCapture | null = null;
   let staticCapture: StaticCapture | null = null;
   try {
-    browserCapture = await captureWithBrowser(requestedUrl);
+    browserCapture = await captureWithBrowser(requestedUrl, onProgress);
   } catch (browserError) {
     // A blocked site, bad certificate or private address won't get better
     // with a plain download, so those stop the scan with a clear message.
     if (browserError instanceof ScanAbort) throw browserError;
     const reason = browserError instanceof Error ? browserError.message : "Headless browser unavailable.";
+    onProgress("open", "No browser available. Downloading the page instead.");
     staticCapture = await captureWithStaticFetch(requestedUrl, reason);
   }
 
@@ -956,6 +962,7 @@ export async function runWebsiteAudit(rawUrl: string, ai?: AISettings): Promise<
     ? Promise.resolve(browserCapture.siteIcon)
     : fetchSiteIcon(html, finalUrl).catch(() => undefined);
 
+  onProgress("policy", ai ? "Rules engine plus AI review." : undefined);
   const policy = await analyzePrivacyPolicy({
     found: policyPage.found,
     url: policyPage.url,
@@ -968,6 +975,7 @@ export async function runWebsiteAudit(rawUrl: string, ai?: AISettings): Promise<
   const forms = browserCapture ? browserCapture.forms : home.forms;
   const pages = browserCapture?.pages;
 
+  onProgress("score");
   const { checks, pillars, overallScore } = buildChecksAndPillars({
     technical,
     policy,

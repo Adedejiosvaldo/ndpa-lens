@@ -37,7 +37,7 @@ if [ -z "$current_key" ] && [ -f "$REPO/.env" ]; then
   # Key from the earlier setup, if there was one.
   current_key="$(grep -E '^OPENROUTER_API_KEY=' "$REPO/.env" | head -1 | cut -d= -f2- || true)"
 fi
-if [ -z "$current_key" ]; then
+if [ -z "$current_key" ] && [ -t 0 ]; then   # only ask when someone is at the keyboard (not in CI)
   read -r -s -p "Paste your OpenRouter API key (input hidden, Enter to skip AI): " current_key
   echo
 fi
@@ -91,6 +91,8 @@ $LENS_DOMAIN {
 		-Server
 	}
 	reverse_proxy ndpa-lens:3000 {
+		# Pass scan progress events through as they happen.
+		flush_interval -1
 		transport http {
 			read_timeout 180s
 			write_timeout 180s
@@ -127,8 +129,16 @@ if [ "$changed" = yes ]; then
 fi
 
 # ---------------------------------------------------- 4. build and start app
-say "Building and starting NDPA Lens (first build takes a few minutes)"
-PROXY_NETWORK="$NET" "${COMPOSE[@]}" up -d --build --remove-orphans
+if [ -n "${NDPA_IMAGE:-}" ]; then
+  # CI built the image already; pull it instead of building on this server.
+  say "Pulling $NDPA_IMAGE and starting NDPA Lens"
+  export NDPA_IMAGE
+  PROXY_NETWORK="$NET" "${COMPOSE[@]}" pull ndpa-lens
+  PROXY_NETWORK="$NET" "${COMPOSE[@]}" up -d --no-build --remove-orphans
+else
+  say "Building and starting NDPA Lens (first build takes a few minutes)"
+  PROXY_NETWORK="$NET" "${COMPOSE[@]}" up -d --build --remove-orphans
+fi
 rm -f "$REPO/.env"   # old location; settings now live in deploy/.env
 
 for _ in $(seq 1 30); do
@@ -137,6 +147,10 @@ for _ in $(seq 1 30); do
   sleep 2
 done
 echo "App status: ${state:-unknown}"
+if [ -n "${NDPA_IMAGE:-}" ] && [ "${state:-}" != healthy ]; then
+  docker logs --tail 40 ndpa-lens-ndpa-lens-1 || true
+  die "The new version didn't become healthy. Logs above."
+fi
 
 # --------------------------------------------------------- 5. DNS and check
 say "Checking $LENS_DOMAIN"

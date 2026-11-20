@@ -7,6 +7,7 @@ import type {
   NetworkLogEntry,
   PageKind,
   PageScan,
+  ScanProgress,
 } from "@/types/audit";
 import { checkHost, ScanAbort } from "@/lib/net-guard";
 import { fetchSiteIconInBrowser } from "@/lib/site-icon";
@@ -428,8 +429,22 @@ function looksLikePolicy(text: string): boolean {
   );
 }
 
-export async function captureWithBrowser(targetUrl: string): Promise<BrowserCapture> {
+const PAGE_PROGRESS: Record<PageKind, string> = {
+  home: "homepage",
+  signup: "sign-up page",
+  login: "login page",
+  checkout: "checkout page",
+  contact: "contact page",
+  policy: "privacy policy",
+  other: "page",
+};
+
+export async function captureWithBrowser(
+  targetUrl: string,
+  onProgress: ScanProgress = () => {}
+): Promise<BrowserCapture> {
   const startedAt = Date.now();
+  onProgress("open");
   const { browser, channel } = await launchBrowser();
   const recorder = new NetworkRecorder();
   const screenshots: EvidenceScreenshot[] = [];
@@ -463,6 +478,7 @@ export async function captureWithBrowser(targetUrl: string): Promise<BrowserCapt
       const banner = await inspectBanner(page);
       const homeShot = await screenshot(page, "Homepage on first visit, before any choice");
       if (homeShot) screenshots.push(homeShot);
+      onProgress("banner", banner.visible ? "Banner found. Clicking Reject, then Accept." : "No banner seen yet. Looking for one.");
 
       // Reject test (then Accept, for comparison) in a fresh browser while we keep crawling.
       const choiceTests = (async () => {
@@ -505,6 +521,7 @@ export async function captureWithBrowser(targetUrl: string): Promise<BrowserCapt
           notes.push(`Skipped ${url} (time limit).`);
           return null;
         }
+        onProgress("pages", `Checking the ${PAGE_PROGRESS[kind] ?? "page"}: ${url.replace(/^https?:\/\//, "")}`);
         net.setPage(url);
         net.take();
         try {
@@ -607,6 +624,7 @@ export async function captureWithBrowser(targetUrl: string): Promise<BrowserCapt
       }));
 
       /* 3. Results of the Reject / Accept tests */
+      onProgress("consent");
       const [reject, accept] = await choiceTests;
       if (reject.screenshot) screenshots.push(reject.screenshot);
 

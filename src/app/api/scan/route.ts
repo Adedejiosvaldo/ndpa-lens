@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import type { AISettings, ScanRequest } from "@/types/audit";
+import type { AISettings, ScanComparison, ScanProgress, ScanRequest, ScanResult } from "@/types/audit";
 import { runWebsiteAudit } from "@/lib/scanner";
 import { ScanAbort } from "@/lib/net-guard";
+import { isReportId, loadReport, saveReport } from "@/lib/report-store";
 import { clientIp, identify, quotaCookie, reserve, type QuotaIdentity } from "@/lib/ai-quota";
 
 export const runtime = "nodejs";
@@ -124,27 +125,102 @@ async function handleScan(request: Request): Promise<Response> {
     }
   }
 
-  running += 1;
-  try {
-    const result = await runWebsiteAudit(body.url, ai);
-    // Only count it if the AI actually reviewed something (no policy = no review).
-    if (release && result.policy.source !== "rules+ai") release();
-    if (aiNotice && result.policy.found) result.policy.aiNotice = aiNotice;
+  const url = body.url;
+  const previousId = typeof body.previous === "string" && isReportId(body.previous) ? body.previous : null;
 
-    const response = NextResponse.json(result);
-    if (identity?.newCookie) response.headers.append("Set-Cookie", quotaCookie(identity, isHttps(request)));
+  const audit = async (onProgress?: ScanProgress): Promise<ScanResult> => {
+    try {
+      const result = await runWebsiteAudit(url, ai, onProgress);
+      // Only count it if the AI actually reviewed something (no policy = no review).
+      if (release && result.policy.source !== "rules+ai") release();
+      if (aiNotice && result.policy.found) result.policy.aiNotice = aiNotice;
+      if (previousId) {
+        const prev = await loadReport(previousId);
+        if (prev && sameSite(prev.finalUrl, result.finalUrl)) result.previous = summarise(prev, previousId);
+      }
+      const shareId = await saveReport(result);
+      if (shareId) result.shareId = shareId;
+      return result;
+    } catch (error) {
+      release?.();
+      throw error;
+    }
+  };
+
+  const cookie = identity?.newCookie ? quotaCookie(identity, isHttps(request)) : null;
+  running += 1;
+
+  if (body.stream) {
+    // Server-sent events: one "progress" per stage, then "result" or "error".
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        const send = (event: string, data: unknown) => {
+          try {
+            controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
+          } catch {
+            /* client went away */
+          }
+        };
+        try {
+          const result = await audit((stage, detail) => send("progress", { stage, detail }));
+          send("result", result);
+        } catch (error) {
+          const { message, status } = errorBody(error);
+          send("error", { error: message, status });
+        } finally {
+          running -= 1;
+          try {
+            controller.close();
+          } catch {
+            /* already closed */
+          }
+        }
+      },
+    });
+    const headers: Record<string, string> = {
+      "Content-Type": "text/event-stream; charset=utf-8",
+      // no-transform keeps proxies (Caddy's encode) from buffering the events.
+      "Cache-Control": "no-cache, no-transform",
+      "X-Accel-Buffering": "no",
+    };
+    if (cookie) headers["Set-Cookie"] = cookie;
+    return new Response(stream, { headers });
+  }
+
+  try {
+    const response = NextResponse.json(await audit());
+    if (cookie) response.headers.append("Set-Cookie", cookie);
     return response;
   } catch (error) {
-    release?.();
-    if (error instanceof ScanAbort) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
-    }
-    console.error("[scan] failed:", error);
-    return NextResponse.json(
-      { error: "The scan couldn't finish. The site may be slow or unreachable. Try again." },
-      { status: 500 }
-    );
+    const { message, status } = errorBody(error);
+    return NextResponse.json({ error: message }, { status });
   } finally {
     running -= 1;
   }
+}
+
+function errorBody(error: unknown): { message: string; status: number } {
+  if (error instanceof ScanAbort) return { message: error.message, status: error.status };
+  console.error("[scan] failed:", error);
+  return { message: "The scan couldn't finish. The site may be slow or unreachable. Try again.", status: 500 };
+}
+
+function sameSite(a: string, b: string): boolean {
+  try {
+    const host = (u: string) => new URL(u).hostname.replace(/^www\./, "");
+    return host(a) === host(b);
+  } catch {
+    return false;
+  }
+}
+
+function summarise(prev: ScanResult, shareId: string): ScanComparison {
+  return {
+    shareId,
+    scannedAt: prev.scannedAt,
+    score: prev.score,
+    grade: prev.grade,
+    checks: prev.checks.map((c) => ({ id: c.id, title: c.title, status: c.status })),
+  };
 }

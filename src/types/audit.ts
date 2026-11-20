@@ -178,6 +178,8 @@ export interface ScanMetadata {
 
 export interface ScanResult {
   id: string;
+  /** ID of the saved copy on the server, used in the report's share link. */
+  shareId?: string;
   requestedUrl: string;
   finalUrl: string;
   /** The site's favicon as a data URI, fetched by the server during the scan. */
@@ -197,6 +199,8 @@ export interface ScanResult {
   /** Every page visited, homepage first. */
   pages?: PageScan[];
   evidence?: ScanEvidence;
+  /** The earlier scan this one was run to compare against. */
+  previous?: ScanComparison;
 }
 
 /** The server's OpenRouter key and model. Never comes from the browser. */
@@ -207,6 +211,19 @@ export interface AISettings {
 
 export interface ScanRequest {
   url: string;
+  /** Send progress events as a stream (text/event-stream) instead of one JSON reply. */
+  stream?: boolean;
+  /** Share ID of an earlier report of the same site, to compare against. */
+  previous?: string;
+}
+
+/** A short copy of an earlier scan of the same site, for "what changed". */
+export interface ScanComparison {
+  shareId: string;
+  scannedAt: string;
+  score: number;
+  grade: ScanResult["grade"];
+  checks: Array<{ id: string; title: string; status: CheckStatus }>;
 }
 
 export interface RemediationProfile {
@@ -215,3 +232,7 @@ export interface RemediationProfile {
   country: string;
   retention: string;
 }
+
+/** Stages a scan reports while it runs, in order. */
+export type ScanStage = "open" | "banner" | "pages" | "consent" | "policy" | "score";
+export type ScanProgress = (stage: ScanStage, detail?: string) => void;
