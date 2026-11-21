@@ -101,6 +101,33 @@ test("DPCO founder signs up, enrols MFA, invites a colleague who joins", async (
   await expect(page.getByLabel("Pack cover preview")).toContainText("DPCO licence NDPC/DPCO/2026/0148");
   await noSeriousA11yIssues(page, "organisation settings");
   await shot(page, "org-settings");
+
+  // CLI-01..03: add a client, a website, confirm engagement
+  await page.getByRole("link", { name: "Clients" }).click();
+  await expect(page.getByText("No clients yet")).toBeVisible();
+  await page.getByRole("link", { name: "Add client" }).first().click();
+  await page.getByLabel("Client name").fill("Harbour Assurance Plc");
+  await page.getByLabel("CAC registration number (optional)").fill("RC 123456");
+  await page.getByLabel("NDPC tier").selectOption("uhl");
+  await page.getByRole("button", { name: "Add client" }).click();
+  await expect(page.getByRole("heading", { name: "Harbour Assurance Plc" })).toBeVisible();
+  await page.getByLabel("Add a website").fill("https://www.HarbourAssurance.ng/");
+  await page.getByRole("button", { name: "Add website" }).click();
+  await expect(page.getByText("www.harbourassurance.ng")).toBeVisible();
+  await expect(page.getByText("Engagement not confirmed yet")).toBeVisible();
+  await page.getByRole("button", { name: "Confirm engagement" }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toContainText("is engaged by Harbour Assurance Plc to assess the website at www.harbourassurance.ng");
+  await expect(dialog.getByRole("button", { name: "Confirm engagement" })).toBeDisabled();
+  await dialog.getByLabel("I confirm this statement is true.").check();
+  await dialog.getByRole("button", { name: "Confirm engagement" }).click();
+  await expect(page.getByText(/Engagement confirmed by Funmi Adeyemi/)).toBeVisible();
+  await noSeriousA11yIssues(page, "client detail");
+  await shot(page, "client-detail");
+  await page.getByRole("link", { name: "Back to clients" }).click();
+  await page.getByLabel("Search").fill("harbourassurance");
+  await expect(page.getByRole("link", { name: "Harbour Assurance Plc" })).toBeVisible();
+  await shot(page, "clients");
 });
 
 test("a wrong password gets a clear error, and the login page is accessible", async ({ page }) => {

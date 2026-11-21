@@ -36,6 +36,20 @@
       "when": 1795202837887,
       "tag": "0004_orgs_rls",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795259543765,
+      "tag": "0005_clients_domains",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795259544399,
+      "tag": "0006_clients_rls",
+      "breakpoints": true
     }
   ]
 }

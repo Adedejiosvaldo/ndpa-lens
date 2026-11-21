@@ -77,7 +77,7 @@ describe("migrations", () => {
   it("are idempotent: a second run is a no-op", async () => {
     await runMigrations(deps.ownerUrl);
     const r = await owner.query("select count(*)::int as n from drizzle.__drizzle_migrations");
-    expect(r.rows[0].n).toBe(5);
+    expect(r.rows[0].n).toBe(7);
   });
 
   it("generate uuid v7 ids", async () => {
