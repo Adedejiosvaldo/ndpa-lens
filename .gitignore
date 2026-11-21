@@ -10,3 +10,5 @@ data/
 docker-compose.override.yml
 .turbo/
 dist/
+test-results/
+playwright-report/

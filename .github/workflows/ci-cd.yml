@@ -1,4 +1,5 @@
-# Checks every push and PR: typecheck, build and test for every workspace package.
+# Checks every push and PR: typecheck, build and test for every workspace package,
+# the web bundle budget, and the browser end-to-end journey (real API + containers).
 #
 # Image build and VPS deploy are on hold until Stage 1 Step 33 (production
 # infra). The previous image/deploy jobs are in git history (commit 26c4faf)
@@ -34,3 +35,15 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm build
       - run: pnpm test
+      - name: Web bundle budget (PRD §11, 250 KB gzipped)
+        run: pnpm --filter web check:bundle
+      - name: Install Playwright Chromium
+        run: pnpm --filter web exec playwright install --with-deps chromium
+      - name: End-to-end (sign-up → MFA → invite → join)
+        run: pnpm --filter web test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report
+          retention-days: 7

@@ -6,6 +6,8 @@ NDPA Lens is being rebuilt as a multi-tenant SaaS for licensed DPCOs. It produce
 
 ```
 apps/
+  api/              NestJS API (auth, organisations); `pnpm --filter api dev`
+  web/              Next.js app for DPCOs; `pnpm --filter web dev`
   legacy-scanner/   the current public scanner (Next.js), unchanged; see its README
 packages/           shared libraries, added step by step
 infra/              local dev and production infrastructure
@@ -21,6 +23,8 @@ pnpm install
 pnpm dev          # all apps (turbo)
 pnpm typecheck
 pnpm build
+pnpm test          # unit + integration (Docker needed for API tests)
+pnpm test:e2e      # browser journey; needs Docker and a prior `pnpm build`
 pnpm --filter legacy-scanner dev   # one app
 ```
 

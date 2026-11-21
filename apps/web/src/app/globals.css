@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (PRD §3.1): one accent, neutral greys, severity colours that
+ * pass WCAG AA (4.5:1 on their own background) in light and dark.
+ */
+:root {
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --surface-2: #f1f5f9;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #475569; /* 7.6:1 on white */
+  --accent: #0f5f56; /* 7.4:1 on white */
+  --accent-fg: #ffffff;
+  --accent-soft: #e6f2f0;
+  --focus: #2563eb;
+
+  --sev-critical: #b42318; /* 6.6:1 */
+  --sev-critical-bg: #fef3f2;
+  --sev-high: #b54708; /* 5.1:1 */
+  --sev-high-bg: #fffaeb;
+  --sev-medium: #855a00; /* 5.9:1 */
+  --sev-medium-bg: #fefbe8;
+  --sev-low: #1849a9; /* 7.6:1 */
+  --sev-low-bg: #eff8ff;
+  --sev-info: #475467; /* 7.6:1 */
+  --sev-info-bg: #f2f4f7;
+  --ok: #067647;
+  --ok-bg: #ecfdf3;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1120;
+    --surface: #111827;
+    --surface-2: #1f2937;
+    --border: #334155;
+    --text: #f1f5f9;
+    --muted: #cbd5e1;
+    --accent: #5eead4;
+    --accent-fg: #042f2e;
+    --accent-soft: #0f2e2b;
+    --focus: #93c5fd;
+
+    --sev-critical: #fda29b;
+    --sev-critical-bg: #3b0f0c;
+    --sev-high: #fec84b;
+    --sev-high-bg: #3a2205;
+    --sev-medium: #fde272;
+    --sev-medium-bg: #332a05;
+    --sev-low: #84caff;
+    --sev-low-bg: #0b2546;
+    --sev-info: #d0d5dd;
+    --sev-info-bg: #1f2937;
+    --ok: #75e0a7;
+    --ok-bg: #053321;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-ok: var(--ok);
+  --color-ok-bg: var(--ok-bg);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  font-size: 14px; /* PRD §3.1: 14px base */
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
