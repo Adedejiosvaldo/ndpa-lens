@@ -118,6 +118,8 @@ const ESSENTIAL_COOKIE_PATTERNS = [
   /(csrf|xsrf|sessid|session_?id|_session$|^asp\.net_sessionid$)/i,
   // Bot protection and load balancing (Cloudflare, Imperva, Akamai, AWS, F5)
   /^(cf_clearance|__cfruid|_cfuvid|visid_incap_|incap_ses_|nlbi_|ak_bmsc|bm_sz|bm_sv|_abck|awsalbcors|ts01)/i,
+  // CAPTCHA risk analysis (Google reCAPTCHA, hCaptcha): security, set to stop bots
+  /^(_GRECAPTCHA|hc_accessibility)$/i,
   // Stores the visitor's consent choice, or a login hand-off in progress
   /consent|^_interaction|^redirect_uri$|\.sig$/i,
   // Remembered language or currency
@@ -158,6 +160,33 @@ export function isConsentModeDeniedPing(url: string): boolean {
   );
 }
 
+/**
+ * Cookies set by analytics, advertising, social and session-replay tools
+ * (names fixed by the vendor). Matching one before consent is a finding.
+ */
+const TRACKING_COOKIE_PATTERNS = [
+  /^(_ga|_ga_[A-Z0-9]+|_gid|_gat(_.*)?|__utm[abcvz]|_gcl_[a-z]+|_gac_.*|AMP_TOKEN)$/, // Google Analytics / Ads
+  /^(IDE|DSID|test_cookie|NID|__gads|__gpi|FPLC|FPID)$/, // Google ad cookies
+  /^(_fbp|_fbc|fr)$/, // Meta
+  /^(_hj.*)$/, // Hotjar
+  /^(_clck|_clsk|CLID|MUID|_uetsid|_uetvid|ANONCHK|SM)$/, // Microsoft Clarity / Ads
+  /^(_ttp|_tt_enable_cookie|tt_.*)$/, // TikTok
+  /^(_pin_unauth|_pinterest_.*|li_sugr|bcookie|lidc|UserMatchHistory|AnalyticsSyncHistory|_scid|_sctr|personalization_id|guest_id(_ads|_marketing)?|muc_ads)$/, // Pinterest, LinkedIn, Snap, X
+  /^(ajs_.*|mp_.*_mixpanel|amplitude_id.*|AMP_.*|_mkto_trk|__hstc|hubspotutk|__hssc|__hssrc|_vwo_.*|_vis_opt_.*|optimizely.*|_dc_gtm_.*|_omappvp|_omappvs)$/, // product analytics, marketing automation, A/B testing
+];
+
+/**
+ * Classify a cookie by name: "essential" (session, security, consent, language),
+ * "tracking" (a known analytics/ads/replay cookie) or "unknown". Unknown
+ * cookies need review; they are never assumed either way (PRD §5.3).
+ */
+export function classifyCookie(name: string): "essential" | "tracking" | "unknown" {
+  if (ESSENTIAL_COOKIE_PATTERNS.some((re) => re.test(name))) return "essential";
+  if (TRACKING_COOKIE_PATTERNS.some((re) => re.test(name))) return "tracking";
+  return "unknown";
+}
+
+/** Legacy scanner rule: anything not recognised as essential counts as non-essential. */
 export function isNonEssentialCookie(name: string): boolean {
   return !ESSENTIAL_COOKIE_PATTERNS.some((re) => re.test(name));
 }

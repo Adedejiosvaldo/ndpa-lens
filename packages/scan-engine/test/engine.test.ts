@@ -145,3 +145,12 @@ describe("retention rule", () => {
     expect(status("We keep your information safe.")).toBe("missing");
   });
 });
+
+describe("cookie classification (PRD §5.3)", () => {
+  it("separates known tracking, essential and unknown cookies", async () => {
+    const { classifyCookie } = await import("../src/trackers.js");
+    for (const n of ["_ga", "_ga_ABC123", "_gid", "_fbp", "fr", "_hjSessionUser_1", "_clck", "IDE", "_gcl_au", "_ttp"]) expect(classifyCookie(n), n).toBe("tracking");
+    for (const n of ["PHPSESSID", "_GRECAPTCHA", "cf_clearance", "cmplz_consented_services", "XSRF-TOKEN"]) expect(classifyCookie(n), n).toBe("essential");
+    for (const n of ["ays_show_popup_only_once_2", "wp_theme_pref", "frankly"]) expect(classifyCookie(n), n).toBe("unknown");
+  });
+});

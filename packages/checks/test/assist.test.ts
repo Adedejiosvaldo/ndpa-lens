@@ -80,3 +80,12 @@ describe("redaction", () => {
     expect(out).toContain("[hash]");
   });
 });
+
+describe("real-site regressions (ndpc.gov.ng, 2026-11-21)", () => {
+  const C09 = CHECKS_01_10.find((c) => c.id === "C-09")!;
+  it("C-09 finds a DPO contact given after a later mention, not just the first", () => {
+    const b = structuredClone(c18);
+    b.policy.text = `${"Intro text about our mandate and how we process personal data. ".repeat(4)}If you seek more clarification contact our designated Data Protection Officer as provided under Article 12 below. ${"Article on third parties and the services they provide to you through our platforms. ".repeat(8)}ARTICLE 12: We have a Data Protection Officer who is responsible for prompt action on your data privacy. Contact the DPSU via this email: dpo@example.gov.ng.`;
+    expect(runChecks(b, { checks: [C09] })[0]!.status).toBe("pass");
+  });
+});

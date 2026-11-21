@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { api } from "@/lib/api";
+import { rememberPendingEmail } from "@/lib/pending-email";
 import { passwordStrength } from "@/lib/password";
 import { rememberAfterVerify } from "@/lib/session";
 
@@ -45,7 +46,8 @@ function Signup() {
           const { legalName, tradingName, address, phone, ...account } = f;
           await api.post("/v1/auth/signup", invited ? account : { ...account, organisation: { legalName, tradingName, address, phone } });
           rememberAfterVerify(next);
-          router.push(`/check-email?email=${encodeURIComponent(f.email)}`);
+          rememberPendingEmail(f.email);
+          router.push("/check-email");
         });
       }}
     >
