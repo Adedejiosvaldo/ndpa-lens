@@ -31,7 +31,8 @@ function Login() {
         });
       }}
     >
-      <h1 className="text-xl font-semibold">Sign in</h1>
+      <h1 className="font-display text-3xl tracking-tight">Welcome back</h1>
+      <p className="text-sm text-muted">Sign in to your DPCO workspace.</p>
       {error && <Alert tone="error">{error}</Alert>}
       <Field label="Email" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} error={fields.email} />
       <Field label="Password" type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} error={fields.password} />

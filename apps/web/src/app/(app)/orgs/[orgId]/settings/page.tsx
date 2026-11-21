@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useApiForm } from "@/components/use-form";
 import { Button } from "@/components/ui/button";
-import { Alert, Card } from "@/components/ui/card";
+import { Alert, Card, PageSection, PageSkeleton } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { api, type Org } from "@/lib/api";
 import { useSession } from "@/lib/session";
@@ -28,12 +28,12 @@ export default function OrgSettings() {
   useEffect(() => {
     void api.get<Org>(`/v1/orgs/${orgId}`).then(setOrg);
   }, [orgId]);
-  if (!org) return <p className="text-muted">Loading…</p>;
+  if (!org) return <PageSkeleton />;
   const set = (k: "name" | "legalName" | "address" | "phone") => (e: { target: { value: string } }) => setOrg({ ...org, [k]: e.target.value });
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Organisation</h1>
+      <h1 className="font-display text-3xl tracking-tight">Organisation</h1>
       <Card>
         <form
           className="max-w-lg space-y-4"
@@ -61,10 +61,9 @@ export default function OrgSettings() {
           )}
         </form>
       </Card>
-      <Card>
-        <h2 className="font-semibold">DPCO licence</h2>
-        <p className="mt-1 text-sm text-muted">Status: {LICENCE[org.licenceStatus]}. Licence submission arrives in a later release.</p>
-      </Card>
+      <PageSection title="DPCO licence">
+        <p className="text-sm text-muted">Status: {LICENCE[org.licenceStatus]}. Licence submission arrives in a later release.</p>
+      </PageSection>
     </div>
   );
 }

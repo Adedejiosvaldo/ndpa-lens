@@ -29,7 +29,7 @@ function Mfa() {
         });
       }}
     >
-      <h1 className="text-xl font-semibold">Two-factor authentication</h1>
+      <h1 className="font-display text-3xl tracking-tight">Two-factor authentication</h1>
       <p className="text-sm text-muted">
         {recovery ? "Enter one of your recovery codes. Each code works once." : "Enter the 6-digit code from your authenticator app."}
       </p>

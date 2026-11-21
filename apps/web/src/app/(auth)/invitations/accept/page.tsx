@@ -15,11 +15,11 @@ function Accept() {
   const [error, setError] = useState<string | null>(null);
   const here = `/invitations/accept?token=${encodeURIComponent(token)}`;
 
-  if (loading) return <p className="text-muted">Loading…</p>;
+  if (loading) return <p className="text-muted" role="status">Checking your session…</p>;
   if (!me)
     return (
       <div className="space-y-4">
-        <h1 className="text-xl font-semibold">You've been invited to NDPA Lens</h1>
+        <h1 className="font-display text-3xl tracking-tight">You've been invited to NDPA Lens</h1>
         <p className="text-sm text-muted">Sign in, or create an account with the email address the invitation was sent to.</p>
         <div className="flex gap-2">
           <Button asChild>
@@ -33,7 +33,7 @@ function Accept() {
     );
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Join the organisation</h1>
+      <h1 className="font-display text-3xl tracking-tight">Join the organisation</h1>
       <p className="text-sm text-muted">You're signed in as {me.user.email}.</p>
       {error && <Alert tone="error">{error}</Alert>}
       <Button

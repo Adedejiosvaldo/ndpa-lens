@@ -11,9 +11,9 @@ function CheckEmail() {
   const [sent, setSent] = useState(false);
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Check your email</h1>
+      <h1 className="font-display text-3xl tracking-tight">Check your email</h1>
       <p className="text-sm text-muted">
-        We've sent a link to <strong className="text-text">{email || "your inbox"}</strong>. Open it to confirm your address and sign in.
+        We've sent a link to <strong className="text-text">{email || "your inbox"}</strong>. Open it on this device to confirm your address and sign straight in. The link expires in 24 hours.
       </p>
       {sent && <Alert tone="ok">If that address needs confirming, a new link is on its way.</Alert>}
       {email && (

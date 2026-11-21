@@ -12,3 +12,5 @@ docker-compose.override.yml
 dist/
 test-results/
 playwright-report/
+.next-dev/
+.next-e2e/

@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useApiForm } from "@/components/use-form";
 import { Button } from "@/components/ui/button";
-import { Alert, Card } from "@/components/ui/card";
+import { Alert, Card, PageSection } from "@/components/ui/card";
 import { Confirm } from "@/components/ui/confirm";
 import { Field, SelectField } from "@/components/ui/field";
 import { api, ApiError, type Role } from "@/lib/api";
@@ -62,7 +62,7 @@ export default function MembersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Members</h1>
+      <h1 className="font-display text-3xl tracking-tight">Members</h1>
       {notice && <Alert tone={notice.tone}>{notice.text}</Alert>}
 
       <Card>
@@ -92,9 +92,8 @@ export default function MembersPage() {
         {invite.error && <Alert tone="error" className="mt-3">{invite.error}</Alert>}
       </Card>
 
-      <Card>
-        <h2 className="font-semibold">People</h2>
-        <table className="mt-4 w-full text-sm">
+      <PageSection title="People">
+        <table className="w-full text-sm">
           <thead className="text-left text-muted">
             <tr>
               <th className="py-2 font-medium">Name</th>
@@ -153,28 +152,39 @@ export default function MembersPage() {
             })}
           </tbody>
         </table>
-      </Card>
+      </PageSection>
 
       {invites.length > 0 && (
-        <Card>
-          <h2 className="font-semibold">Pending invitations</h2>
-          <ul className="mt-3 divide-y divide-border text-sm">
-            {invites.map((i) => (
-              <li key={i.id} className="flex items-center justify-between py-2">
-                <span>
-                  {i.email} · {ROLE_LABEL[i.role]} · expires {formatDate(i.expiresAt)}
-                </span>
-                <Confirm
-                  trigger={<Button variant="ghost" size="sm">Cancel</Button>}
-                  title={`Cancel the invitation to ${i.email}?`}
-                  body="The link in their email will stop working."
-                  confirmLabel="Cancel invitation"
-                  onConfirm={() => act(() => api.del(`/v1/orgs/${orgId}/invitations/${i.id}`), `Invitation to ${i.email} cancelled.`)}
-                />
-              </li>
-            ))}
-          </ul>
-        </Card>
+        <PageSection title="Pending invitations">
+          <table className="w-full text-sm">
+            <thead className="text-left text-muted">
+              <tr>
+                <th className="py-2 font-medium">Email</th>
+                <th className="font-medium">Role</th>
+                <th className="font-medium">Expires</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {invites.map((i) => (
+                <tr key={i.id} className="border-t border-border">
+                  <td className="py-2">{i.email}</td>
+                  <td>{ROLE_LABEL[i.role]}</td>
+                  <td>{formatDate(i.expiresAt)}</td>
+                  <td className="text-right">
+                  <Confirm
+                    trigger={<Button variant="ghost" size="sm">Cancel</Button>}
+                    title={`Cancel the invitation to ${i.email}?`}
+                    body="The link in their email will stop working."
+                    confirmLabel="Cancel invitation"
+                    onConfirm={() => act(() => api.del(`/v1/orgs/${orgId}/invitations/${i.id}`), `Invitation to ${i.email} cancelled.`)}
+                  />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </PageSection>
       )}
     </div>
   );

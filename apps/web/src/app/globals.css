@@ -1,20 +1,25 @@
 @import "tailwindcss";
 
 /*
- * Design tokens (PRD §3.1): one accent, neutral greys, severity colours that
- * pass WCAG AA (4.5:1 on their own background) in light and dark.
+ * Design tokens — Step 10a direction "evidence-grade compliance tech":
+ * clean white and cool neutrals, one emerald accent, severity colours that
+ * pass WCAG AA (4.5:1) on their own background.
  */
 :root {
   --bg: #ffffff;
-  --surface: #f8fafc;
-  --surface-2: #f1f5f9;
-  --border: #e2e8f0;
-  --text: #0f172a;
-  --muted: #475569; /* 7.6:1 on white */
-  --accent: #0f5f56; /* 7.4:1 on white */
+  --surface: #f6f7f9;
+  --surface-2: #eceef2;
+  --border: #e2e5ea;
+  --text: #0b0d12; /* ink */
+  --muted: #4b5563; /* 7.6:1 on white */
+  --accent: #047857; /* emerald, 5.5:1 on white: buttons and links */
+  --accent-bright: #10b981; /* highlights only, never body text */
   --accent-fg: #ffffff;
-  --accent-soft: #e6f2f0;
+  --accent-soft: #e7f6f0;
+  --ink: #0b0d12; /* dark bands */
+  --ink-muted: #9ca3af;
   --focus: #2563eb;
+  --shadow: 15 23 42; /* cool tinted shadow (rgb) */
 
   --sev-critical: #b42318; /* 6.6:1 */
   --sev-critical-bg: #fef3f2;
@@ -32,16 +37,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0b1120;
-    --surface: #111827;
-    --surface-2: #1f2937;
-    --border: #334155;
-    --text: #f1f5f9;
-    --muted: #cbd5e1;
-    --accent: #5eead4;
-    --accent-fg: #042f2e;
-    --accent-soft: #0f2e2b;
+    --bg: #0b0d12;
+    --surface: #12151c;
+    --surface-2: #1b1f28;
+    --border: #2a2f3a;
+    --text: #f3f4f6;
+    --muted: #b6bcc7;
+    --accent: #34d399;
+    --accent-bright: #34d399;
+    --accent-fg: #052e22;
+    --accent-soft: #0d2b22;
     --focus: #93c5fd;
+    --shadow: 0 0 0;
 
     --sev-critical: #fda29b;
     --sev-critical-bg: #3b0f0c;
@@ -70,7 +77,14 @@
   --color-accent-soft: var(--accent-soft);
   --color-ok: var(--ok);
   --color-ok-bg: var(--ok-bg);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --color-accent-bright: var(--accent-bright);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --shadow-paper: 0 1px 2px rgb(var(--shadow) / 0.06), 0 8px 24px -8px rgb(var(--shadow) / 0.12);
+  --shadow-lift: 0 2px 4px rgb(var(--shadow) / 0.06), 0 24px 48px -16px rgb(var(--shadow) / 0.22);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html {
@@ -82,9 +96,151 @@ body {
   color: var(--text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+/* Display type: bold, tightly tracked sans (Geist). */
+.font-display {
+  font-family: var(--font-sans);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Numbers line up in tables, timestamps and hashes. */
+table,
+time,
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Faint paper grain on large surfaces (pointer-events none, GPU-cheap). */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .05 0 0 0 0 .07 0 0 0 0 .1 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 50;
+  border-radius: 0.375rem;
+  background: var(--text);
+  color: var(--bg);
+  padding: 0.5rem 0.875rem;
+  font-weight: 500;
+  transition: top 0.15s var(--ease-out-quint);
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+.skeleton {
+  border-radius: 0.375rem;
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface) 37%, var(--surface-2) 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
+}
+
+/*
+ * Landing: how-it-works scrub. The active step and consent states are marked by
+ * an accent border and tint; text never fades below AA contrast. Without JS, on
+ * mobile or with reduced motion every step looks the same (all fully readable).
+ */
+[data-how][data-scrub] [data-step],
+[data-how][data-scrub] [data-state] {
+  transition: border-color 0.3s var(--ease-out-quint), background-color 0.3s var(--ease-out-quint), box-shadow 0.3s var(--ease-out-quint);
+}
+[data-how][data-scrub] [data-step][data-active] {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lift);
+}
+[data-how][data-scrub] [data-state][data-active] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/*
+ * Landing hero intro, the page's one orchestrated moment. Pure CSS so it plays
+ * at first paint, on the compositor (transform/opacity only). Under reduced
+ * motion nothing moves and the hero is simply there.
+ */
+@keyframes hero-word {
+  from {
+    transform: translateY(110%);
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+@keyframes pack-file {
+  from {
+    opacity: 0;
+    translate: 0 48px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero] [data-word] {
+    animation: hero-word 0.9s var(--ease-out-quint) both;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+  [data-hero-fade] {
+    animation: hero-fade 0.7s var(--ease-out-quint) both;
+    animation-delay: calc(350ms + var(--i, 0) * 60ms);
+  }
+  [data-pack-page] {
+    animation: pack-file 1s var(--ease-out-quint) both;
+    animation-delay: calc(450ms + var(--i, 0) * 110ms);
+  }
 }

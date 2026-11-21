@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
+import { Brand } from "@/components/brand";
+import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
+import { PageSkeleton } from "@/components/ui/card";
 import { api } from "@/lib/api";
 import { cn } from "@/lib/cn";
 import { useRequireAuth } from "@/lib/session";
@@ -13,7 +16,12 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   const params = useParams<{ orgId?: string }>();
   const path = usePathname();
   const router = useRouter();
-  if (loading || !me) return <p className="p-8 text-muted">Loading…</p>;
+  if (loading || !me)
+    return (
+      <div className="mx-auto max-w-6xl px-6 py-10">
+        <PageSkeleton />
+      </div>
+    );
 
   const org = me.memberships.find((m) => m.orgId === params.orgId) ?? me.memberships[0];
   const canAdmin = org && (org.role === "owner" || org.role === "admin");
@@ -31,13 +39,11 @@ export default function AppLayout({ children }: { children: ReactNode }) {
     : [];
 
   return (
-    <div className="min-h-screen bg-surface">
-      <header className="border-b border-border bg-bg">
+    <div className="min-h-dvh bg-surface">
+      <header className="sticky top-0 z-20 border-b border-border bg-bg/90 backdrop-blur supports-[backdrop-filter]:bg-bg/75">
         <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-6">
-          <Link href="/" className="font-semibold text-accent">
-            NDPA Lens
-          </Link>
-          {org && <span className="text-sm text-muted">{org.name}</span>}
+          <Brand href={org ? `/orgs/${org.orgId}` : "/settings/security"} />
+          {org && <span className="hidden border-l border-border pl-4 text-sm text-muted sm:inline">{org.name}</span>}
           <nav aria-label="Main" className="flex gap-1">
             {!mfaRequired &&
               nav.map((n) => (
@@ -45,14 +51,14 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                   key={n.href}
                   href={n.href}
                   aria-current={path === n.href ? "page" : undefined}
-                  className={cn("rounded-md px-3 py-1.5 text-sm hover:bg-surface-2", path === n.href && "bg-surface-2 font-medium")}
+                  className={cn("rounded-md px-3 py-1.5 text-sm text-muted transition-colors hover:bg-surface-2 hover:text-text", path === n.href && "bg-surface-2 font-medium text-text")}
                 >
                   {n.label}
                 </Link>
               ))}
           </nav>
           <div className="ml-auto flex items-center gap-3">
-            <Link href="/settings/security" className="text-sm hover:underline">
+            <Link href="/settings/security" className="text-sm text-muted transition-colors hover:text-text" title="Security settings">
               {me.user.name}
             </Link>
             <Button
@@ -64,12 +70,13 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                 router.push("/login");
               }}
             >
+              <Icon name="logout-2-linear" />
               Sign out
             </Button>
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
+      <main id="main" tabIndex={-1} className="mx-auto max-w-6xl px-6 py-10">{children}</main>
     </div>
   );
 }

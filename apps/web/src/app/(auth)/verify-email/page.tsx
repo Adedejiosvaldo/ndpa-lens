@@ -27,7 +27,7 @@ function Verify() {
   if (!token || error)
     return (
       <div className="space-y-4">
-        <h1 className="text-xl font-semibold">Confirm your email</h1>
+        <h1 className="font-display text-3xl tracking-tight">Confirm your email</h1>
         <Alert tone="error">{error ?? "This link is missing its token."}</Alert>
         <Link href="/login" className="text-sm text-accent underline">
           Go to sign in

@@ -1,14 +1,14 @@
 "use client";
 
-import QRCode from "qrcode";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { useApiForm } from "@/components/use-form";
 import { Button } from "@/components/ui/button";
-import { Alert, Card } from "@/components/ui/card";
+import { Alert, Card, PageSection } from "@/components/ui/card";
 import { Confirm } from "@/components/ui/confirm";
 import { Field } from "@/components/ui/field";
 import { api } from "@/lib/api";
+import { compactIp, describeDevice } from "@/lib/device";
 import { formatDateTime } from "@/lib/format";
 import { useSession } from "@/lib/session";
 
@@ -39,7 +39,8 @@ function Mfa() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (enrolment) void QRCode.toDataURL(enrolment.otpauthUri, { margin: 1, width: 192 }).then(setQr);
+    // The QR library only loads once someone starts enrolment.
+    if (enrolment) void import("qrcode").then((q) => q.toDataURL(enrolment.otpauthUri, { margin: 1, width: 192 })).then(setQr);
   }, [enrolment]);
 
   if (!me) return null;
@@ -142,10 +143,8 @@ function Sessions() {
     void load();
   }, [load]);
   return (
-    <Card>
-      <h2 className="font-semibold">Where you're signed in</h2>
-      <p className="mt-1 text-sm text-muted">Sessions end after 12 hours without activity, and after 7 days at most.</p>
-      <table className="mt-4 w-full text-sm">
+    <PageSection title="Where you're signed in" description="Sessions end after 12 hours without activity, and after 7 days at most.">
+      <table className="w-full text-sm">
         <thead className="text-left text-muted">
           <tr>
             <th className="py-2 font-medium">Device</th>
@@ -158,16 +157,16 @@ function Sessions() {
           {rows?.map((s) => (
             <tr key={s.id} className="border-t border-border">
               <td className="max-w-xs truncate py-2" title={s.userAgent ?? ""}>
-                {s.userAgent ?? "Unknown device"} {s.current && <span className="ml-1 text-xs text-ok">(this device)</span>}
+                {describeDevice(s.userAgent)} {s.current && <span className="ml-1 text-xs text-ok">(this device)</span>}
               </td>
-              <td>{s.ipAddress ?? "—"}</td>
+              <td>{compactIp(s.ipAddress)}</td>
               <td>{formatDateTime(s.lastSeenAt)}</td>
               <td className="text-right">
                 {!s.current && (
                   <Confirm
                     trigger={<Button variant="secondary" size="sm">Sign out</Button>}
                     title="Sign out this session?"
-                    body={`The session from ${s.ipAddress ?? "an unknown address"} will be signed out straight away.`}
+                    body={`${describeDevice(s.userAgent)} (${compactIp(s.ipAddress)}) will be signed out straight away.`}
                     confirmLabel="Sign out session"
                     onConfirm={async () => {
                       await api.del(`/v1/me/sessions/${s.id}`);
@@ -180,14 +179,14 @@ function Sessions() {
           ))}
         </tbody>
       </table>
-    </Card>
+    </PageSection>
   );
 }
 
 export default function SecurityPage() {
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Security</h1>
+      <h1 className="font-display text-3xl tracking-tight">Security</h1>
       <Suspense>
         <Mfa />
       </Suspense>
