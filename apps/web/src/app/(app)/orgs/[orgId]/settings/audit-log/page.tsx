@@ -27,7 +27,20 @@ const ACTION_LABEL: Record<string, string> = {
   "ownership.transfer_requested": "Ownership transfer requested",
   "ownership.transfer_accepted": "Ownership transferred",
   "ownership.transfer_cancelled": "Ownership transfer cancelled",
+  "licence.submitted": "Licence submitted for checking",
+  "branding.updated": "Branding changed",
+  "branding.logo_uploaded": "Logo uploaded",
+  "client.created": "Client added",
+  "client.updated": "Client details changed",
+  "client.archived": "Client archived",
+  "domain.added": "Website added",
+  "domain.updated": "Website pages changed",
+  "domain.removed": "Website removed",
+  "domain.authorised": "Engagement confirmed for a website",
 };
+
+/** Fallback for actions added later: "domain.added" → "Domain added". */
+const humanise = (a: string) => a.replace(/[._]/g, " ").replace(/^./, (c) => c.toUpperCase());
 
 export default function AuditLogPage() {
   const { orgId } = useParams<{ orgId: string }>();
@@ -64,7 +77,7 @@ export default function AuditLogPage() {
             {items.map((e) => (
               <tr key={e.id} className="border-t border-border">
                 <td className="py-2 whitespace-nowrap">{formatDateTime(e.createdAt)}</td>
-                <td>{ACTION_LABEL[e.action] ?? e.action}</td>
+                <td>{ACTION_LABEL[e.action] ?? humanise(e.action)}</td>
                 <td>{e.actorName ?? "System"}</td>
                 <td>{e.ip ?? "Not recorded"}</td>
               </tr>

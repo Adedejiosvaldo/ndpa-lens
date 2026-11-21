@@ -55,7 +55,9 @@ export class ClientsService {
           ndpcTier: clients.ndpcTier,
           archivedAt: clients.archivedAt,
           createdAt: clients.createdAt,
-          domainCount: sql<number>`(select count(*)::int from ${domains} d where d.client_id = ${clients.id})`,
+          // Qualified by hand: inside a select list Drizzle renders ${clients.id} as bare "id",
+          // which the subquery would resolve to d.id (and always count 0).
+          domainCount: sql<number>`(select count(*)::int from ${domains} d where d.client_id = "clients"."id")`,
         })
         .from(clients)
         .where(and(...conds))

@@ -187,6 +187,8 @@ describe("CLI-04 archive and CLI-05 list", () => {
   it("searches by name, RC number or domain, and filters by sector and tier", async () => {
     const byDomain = await viewer.get(`${base()}/clients?search=ekobet`);
     expect(byDomain.body.items.map((c: { name: string }) => c.name)).toEqual(["Eko Bet Ltd"]);
+    // Regression: the count once compared a domain's client_id with its own id and was always 0.
+    expect(byDomain.body.items[0].domainCount).toBeGreaterThanOrEqual(1);
     const byName = await viewer.get(`${base()}/clients?search=harbour`);
     expect(byName.body.items[0]).toMatchObject({ name: "Harbour Assurance Plc", domainCount: 0, lastScanAt: null });
     const sector = await viewer.get(`${base()}/clients?sector=insurance&tier=uhl`);

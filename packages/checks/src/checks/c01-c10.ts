@@ -1,4 +1,4 @@
-import { evaluatePolicyClausesByRules, isNonEssentialCookie } from "@ndpa/scan-engine";
+import { classifyCookie, evaluatePolicyClausesByRules } from "@ndpa/scan-engine";
 import type { AssistItemId } from "../assist.js";
 import { classifyHost } from "@ndpa/vendors";
 import { assistedFields, type CheckDef, decidePolicyItem, desktop, evidenceFor, home, inState, list, nonEssentialRequests, uniq } from "../core.js";
@@ -177,18 +177,23 @@ export const C05: CheckDef = {
 
 export const C06: CheckDef = {
   id: "C-06",
-  version: "1",
+  version: "2",
   area: "consent",
   severity: "high",
   legalRef: "NDPA 2023 s.26. Draft, pending legal review.",
   run(b) {
     const pages = inState(b, "none");
-    const bad: Array<{ page: (typeof pages)[number]; name: string; domain: string }> = [];
+    type Hit = { page: (typeof pages)[number]; name: string; domain: string };
+    const bad: Hit[] = [];
+    const unknown: Hit[] = [];
     for (const p of pages) {
       for (const c of p.cookies) {
         if (!c.setBeforeChoice) continue;
+        const kind = classifyCookie(c.name);
         const vendor = classifyHost(c.domain.replace(/^\./, ""));
-        if (isNonEssentialCookie(c.name) || (c.thirdParty && vendor.nonEssential)) bad.push({ page: p, name: c.name, domain: c.domain });
+        // A known tracking cookie, or any cookie dropped by a vendor that needs consent.
+        if (kind === "tracking" || (c.thirdParty && vendor.nonEssential)) bad.push({ page: p, name: c.name, domain: c.domain });
+        else if (kind === "unknown" && !(c.thirdParty && vendor.nonEssential === false)) unknown.push({ page: p, name: c.name, domain: c.domain });
       }
     }
     if (bad.length) {
@@ -198,10 +203,24 @@ export const C06: CheckDef = {
           status: "fail",
           title: `Tracking cookies are set before consent (${list(names, 3)})`,
           whyItMatters: "Storing tracking identifiers on a device needs the visitor's consent first.",
-          explanation: `Before any choice, the browser received ${names.length} non-essential cookie${names.length > 1 ? "s" : ""}: ${list(names)}.`,
+          explanation: `Before any choice, the browser received ${names.length} tracking cookie${names.length > 1 ? "s" : ""}: ${list(names)}.`,
           remediation: "Set analytics and advertising cookies only after the visitor accepts them.",
           pageKeys: uniq(bad.map((x) => x.page.pageId)),
           evidence: bad.slice(0, 10).flatMap((x) => evidenceFor(b, x.page, ["cookies"], `${x.name} (${x.domain})`)),
+        },
+      ];
+    }
+    if (unknown.length) {
+      const names = uniq(unknown.map((x) => x.name));
+      return [
+        {
+          status: "needs_review",
+          title: `Unrecognised cookies are set before consent (${list(names, 3)})`,
+          whyItMatters: "If any of these track visitors, they need consent first.",
+          explanation: `Before any choice, the browser received ${list(names)}. We don't recognise ${names.length > 1 ? "these names" : "this name"}, so an analyst should confirm what ${names.length > 1 ? "they do" : "it does"}.`,
+          remediation: "Confirm each cookie's purpose. Hold any that track visitors until consent, and list the rest in the cookie notice.",
+          pageKeys: uniq(unknown.map((x) => x.page.pageId)),
+          evidence: unknown.slice(0, 10).flatMap((x) => evidenceFor(b, x.page, ["cookies"], `${x.name} (${x.domain})`)),
         },
       ];
     }
@@ -296,15 +315,17 @@ const CONTACT_RE = /[\w.+-]+@[\w-]+(\.[\w-]+)+|\+?234[\s\d-]{7,}|\b0[789]\d[\s\d
 
 export const C09: CheckDef = {
   id: "C-09",
-  version: "1",
+  version: "2",
   area: "rights",
   severity: "medium",
   legalRef: "NDPA 2023 s.32 (Data Protection Officer). Draft, pending legal review.",
   run(b, ctx) {
     const text = b.policy.text;
-    const at = text.search(DPO_RE);
-    const nearby = at >= 0 ? text.slice(Math.max(0, at - 200), at + 300) : "";
-    const { status, item } = decidePolicyItem(at >= 0 && CONTACT_RE.test(nearby) ? "found" : at >= 0 ? "partial" : "missing", ctx, "dpo-contact");
+    // Any DPO mention with a contact close by (policies often name the DPO early and give the address later).
+    const mentions = [...text.matchAll(new RegExp(DPO_RE.source, "gi"))].map((m) => m.index);
+    const at = mentions[0] ?? -1;
+    const contactNearAny = mentions.some((i) => CONTACT_RE.test(text.slice(Math.max(0, i - 200), i + 300)));
+    const { status, item } = decidePolicyItem(contactNearAny ? "found" : at >= 0 ? "partial" : "missing", ctx, "dpo-contact");
     const a = assistedFields(ctx, item);
     if (status === "pass") {
       return [{ ...pass("A DPO contact is published", item?.quote ? `The policy says: “${item.quote.slice(0, 200)}”.` : "The policy names a Data Protection Officer with contact details.", []), ...a }];

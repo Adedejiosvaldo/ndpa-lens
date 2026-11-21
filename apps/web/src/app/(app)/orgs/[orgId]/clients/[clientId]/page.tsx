@@ -180,10 +180,13 @@ export default function ClientDetailPage() {
             </p>
           </div>
           <div className="text-right">
-            <Button disabled title="Scanning arrives in a later release">
+            {/* One reason, shown and announced: the hint describes the disabled button. */}
+            <Button disabled aria-describedby="run-scan-hint">
               Run scan
             </Button>
-            <p className="mt-1 text-xs text-muted">{ready ? "Scanning arrives in a later release." : "Add a domain and confirm engagement first."}</p>
+            <p id="run-scan-hint" className="mt-1 text-xs text-muted">
+              {ready ? "Scanning arrives in a later release." : "Add a domain and confirm engagement first."}
+            </p>
           </div>
         </div>
         {c.archivedAt && (

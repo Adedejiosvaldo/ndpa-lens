@@ -1,14 +1,15 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/card";
 import { api } from "@/lib/api";
+import { readPendingEmail } from "@/lib/pending-email";
 
-function CheckEmail() {
-  const email = useSearchParams().get("email") ?? "";
+export default function CheckEmailPage() {
+  const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  useEffect(() => setEmail(readPendingEmail()), []);
   return (
     <div className="space-y-4">
       <h1 className="font-display text-3xl tracking-tight">Check your email</h1>
@@ -22,13 +23,5 @@ function CheckEmail() {
         </Button>
       )}
     </div>
-  );
-}
-
-export default function CheckEmailPage() {
-  return (
-    <Suspense>
-      <CheckEmail />
-    </Suspense>
   );
 }
