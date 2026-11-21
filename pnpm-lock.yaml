@@ -139,6 +139,12 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1(@types/node@22.20.5)(vite@8.3.8(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
 
+  apps/fixtures:
+    dependencies:
+      selfsigned:
+        specifier: ^5.5.0
+        version: 5.5.0
+
   apps/legacy-scanner:
     dependencies:
       '@ndpa/scan-engine':
