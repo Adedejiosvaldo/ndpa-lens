@@ -14,4 +14,5 @@ export * from "./url-check.js";
 export * from "./net-policy.js";
 export * from "./preflight.js";
 export * from "./evidence.js";
+export * from "./discover.js";
 export type * from "./types.js";
