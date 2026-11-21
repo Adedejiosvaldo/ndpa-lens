@@ -5,6 +5,8 @@ test.describe("landing page", () => {
   test("is accessible and leads to sign-up", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1, name: "Prove what a client's website does with personal data." })).toBeVisible();
+    // Let the hero intro finish: mid-fade text is semi-transparent and fails contrast on slower machines.
+    await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished)));
     const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
     expect(r.violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => `${v.id}: ${v.help}`)).toEqual([]);
 
