@@ -34,7 +34,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [ ] **14** [Extract `packages/scan-engine`](steps/14-extract-scan-engine.md) — done 2026-11-21 — `@ndpa/scan-engine` (git mv, history kept); legacy scan of example.com identical before/after; 11 unit tests + 2 known gaps pinned
 - [ ] **15** [Evidence store, preflight and SSRF hardening](steps/15-evidence-preflight.md) — done 2026-11-21 — connect-time SSRF guard (found and fixed an IP-literal redirect hole), preflight (TLS, robots, headers, egress), evidence writer; 24 engine tests
 - [ ] **16** [Page discovery up to 25 pages](steps/16-discovery.md) — done 2026-11-21 — deterministic page discovery (home, named, ranked by type and keyword, cap 25); 5 tests
-- [ ] **17** [Capture in three consent states, plus form inspection](steps/17-consent-capture.md) — todo
+- [ ] **17** [Capture in three consent states, plus form inspection](steps/17-consent-capture.md) — done 2026-11-21 — capture in none/reject/accept with request phases, CMP + heuristic banner, button prominence, forms (never submitted), browser SSRF interception, hashed evidence; 9 browser tests
 - [ ] **18** [`packages/vendors` and GeoIP](steps/18-vendors.md) — todo
 - [ ] **19** [Labelled fixtures site](steps/19-fixtures-site.md) — todo
 - [ ] **20** [Checks C-01 to C-10 with golden tests](steps/20-checks-01-10.md) — todo
@@ -92,7 +92,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 
 _Out-of-scope work found during a step goes here, with a reason._
 
-- [ ] **14a** (1/2 fixed in Step 15: `ftp://` now refused) Two engine gaps found by the new unit tests (Step 14), pinned as `it.fails` and to be fixed in Steps 15 and 17: (1) `normalizeTargetUrl("ftp://…")` isn't refused up front (it becomes host "ftp" and only DNS stops it); (2) OneTrust's standard loader `cdn.cookielaw.org/…/otSDKStub.js` isn't recognised from page source.
+- [x] **14a** (fixed: `ftp://` refused in Step 15; OneTrust loader recognised in Step 17) Two engine gaps found by the new unit tests (Step 14), pinned as `it.fails` and to be fixed in Steps 15 and 17: (1) `normalizeTargetUrl("ftp://…")` isn't refused up front (it becomes host "ftp" and only DNS stops it); (2) OneTrust's standard loader `cdn.cookielaw.org/…/otSDKStub.js` isn't recognised from page source.
 - [ ] **07a** Global API rate limit, 300 requests a minute per session (PRD §8 conventions). Found in Step 07, which only rate-limits login and the email endpoints. Do it before Step 35's security gate.
 
 - [ ] **01a** Fix the Docker image build — found in Step 01. On `main`, the **Build and push image** job fails at `RUN corepack enable` (exit 127): the `mcr.microsoft.com/playwright:v1.64.1-noble` base image has no corepack. The likely fix is to install pnpm directly (`npm i -g pnpm@11.5.2`, matching `packageManager`). The same Dockerfile is used by `deploy/deploy.sh`, so manual VPS builds are probably broken too. Deferred by the owner on 2026-11-20 together with all VPS, image and deploy work. **Do it in Step 33.**

@@ -128,7 +128,7 @@ const ESSENTIAL_COOKIE_PATTERNS = [
 
 /** Consent-management tools we recognise in page source. */
 export const CMP_SIGNATURES: Array<{ name: string; pattern: RegExp }> = [
-  { name: "OneTrust", pattern: /onetrust|optanon/i },
+  { name: "OneTrust", pattern: /onetrust|optanon|cookielaw\.org|otSDKStub/i },
   { name: "Cookiebot", pattern: /cookiebot/i },
   { name: "CookieYes", pattern: /cookieyes|cookie-law-info/i },
   { name: "Osano", pattern: /osano\.com/i },

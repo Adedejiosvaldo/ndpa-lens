@@ -74,8 +74,7 @@ describe("trackers", () => {
   });
 });
 
-// Known gap (tracker 14a): OneTrust's standard loader is not recognised from the page source alone.
-it.fails("detects OneTrust from its standard loader script", () => {
+it("detects OneTrust from its standard loader script (tracker 14a, fixed in Step 17)", () => {
   expect(detectCmp('<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"></script>')).toBe("OneTrust");
 });
 
