@@ -86,7 +86,7 @@ const consentScript = (f, page) => `
   };
   const analytics = () => add('https://www.googletagmanager.com/gtag/js?id=G-FIXTURE');
   const allowed = c === 'accept' || (c === 'reject' && ${!!f.ignoreReject}) || ${!!f.trackerBeforeConsent};
-  if (allowed && ${page !== "checkout" || !!f.pixelOnCheckout}) { analytics(); ads(); }
+  if (allowed && ${!["checkout", "login"].includes(page) || (page === "checkout" && !!f.pixelOnCheckout)}) { analytics(); ads(); }
   if (${!!f.replayBeforeConsent} || c === 'accept') add('https://static.hotjar.com/c/hotjar-1234.js');
   ${f.cookieBeforeConsent ? "document.cookie = '_ga=GA1.1.123.456; path=/; max-age=63072000';" : ""}
   const set = (v) => (e) => { e && e.preventDefault && e.preventDefault(); document.cookie = 'consent=' + v + '; path=/; max-age=31536000'; if (b) b.style.display = 'none'; };

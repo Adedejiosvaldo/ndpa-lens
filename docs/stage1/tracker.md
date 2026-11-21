@@ -38,7 +38,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [ ] **18** [`packages/vendors` and GeoIP](steps/18-vendors.md) — done 2026-11-21 — curated vendor list v2026-11-21.1 (77 vendors, NG payments), host classification, DB-IP Lite GeoIP wrapper; 5 tests
 - [ ] **19** [Labelled fixtures site](steps/19-fixtures-site.md) — done 2026-11-21 — HTTPS fixture site: compliant baseline + one fail variant per check (C-01..C-20), real tracker hostnames, own CA, expired-cert SNI; 3 tests
 - [ ] **20** [Checks C-01 to C-10 with golden tests](steps/20-checks-01-10.md) — done 2026-11-21 — `collectEvidence` bundle + `@ndpa/checks` C-01..C-10 as pure versioned functions; golden bundles from all 21 fixture variants; 24 tests
-- [ ] **21** [Checks C-11 to C-20 and the LLM policy classifier](steps/21-checks-11-20-llm.md) — todo
+- [ ] **21** [Checks C-11 to C-20 and the LLM policy classifier](steps/21-checks-11-20-llm.md) — done 2026-11-21 — C-11..C-20 + LLM assist (stored raw reply replayed, quote-verified, labelled assisted); fixed HTTPS through the SSRF guard; 33 check tests
 - [ ] **22** [Scan worker, scans API and SSE](steps/22-worker-scan.md) — todo
 - [ ] **23** [Scan progress and findings review UI](steps/23-scan-ui.md) — todo
 
@@ -74,6 +74,8 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - **2026-11-21, GeoIP source:** DB-IP Lite (country and ASN, CC-BY, monthly, no key) instead of MaxMind GeoLite2. Packs credit DB-IP.
 
 - **2026-11-21, vendor list source (decided during Step 18; tell the owner):** curated in-house from public facts rather than seeded from DuckDuckGo Tracker Radar (CC BY-NC-SA 4.0, no commercial use) or Disconnect (GPL-3.0). Revisit only with a commercial licence.
+
+- **2026-11-21, LLM provider for policy assist (Step 21):** OpenRouter (as the legacy scanner already used), default model `anthropic/claude-haiku-5.5`, temperature 0, strict JSON schema. Needs `OPENROUTER_API_KEY` from the owner. Without it, scans run rules-only and doubtful policy items become needs-review.
 
 ## Owner tracks 👤 (not coded)
 

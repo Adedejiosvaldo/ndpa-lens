@@ -9,7 +9,7 @@ import { type Preflight, preflight } from "./preflight.js";
 import { getRootDomain } from "./trackers.js";
 
 /** Bump when capture or collection behaviour changes; findings record it (§5.4). */
-export const ENGINE_VERSION = "1.0.0";
+export const ENGINE_VERSION = "1.1.0";
 export const BUNDLE_SCHEMA = "ndpa-lens/bundle@1" as const;
 export const STATES: ConsentState[] = ["none", "reject", "accept"];
 
