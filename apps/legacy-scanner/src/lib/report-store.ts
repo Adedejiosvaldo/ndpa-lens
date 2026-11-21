@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { ScanResult } from "@/types/audit";
+import type { ScanResult } from "@ndpa/scan-engine/types";
 
 /*
  * Saves finished scans so a report survives a refresh and can be shared by link.

@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 import type { BrowserContext } from "playwright";
-import { assertPublicUrl, safeFetch } from "@/lib/net-guard";
+import { assertPublicUrl, safeFetch } from "./net-guard.js";
 
 const MAX_BYTES = 64 * 1024;
 const TIMEOUT_MS = 5000;

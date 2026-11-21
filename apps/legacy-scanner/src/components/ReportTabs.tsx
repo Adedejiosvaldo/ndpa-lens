@@ -30,7 +30,7 @@ import type {
   PillarId,
   RemediationProfile,
   ScanResult,
-} from "@/types/audit";
+} from "@ndpa/scan-engine/types";
 import type { RemediationArtifact } from "@/lib/remediation";
 import {
   Badge,

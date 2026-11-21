@@ -1,4 +1,4 @@
-import type { ScanResult } from "@/types/audit";
+import type { ScanResult } from "@ndpa/scan-engine/types";
 
 export const SAMPLE_AUDITS: Record<string, ScanResult> = {
   fintechDemo: {

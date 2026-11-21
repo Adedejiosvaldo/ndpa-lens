@@ -4,7 +4,7 @@ import type {
   ClauseStatus,
   PolicyAnalysis,
   PolicyClause,
-} from "@/types/audit";
+} from "./types.js";
 
 interface ClauseRule {
   id: string;

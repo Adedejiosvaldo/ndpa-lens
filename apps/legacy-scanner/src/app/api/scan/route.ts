@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import type { AISettings, ScanComparison, ScanProgress, ScanRequest, ScanResult } from "@/types/audit";
+import type { AISettings, ScanComparison, ScanProgress, ScanRequest, ScanResult } from "@ndpa/scan-engine/types";
 import { runWebsiteAudit } from "@/lib/scanner";
-import { ScanAbort } from "@/lib/net-guard";
+import { ScanAbort } from "@ndpa/scan-engine";
 import { isReportId, loadReport, saveReport } from "@/lib/report-store";
 import { clientIp, identify, quotaCookie, reserve, type QuotaIdentity } from "@/lib/ai-quota";
 

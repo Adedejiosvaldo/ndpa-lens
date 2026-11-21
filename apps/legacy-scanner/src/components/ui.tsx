@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ChevronRight, Monitor, Moon, Sun, type LucideIcon } from "lucide-react";
-import type { CheckStatus, ClauseStatus } from "@/types/audit";
+import type { CheckStatus, ClauseStatus } from "@ndpa/scan-engine/types";
 
 export function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");

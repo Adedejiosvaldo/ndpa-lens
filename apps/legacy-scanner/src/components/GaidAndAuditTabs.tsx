@@ -9,7 +9,7 @@ import {
   RotateCcw,
   Sparkles,
 } from "lucide-react";
-import type { RemediationProfile, ScanResult } from "@/types/audit";
+import type { RemediationProfile, ScanResult } from "@ndpa/scan-engine/types";
 import {
   type DcpmiAssessmentInput,
   type DcpmiSector,
