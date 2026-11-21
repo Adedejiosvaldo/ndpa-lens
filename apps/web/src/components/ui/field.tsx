@@ -2,7 +2,7 @@ import { type InputHTMLAttributes, type SelectHTMLAttributes, useId } from "reac
 import { cn } from "@/lib/cn";
 
 const control =
-  "h-9 w-full rounded-md border border-border bg-bg px-3 text-sm text-text placeholder:text-muted aria-[invalid=true]:border-[var(--sev-critical)]";
+  "h-10 w-full rounded-md border border-border bg-bg px-3 text-sm text-text transition-[border-color,box-shadow] duration-150 placeholder:text-muted hover:border-[color-mix(in_oklab,var(--border)_60%,var(--text))] focus:border-accent focus:shadow-[0_0_0_3px_var(--accent-soft)] focus:outline-none aria-[invalid=true]:border-[var(--sev-critical)] disabled:cursor-not-allowed disabled:opacity-60";
 
 interface FieldProps {
   label: string;

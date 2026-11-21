@@ -34,7 +34,7 @@ function Reset() {
         });
       }}
     >
-      <h1 className="text-xl font-semibold">Choose a new password</h1>
+      <h1 className="font-display text-3xl tracking-tight">Choose a new password</h1>
       {error && <Alert tone="error">{error}</Alert>}
       <Field label="New password" type="password" autoComplete="new-password" minLength={12} required value={pw} onChange={(e) => setPw(e.target.value)} error={fields.newPassword} hint="At least 12 characters." />
       <Button type="submit" className="w-full" disabled={busy}>

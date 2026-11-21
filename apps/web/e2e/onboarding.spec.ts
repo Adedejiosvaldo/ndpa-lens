@@ -2,6 +2,12 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 import { latestEmail, linkIn, PASSWORD, totp, unique } from "./helpers";
 
+/** Opt-in design review captures: E2E_SHOTS=<dir> pnpm test:e2e */
+const shot = async (page: Page, name: string) => {
+  const dir = process.env.E2E_SHOTS;
+  if (dir) await page.screenshot({ path: `${dir}/app-${name}.png`, fullPage: true });
+};
+
 async function noSeriousA11yIssues(page: Page, name: string) {
   const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
   const serious = r.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
@@ -36,6 +42,7 @@ test("DPCO founder signs up, enrols MFA, invites a colleague who joins", async (
   await page.getByRole("button", { name: "Set up authenticator app" }).click();
   await expect(page.getByAltText("QR code for your authenticator app")).toBeVisible();
   await expect(page.getByTestId("recovery-codes").locator("li")).toHaveCount(10);
+  await shot(page, "security-enrol");
   await noSeriousA11yIssues(page, "security (enrol)");
   const key = (await page.getByTestId("manual-key").textContent())!.trim();
   await page.getByLabel("Code", { exact: true }).fill(totp(key));
@@ -50,7 +57,9 @@ test("DPCO founder signs up, enrols MFA, invites a colleague who joins", async (
   await page.getByLabel("Role").selectOption("analyst");
   await page.getByRole("button", { name: "Send invitation" }).click();
   await expect(page.getByText(`Invitation sent to ${colleague}`)).toBeVisible();
-  await expect(page.getByText(`${colleague} · Analyst`)).toBeVisible();
+  const pending = page.getByRole("row", { name: new RegExp(colleague) });
+  await expect(pending).toContainText("Analyst");
+  await shot(page, "members");
 
   // The colleague accepts in their own browser: create account (no org), verify, join
   const other = await browser.newContext();
@@ -67,6 +76,7 @@ test("DPCO founder signs up, enrols MFA, invites a colleague who joins", async (
   await expect(p2.getByRole("heading", { name: "Join the organisation" })).toBeVisible();
   await p2.getByRole("button", { name: "Accept invitation" }).click();
   await expect(p2.getByRole("heading", { name: "Adeyemi & Co" })).toBeVisible();
+  await shot(p2, "org-overview");
   await other.close();
 
   // The founder sees the new member and the audit trail
@@ -74,6 +84,10 @@ test("DPCO founder signs up, enrols MFA, invites a colleague who joins", async (
   await expect(page.getByRole("cell", { name: "Chidi Okafor" })).toBeVisible();
   await page.getByRole("link", { name: "Audit log" }).click();
   await expect(page.getByRole("cell", { name: "Invitation accepted" })).toBeVisible();
+  await shot(page, "audit-log");
+  await page.getByRole("link", { name: "Organisation" }).click();
+  await expect(page.getByLabel("Trading name")).toBeVisible();
+  await shot(page, "org-settings");
 });
 
 test("a wrong password gets a clear error, and the login page is accessible", async ({ page }) => {

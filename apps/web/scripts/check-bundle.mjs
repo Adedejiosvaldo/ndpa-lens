@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 
 const LIMIT = 250 * 1024;
-const dir = new URL("../.next/", import.meta.url).pathname;
+const dir = new URL(`../${process.env.NEXT_DIST_DIR || ".next"}/`, import.meta.url).pathname;
 const manifest = JSON.parse(readFileSync(join(dir, "app-build-manifest.json"), "utf8"));
 const size = new Map();
 const gz = (f) => size.get(f) ?? size.set(f, gzipSync(readFileSync(join(dir, f))).length).get(f);

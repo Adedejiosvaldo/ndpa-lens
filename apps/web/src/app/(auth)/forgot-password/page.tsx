@@ -22,7 +22,7 @@ export default function ForgotPage() {
         });
       }}
     >
-      <h1 className="text-xl font-semibold">Reset your password</h1>
+      <h1 className="font-display text-3xl tracking-tight">Reset your password</h1>
       {done ? (
         <Alert tone="ok">If an account uses {email}, we've sent a reset link. It expires in 30 minutes.</Alert>
       ) : (

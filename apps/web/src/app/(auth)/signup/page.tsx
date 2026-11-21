@@ -49,7 +49,12 @@ function Signup() {
         });
       }}
     >
-      <h1 className="text-xl font-semibold">{invited ? "Create your account" : "Set up your DPCO on NDPA Lens"}</h1>
+      <h1 className="font-display text-3xl tracking-tight">{invited ? "Create your account" : "Create your DPCO workspace"}</h1>
+      <p className="text-sm text-muted">
+        {invited
+          ? "Use the email address your invitation was sent to."
+          : "Your first three evidence packs are free while we verify your DPCO licence."}
+      </p>
       {error && <Alert tone="error">{error}</Alert>}
       <Field label="Your name" autoComplete="name" required value={f.name} onChange={set("name")} error={fields.name} />
       <Field label="Work email" type="email" autoComplete="email" required value={f.email} onChange={set("email")} error={fields.email} />

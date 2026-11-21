@@ -3,7 +3,6 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { api } from "@/lib/api";
 import { formatDateTime } from "@/lib/format";
 
@@ -50,8 +49,8 @@ export default function AuditLogPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Audit log</h1>
-      <Card>
+      <h1 className="font-display text-3xl tracking-tight">Audit log</h1>
+      <div>
         <table className="w-full text-sm">
           <thead className="text-left text-muted">
             <tr>
@@ -67,7 +66,7 @@ export default function AuditLogPage() {
                 <td className="py-2 whitespace-nowrap">{formatDateTime(e.createdAt)}</td>
                 <td>{ACTION_LABEL[e.action] ?? e.action}</td>
                 <td>{e.actorName ?? "System"}</td>
-                <td>{e.ip ?? "—"}</td>
+                <td>{e.ip ?? "Not recorded"}</td>
               </tr>
             ))}
           </tbody>
@@ -77,7 +76,7 @@ export default function AuditLogPage() {
             Show older entries
           </Button>
         )}
-      </Card>
+      </div>
     </div>
   );
 }
