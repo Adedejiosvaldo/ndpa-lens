@@ -65,8 +65,16 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [ ] **37** [Legal documents and scanner identification](steps/37-legal-docs.md) 👤 — todo
 - [ ] **38** [Production launch](steps/38-launch.md) — todo
 
+## Owner decisions
+
+- **2026-11-21, session tokens:** accept Better Auth's unhashed `sessions.token` for Stage 1. It's readable only by `ndpa_auth`. Revisit after launch or if a client asks. (Deviation from PRD §7.)
+- **2026-11-21, MFA encryption key:** accept Better Auth's encryption keyed by `BETTER_AUTH_SECRET`. Treat that secret as long-lived and keep it in SOPS (Step 33); any rotation is a planned re-enrolment for all users. (Deviation from PRD §9.)
+- **2026-11-21, HIBP outage:** fail open. Sign-up and reset proceed without the check and log a warning.
+- **2026-11-21, GeoIP source:** DB-IP Lite (country and ASN, CC-BY, monthly, no key) instead of MaxMind GeoLite2. Packs credit DB-IP.
+
 ## Owner tracks 👤 (not coded)
 
+- [ ] Credentials needed later: LLM API key (Step 21), Paystack test keys (Step 29; live keys need the company registered), Cloudflare Turnstile keys (Step 31), Resend, R2, Cloudflare and VPS access (Step 33)
 - [ ] PRD §14 open questions: legal reviewer, hosting country and R2 location, NDPC register access, ₦100k pricing check, GAID CAR template, company entity and Paystack business account
 - [ ] Caddy `flush_interval -1` in azaman-engine's Caddyfile (from `docs/review-and-changes.md`)
 - [ ] 300-site sweep and labelling of 50 sites (after Step 22)
