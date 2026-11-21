@@ -33,7 +33,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 
 - [ ] **14** [Extract `packages/scan-engine`](steps/14-extract-scan-engine.md) — done 2026-11-21 — `@ndpa/scan-engine` (git mv, history kept); legacy scan of example.com identical before/after; 11 unit tests + 2 known gaps pinned
 - [ ] **15** [Evidence store, preflight and SSRF hardening](steps/15-evidence-preflight.md) — done 2026-11-21 — connect-time SSRF guard (found and fixed an IP-literal redirect hole), preflight (TLS, robots, headers, egress), evidence writer; 24 engine tests
-- [ ] **16** [Page discovery up to 25 pages](steps/16-discovery.md) — todo
+- [ ] **16** [Page discovery up to 25 pages](steps/16-discovery.md) — done 2026-11-21 — deterministic page discovery (home, named, ranked by type and keyword, cap 25); 5 tests
 - [ ] **17** [Capture in three consent states, plus form inspection](steps/17-consent-capture.md) — todo
 - [ ] **18** [`packages/vendors` and GeoIP](steps/18-vendors.md) — todo
 - [ ] **19** [Labelled fixtures site](steps/19-fixtures-site.md) — todo
