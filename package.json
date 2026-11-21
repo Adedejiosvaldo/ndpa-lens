@@ -12,7 +12,8 @@
     "dev": "turbo run dev",
     "dev:infra": "bash infra/dev/up.sh",
     "dev:infra:down": "docker compose -f infra/dev/docker-compose.yml down",
-    "dev:infra:reset": "docker compose -f infra/dev/docker-compose.yml down -v"
+    "dev:infra:reset": "docker compose -f infra/dev/docker-compose.yml down -v",
+    "test:e2e": "pnpm --filter web test:e2e"
   },
   "devDependencies": {
     "turbo": "^2.11.13",

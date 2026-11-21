@@ -20,7 +20,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [ ] **07** [Auth core: sign-up, verify, login, reset, sessions](steps/07-auth-core.md) — done 2026-11-20 — Better Auth (server-side), argon2id, HIBP, verify/login/reset/sessions, Redis login limits, CSRF; 24 auth tests
 - [ ] **08** [TOTP MFA and recovery codes](steps/08-mfa.md) — done 2026-11-20 — TOTP + 10 recovery codes, sign-in second step, mandatory for Owners/Platform Admins; 9 MFA tests
 - [ ] **09** [Organisations, members, roles and tenant harness](steps/09-orgs-roles.md) — done 2026-11-20 — org at sign-up, invitations, roles, last-Owner rule, ownership transfer, audit log API, OpenAPI-driven tenant harness; 18 org tests
-- [ ] **10** [`apps/web` shell and auth UI](steps/10-web-shell.md) — todo
+- [ ] **10** [`apps/web` shell and auth UI](steps/10-web-shell.md) — done 2026-11-21 — Next.js 15 + Tailwind 4 shell, auth/MFA/sessions/org/members/audit screens; e2e journey + axe + 135 KB bundle in CI
 - [ ] **11** [HTML mocks of the key screens](steps/11-ui-mocks.md) — todo
 
 ## Phase 2 — Clients
