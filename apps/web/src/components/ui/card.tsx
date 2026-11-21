@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/cn";
 
 export function Card({ className, ...props }: HTMLAttributes<HTMLElement>) {
-  return <section className={cn("rounded-xl border border-border bg-bg p-6 shadow-[var(--shadow-paper)]", className)} {...props} />;
+  return <section className={cn("rounded-xl border border-border bg-bg p-6", className)} {...props} />;
 }
 
 export function Alert({ tone = "info", className, ...props }: { tone?: "info" | "error" | "ok" } & HTMLAttributes<HTMLDivElement>) {
