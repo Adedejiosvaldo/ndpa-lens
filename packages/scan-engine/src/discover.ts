@@ -45,6 +45,11 @@ export function classify(url: string, text = ""): { type: PageType; score: numbe
 const canonical = (u: URL) => `${u.protocol}//${u.host.toLowerCase()}${u.pathname.replace(/\/+$/, "") || "/"}${u.search}`;
 
 export function discoverPages(homeHtml: string, homeUrl: string, namedUrls: string[] = [], max = MAX_PAGES_PER_DOMAIN): DiscoveredPage[] {
+  return discoverFromLinks(inspectDomContent(homeHtml, homeUrl, homeUrl).links, homeUrl, namedUrls, max);
+}
+
+/** Same ranking from links already extracted (e.g. by capturePage). */
+export function discoverFromLinks(links: Array<{ href: string; text: string }>, homeUrl: string, namedUrls: string[] = [], max = MAX_PAGES_PER_DOMAIN): DiscoveredPage[] {
   const home = new URL(homeUrl);
   const root = getRootDomain(home.hostname);
   const seen = new Set<string>();
@@ -69,7 +74,6 @@ export function discoverPages(homeHtml: string, homeUrl: string, namedUrls: stri
     }
   }
 
-  const { links } = inspectDomContent(homeHtml, home.toString(), home.toString());
   const candidates: DiscoveredPage[] = [];
   for (const l of links) {
     let u: URL;

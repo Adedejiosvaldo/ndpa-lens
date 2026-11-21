@@ -35,10 +35,10 @@ export interface Preflight {
 const first = (v: string | string[] | undefined): string | null => (Array.isArray(v) ? (v[0] ?? null) : (v ?? null));
 
 /** Read the certificate and negotiated protocol (C-19) with a direct TLS handshake. */
-export function inspectTls(hostname: string, address: string, port = 443, timeoutMs = 10_000): Promise<TlsInfo> {
+export function inspectTls(hostname: string, address: string, port = 443, timeoutMs = 10_000, ca?: string): Promise<TlsInfo> {
   return new Promise((resolve) => {
     const empty: TlsInfo = { protocol: null, authorized: false, authorizationError: null, subject: null, issuer: null, validFrom: null, validTo: null, daysToExpiry: null, altNames: [] };
-    const socket = tls.connect({ host: address, port, servername: hostname, rejectUnauthorized: false, timeout: timeoutMs }, () => {
+    const socket = tls.connect({ host: address, port, servername: hostname, rejectUnauthorized: false, timeout: timeoutMs, ...(ca ? { ca } : {}) }, () => {
       const cert = socket.getPeerCertificate();
       const validTo = cert?.valid_to ? new Date(cert.valid_to) : null;
       resolve({
@@ -78,7 +78,7 @@ function disallowsAll(robots: string): boolean {
  */
 export async function preflight(
   rawUrl: string,
-  opts: { policy: NetPolicy; budget?: ByteBudget; egressEchoUrl?: string; tlsPort?: number },
+  opts: { policy: NetPolicy; budget?: ByteBudget; egressEchoUrl?: string; tlsPort?: number; /** Tests only: extra trusted CA (fixture site). */ tlsCa?: string },
 ): Promise<Preflight> {
   // Tests run fixture servers on high ports; production targets are limited to 80 and 443.
   const requestedUrl = opts.policy.allowPrivate ? new URL(rawUrl).toString() : normalizeTargetUrl(rawUrl);
@@ -106,7 +106,7 @@ export async function preflight(
     }
 
     const tlsInfo: TlsInfo = httpsTarget
-      ? await inspectTls(new URL(finalUrl).hostname, (await vetHost(new URL(finalUrl).hostname, opts.policy))[0]!, opts.tlsPort ?? (Number(new URL(finalUrl).port) || 443))
+      ? await inspectTls(new URL(finalUrl).hostname, (await vetHost(new URL(finalUrl).hostname, opts.policy))[0]!, opts.tlsPort ?? (Number(new URL(finalUrl).port) || 443), 10_000, opts.tlsCa)
       : { protocol: null, authorized: false, authorizationError: "no https", subject: null, issuer: null, validFrom: null, validTo: null, daysToExpiry: null, altNames: [] };
 
     let robots: Preflight["robots"] = { status: null, body: null, disallowsAll: false };

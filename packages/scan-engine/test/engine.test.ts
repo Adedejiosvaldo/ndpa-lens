@@ -134,3 +134,14 @@ describe("policy rules", () => {
     expect(found).toBeGreaterThanOrEqual(4);
   });
 });
+
+describe("retention rule", () => {
+  it("accepts a stated period and rejects a bare promise", async () => {
+    const { evaluatePolicyClausesByRules } = await import("../src/policy-analyzer.js");
+    const pad = " We are committed to protecting the privacy of everyone who uses our services and visits this website.".repeat(2);
+    const status = (t: string) => evaluatePolicyClausesByRules(t + pad, true).find((c) => c.id === "retention-period")!.status;
+    expect(status("We retain policy records for six years after the policy ends.")).toBe("found");
+    expect(status("We keep your account data for 24 months.")).toBe("found");
+    expect(status("We keep your information safe.")).toBe("missing");
+  });
+});

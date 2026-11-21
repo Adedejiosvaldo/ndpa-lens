@@ -5,7 +5,10 @@
   "type": "module",
   "main": "./src/server.mjs",
   "exports": {
-    ".": "./src/server.mjs"
+    ".": {
+      "types": "./src/server.d.mts",
+      "default": "./src/server.mjs"
+    }
   },
   "scripts": {
     "dev": "node src/cli.mjs",
@@ -14,5 +17,6 @@
   },
   "dependencies": {
     "selfsigned": "^5.5.0"
-  }
+  },
+  "types": "./src/server.d.mts"
 }

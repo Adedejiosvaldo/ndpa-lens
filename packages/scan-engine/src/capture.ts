@@ -6,7 +6,7 @@ import type { Browser, BrowserContext, Frame, Page, Request, Response } from "pl
 import type { EvidenceFile, EvidenceWriter } from "./evidence.js";
 import { ScanAbort } from "./net-guard.js";
 import { DESKTOP_UA, type NetPolicy, SCANNER_HEADER, scannerHeaders, vetHost } from "./net-policy.js";
-import { ACCEPT_RE, REJECT_RE, SETTINGS_RE } from "./page-inspect.js";
+import { ACCEPT_RE, inspectDomContent, REJECT_RE, SETTINGS_RE } from "./page-inspect.js";
 import { detectCmp, getRootDomain } from "./trackers.js";
 
 /**
@@ -124,6 +124,12 @@ export interface PageCapture {
   console: Array<{ type: string; text: string }>;
   forms: CapturedForm[];
   mixedContent: string[];
+  /** Links on the page (C-07, discovery). */
+  links: Array<{ href: string; text: string }>;
+  /** Privacy-policy link found on the page, if any. */
+  policyLink: string | null;
+  /** The captured HTML. In memory only: it is stored as evidence and never copied into the bundle. */
+  html?: string;
   /** Hashed evidence files for this page and state. */
   evidence: EvidenceFile[];
   capturedAt: string;
@@ -139,6 +145,11 @@ export interface CaptureOptions {
   writer: EvidenceWriter;
   device?: "desktop" | "mobile";
   timeoutMs?: number;
+  /**
+   * Keep going on certificate errors. Preflight records TLS separately, so an
+   * expired or untrusted certificate becomes a finding (C-19), not a stopped scan.
+   */
+  ignoreTlsErrors?: boolean;
 }
 
 const PERSONAL = /e-?mail|phone|mobile|tel|name|surname|address|street|city|post(al)?[\s_-]?code|zip|dob|birth|bvn|nin|passport|national[\s_-]?id|account[\s_-]?number|card/i;
@@ -163,7 +174,7 @@ async function newContext(browser: Browser, opts: CaptureOptions, harPath: strin
     locale: "en-GB",
     timezoneId: "Africa/Lagos",
     acceptDownloads: false,
-    ignoreHTTPSErrors: false,
+    ignoreHTTPSErrors: opts.ignoreTlsErrors ?? false,
     serviceWorkers: "block",
     extraHTTPHeaders: { [SCANNER_HEADER]: headers[SCANNER_HEADER]! },
     recordHar: { path: harPath, content: "omit", mode: "full" },
@@ -435,6 +446,7 @@ export async function capturePage(browser: Browser, opts: CaptureOptions): Promi
     const isHttps = new URL(page.url()).protocol === "https:";
     const mixedContent = isHttps ? [...new Set(requests.filter((r) => r.url.startsWith("http:")).map((r) => r.url))].slice(0, 50) : [];
     const dom = await page.content().catch(() => "");
+    const inspected = inspectDomContent(dom, page.url(), page.url());
     const fold = await page.screenshot({ type: "png" }).catch(() => null);
     const full = await page.screenshot({ type: "png", fullPage: true, timeout: 15_000 }).catch(() => null);
     const finalUrl = page.url();
@@ -469,6 +481,9 @@ export async function capturePage(browser: Browser, opts: CaptureOptions): Promi
       console: consoleMsgs,
       forms,
       mixedContent,
+      links: inspected.links,
+      policyLink: inspected.policyLink ?? null,
+      html: dom,
       evidence,
       capturedAt: new Date(started).toISOString(),
       durationMs: Date.now() - started,

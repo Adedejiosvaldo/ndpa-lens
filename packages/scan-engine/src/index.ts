@@ -16,4 +16,5 @@ export * from "./preflight.js";
 export * from "./evidence.js";
 export * from "./discover.js";
 export * from "./capture.js";
+export * from "./collect.js";
 export type * from "./types.js";
