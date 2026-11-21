@@ -4,17 +4,12 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useApiForm } from "@/components/use-form";
 import { Button } from "@/components/ui/button";
-import { Alert, Card, PageSection, PageSkeleton } from "@/components/ui/card";
+import { Alert, Card, PageSkeleton } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { api, type Org } from "@/lib/api";
 import { useSession } from "@/lib/session";
-
-const LICENCE: Record<Org["licenceStatus"], string> = {
-  unsubmitted: "Not submitted",
-  pending: "Waiting for verification",
-  verified: "Verified",
-  rejected: "Rejected",
-};
+import { BrandingSection } from "./_parts/branding";
+import { LicenceSection } from "./_parts/licence";
 
 export default function OrgSettings() {
   const { orgId } = useParams<{ orgId: string }>();
@@ -61,9 +56,8 @@ export default function OrgSettings() {
           )}
         </form>
       </Card>
-      <PageSection title="DPCO licence">
-        <p className="text-sm text-muted">Status: {LICENCE[org.licenceStatus]}. Licence submission arrives in a later release.</p>
-      </PageSection>
+      <LicenceSection org={org} isOwner={role === "owner"} onChange={setOrg} />
+      <BrandingSection org={org} canEdit={canEdit} />
     </div>
   );
 }

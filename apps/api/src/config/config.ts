@@ -20,6 +20,13 @@ export const ConfigSchema = z.object({
   /** Signs/encrypts Better Auth tokens and TOTP secrets. 32+ random characters. */
   BETTER_AUTH_SECRET: z.string().min(32),
   SMTP_URL: z.string().url(),
+  /** S3-compatible object storage: R2 in production, SeaweedFS in dev. */
+  S3_ENDPOINT: z.string().url(),
+  S3_REGION: z.string().default("auto"),
+  S3_BUCKET: z.string().min(3),
+  S3_ACCESS_KEY_ID: z.string().min(1),
+  S3_SECRET_ACCESS_KEY: z.string().min(1),
+  S3_FORCE_PATH_STYLE: z.enum(["true", "false"]).default("true").transform((v) => v === "true"),
   EMAIL_FROM: z.string().min(3),
   /** Express "trust proxy": which hops may set X-Forwarded-For (client IP for rate limits and audit). */
   TRUST_PROXY: trustProxy,

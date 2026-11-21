@@ -37,9 +37,15 @@ function csrfToken(force = false): Promise<string> {
 
 type Method = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
+/** Raw bytes with their own content type (e.g. a logo upload). */
+export class RawBody {
+  constructor(readonly data: Blob, readonly type: string) {}
+}
+
 async function call<T>(method: Method, path: string, body?: unknown, retried = false): Promise<T> {
   const headers: Record<string, string> = {};
-  if (body !== undefined) headers["Content-Type"] = "application/json";
+  const raw = body instanceof RawBody;
+  if (body !== undefined) headers["Content-Type"] = raw ? body.type : "application/json";
   if (method !== "GET") headers["X-CSRF-Token"] = await csrfToken();
   let res: Response;
   try {
@@ -48,7 +54,7 @@ async function call<T>(method: Method, path: string, body?: unknown, retried = f
       headers,
       credentials: "include",
       cache: "no-store",
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: body === undefined ? undefined : raw ? body.data : JSON.stringify(body),
     });
   } catch {
     throw new ApiError(0, "network_error", "Can't reach NDPA Lens", "Check your connection and try again.");
@@ -70,6 +76,7 @@ export const api = {
   get: <T>(path: string) => call<T>("GET", path),
   post: <T>(path: string, body?: unknown) => call<T>("POST", path, body ?? {}),
   patch: <T>(path: string, body: unknown) => call<T>("PATCH", path, body),
+  put: <T>(path: string, body: unknown) => call<T>("PUT", path, body),
   del: <T = void>(path: string) => call<T>("DELETE", path),
 };
 
@@ -91,4 +98,13 @@ export interface Org {
   dpcoLicenceNo: string | null;
   licenceStatus: "unsubmitted" | "pending" | "verified" | "rejected";
   createdAt: string;
+}
+
+export interface Branding {
+  firmName: string;
+  primaryColour: string;
+  contactBlock: string;
+  showLicenceOnCover: boolean;
+  logo: { key: string; contentType: string; sha256: string; bytes: number } | null;
+  logoUrl: string | null;
 }

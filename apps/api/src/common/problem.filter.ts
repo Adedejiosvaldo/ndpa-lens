@@ -10,6 +10,8 @@ const CODE_BY_STATUS: Record<number, ErrorCode> = {
   403: "forbidden",
   404: "not_found",
   409: "conflict",
+  413: "validation_failed",
+  415: "validation_failed",
   429: "rate_limited",
 };
 
@@ -58,6 +60,12 @@ export class ProblemFilter implements ExceptionFilter {
         code: "validation_failed",
         errors: exception.issues.map((i) => ({ path: i.path.join("."), message: i.message })),
       };
+    }
+    // Express body parsers throw plain errors carrying a 4xx status (e.g. 413 too large).
+    const parserStatus = (exception as { status?: unknown } | null)?.status;
+    if (!(exception instanceof HttpException) && typeof parserStatus === "number" && parserStatus >= 400 && parserStatus < 500) {
+      const title = parserStatus === 413 ? "The upload is too large" : parserStatus === 415 ? "That file type is not supported" : "The request is not valid";
+      return { type: "about:blank", title, status: parserStatus, code: CODE_BY_STATUS[parserStatus] ?? "validation_failed" };
     }
     if (exception instanceof HttpException) {
       const status = exception.getStatus();

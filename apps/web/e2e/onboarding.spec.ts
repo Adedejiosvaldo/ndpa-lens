@@ -87,6 +87,19 @@ test("DPCO founder signs up, enrols MFA, invites a colleague who joins", async (
   await shot(page, "audit-log");
   await page.getByRole("link", { name: "Organisation" }).click();
   await expect(page.getByLabel("Trading name")).toBeVisible();
+
+  // ORG-02: submit the DPCO licence; BRAND-01: logo, colour and contact on the pack cover
+  await page.getByLabel("Licence number", { exact: true }).fill("NDPC/DPCO/2026/0148");
+  await page.getByRole("button", { name: "Submit for verification" }).click();
+  await expect(page.getByText("Waiting for verification")).toBeVisible();
+  const png = Buffer.from("89504e470d0a1a0a0000000d4948445200000001000000010806000000" + "1f15c4890000000d49444154789c6360f8cf00000301010018dd8db00000000049454e44ae426082", "hex");
+  await page.locator("#logo-input").setInputFiles({ name: "logo.png", mimeType: "image/png", buffer: png });
+  await expect(page.getByAltText(/logo$/)).toBeVisible();
+  await page.getByLabel("Contact block").fill("12 Awolowo Road, Ikoyi, Lagos");
+  await page.getByRole("button", { name: "Save branding" }).click();
+  await expect(page.getByText("Branding saved.")).toBeVisible();
+  await expect(page.getByLabel("Pack cover preview")).toContainText("DPCO licence NDPC/DPCO/2026/0148");
+  await noSeriousA11yIssues(page, "organisation settings");
   await shot(page, "org-settings");
 });
 
