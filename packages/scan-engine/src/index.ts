@@ -11,4 +11,7 @@ export * from "./policy-analyzer.js";
 export * from "./browser-capture.js";
 export * from "./site-icon.js";
 export * from "./url-check.js";
+export * from "./net-policy.js";
+export * from "./preflight.js";
+export * from "./evidence.js";
 export type * from "./types.js";

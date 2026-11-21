@@ -118,6 +118,11 @@ export function normalizeTargetUrl(rawUrl: string): string {
   if (!trimmed) {
     throw new ScanAbort("Please enter a valid website URL to audit.");
   }
+  // Any other scheme ("ftp://", "file:") is refused here rather than mangled into a bogus host.
+  const scheme = trimmed.match(/^([a-z][a-z0-9+.-]*):\/\//i)?.[1]?.toLowerCase();
+  if (scheme && scheme !== "http" && scheme !== "https") {
+    throw new ScanAbort("Only HTTP and HTTPS URLs are supported.");
+  }
   const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
 
   let parsed: URL;
