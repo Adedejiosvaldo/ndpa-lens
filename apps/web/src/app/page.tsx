@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import type * as React from "react";
 import Link from "next/link";
 import { Brand } from "@/components/brand";
-import { Icon } from "@/components/icon";
-import type { IconName } from "@/components/icons.generated";
 import { DaysToCar } from "@/components/landing/countdown";
 import { HeroPack } from "@/components/landing/hero-pack";
 import { LandingMotion } from "@/components/landing/landing-motion";
@@ -31,6 +29,14 @@ const PROBLEMS: { title: string; body: string }[] = [
   },
 ];
 
+const COVERAGE: { area: string; count: number; examples: string }[] = [
+  { area: "Consent", count: 8, examples: "Trackers before consent or after “reject all”, missing or lopsided banners, pre-ticked boxes, session replay." },
+  { area: "Transparency", count: 3, examples: "Privacy policy linked from the homepage, required disclosures present, notice at the point of collection." },
+  { area: "Data subject rights", count: 2, examples: "A published DPO contact and a channel for rights requests." },
+  { area: "Security", count: 4, examples: "HTTPS and HSTS, TLS version, security headers, forms posting over HTTP." },
+  { area: "Transfers and sharing", count: 3, examples: "Data sent abroad without a stated basis, personal data in third-party requests, pixels on checkout and login." },
+];
+
 const STEPS: { n: string; title: string; body: string }[] = [
   { n: "01", title: "Add the client, confirm you're engaged", body: "Name the domains and any pages that matter. Your attestation is recorded with who, when and from where." },
   { n: "02", title: "We find the pages that collect data", body: "Up to 25 pages per domain: the homepage, privacy policy, sign-up, login, checkout, contact and careers, plus any URL you name." },
@@ -46,11 +52,11 @@ const PACK: { code: string; title: string; body: string }[] = [
   { code: "E", title: "Integrity statement", body: "A SHA-256 manifest of every file, signed by NDPA Lens. Anyone can check a pack hasn't been altered." },
 ];
 
-const TEAM: { icon: IconName; title: string; body: string }[] = [
-  { icon: "pen-new-square-linear", title: "Your brand, not ours", body: "Your logo, colour, address and licence number on the cover. NDPA Lens appears as one small line." },
-  { icon: "users-group-two-rounded-linear", title: "Roles that match a firm", body: "Owners handle billing, Admins run the team, Analysts prepare audits, Viewers review packs." },
-  { icon: "eye-linear", title: "Analyst judgement, on the record", body: "Mark a finding as a false positive with a note. The original result is kept and both appear in the audit trail." },
-  { icon: "refresh-linear", title: "Before and after, free", body: "Re-scan after the client's fixes in the same audit cycle at no cost, and show what's fixed, still open or new." },
+const TEAM: { title: string; body: string }[] = [
+  { title: "Your brand, not ours", body: "Your logo, colour, address and licence number on the cover. NDPA Lens appears as one small line." },
+  { title: "Roles that match a firm", body: "Owners handle billing, Admins run the team, Analysts prepare audits, Viewers review packs." },
+  { title: "Analyst judgement, on the record", body: "Mark a finding as a false positive with a note. The original result is kept and both appear in the audit trail." },
+  { title: "Before and after, free", body: "Re-scan after the client's fixes in the same audit cycle at no cost, and show what's fixed, still open or new." },
 ];
 
 const SECURITY: { title: string; body: string }[] = [
@@ -82,15 +88,14 @@ export default function Landing() {
 
       <main id="main" tabIndex={-1}>
         {/* Hero */}
-        <section data-hero className="grain overflow-hidden">
+        <section data-hero className="overflow-hidden">
           <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-5 pt-14 pb-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:pt-20 lg:pb-28">
             <div>
-              <p data-hero-fade style={{ "--i": 0 } as React.CSSProperties} className="text-sm font-medium text-accent">For NDPC-licensed DPCOs preparing 2027 audit returns</p>
-              <RevealHeading as="h1" text="Prove what a client's website does with personal data." className="mt-5 text-[2.5rem] leading-[1.02] sm:text-6xl lg:text-[4.25rem]" />
-              <p data-hero-fade style={{ "--i": 1 } as React.CSSProperties} className="mt-6 max-w-[34rem] text-lg leading-relaxed text-muted">
-                We record the site before consent, after “reject all” and after “accept all”. You hand over a signed evidence pack in your firm's name, mapped to the NDPA and GAID.
+              <RevealHeading as="h1" text="Prove what a client's website does with personal data." className="text-[2.5rem] leading-[1.02] sm:text-6xl lg:text-[4.25rem]" />
+              <p data-hero-fade style={{ "--i": 0 } as React.CSSProperties} className="mt-6 max-w-[36rem] text-lg leading-relaxed text-muted">
+                For NDPC-licensed DPCOs. We record the site before consent, after “reject all” and after “accept all”, and you hand over a signed evidence pack in your firm's name, mapped to NDPA&nbsp;2023 and GAID&nbsp;2025.
               </p>
-              <div data-hero-fade style={{ "--i": 2 } as React.CSSProperties} className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <div data-hero-fade style={{ "--i": 1 } as React.CSSProperties} className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <Button asChild size="lg">
                   <Link href="/signup">Create your workspace</Link>
                 </Button>
@@ -100,6 +105,30 @@ export default function Landing() {
               </div>
             </div>
             <HeroPack />
+          </div>
+        </section>
+
+        {/* Coverage */}
+        <section aria-labelledby="coverage-h" className="border-t border-border">
+          <div className="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 lg:py-24">
+            <div className="max-w-3xl">
+              <h2 id="coverage-h" className="font-display text-3xl leading-[1.1] sm:text-4xl">
+                Twenty checks across the parts of NDPA&nbsp;2023 and GAID&nbsp;2025 a website can break.
+              </h2>
+              <p className="mt-4 max-w-[62ch] leading-relaxed text-muted">
+                Compliance workspaces help a company run its programme. NDPA Lens does one job for the auditor: it proves what the website actually does, in a pack anyone can verify.
+              </p>
+            </div>
+            <ul className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
+              {COVERAGE.map((c) => (
+                <li key={c.area} className="bg-bg p-6">
+                  <p className="font-display text-4xl text-accent tabular">{c.count}</p>
+                  <p className="mt-1 font-medium tracking-tight">{c.area}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{c.examples}</p>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-xs text-muted">Check catalogue v1. Legal references are reviewed by a data protection lawyer before launch.</p>
           </div>
         </section>
 
@@ -194,20 +223,38 @@ export default function Landing() {
             <div>
               <h2 id="teams-h" className="font-display mt-4 text-4xl leading-[1.08] sm:text-5xl">Your brand on every page. Your team on every client.</h2>
             </div>
-            <ul className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
-              {TEAM.map((t) => (
-                <li key={t.title}>
-                  <Icon name={t.icon} className="size-6 text-accent" />
-                  <h3 className="mt-3 text-lg font-medium tracking-tight">{t.title}</h3>
-                  <p className="mt-1.5 leading-relaxed text-muted">{t.body}</p>
-                </li>
-              ))}
-            </ul>
+            <div>
+              <div className="grid items-center gap-8 sm:grid-cols-[1fr_auto]">
+                <div>
+                  <h3 className="text-xl font-medium tracking-tight">{TEAM[0]!.title}</h3>
+                  <p className="mt-2 max-w-[48ch] leading-relaxed text-muted">{TEAM[0]!.body}</p>
+                </div>
+                <div aria-hidden className="w-56 rounded-lg bg-bg p-4 shadow-[var(--shadow-lift)]">
+                  <div className="flex items-center gap-2">
+                    <span className="size-4 rounded" style={{ background: "#7a2e1d" }} />
+                    <span className="text-xs font-semibold" style={{ color: "#7a2e1d" }}>
+                      Adeyemi &amp; Co
+                    </span>
+                  </div>
+                  <p className="mt-4 text-[10px] text-muted">NDPA technical evidence pack</p>
+                  <p className="text-sm font-semibold">Harbour Assurance Plc</p>
+                  <p className="mt-5 text-[9px] text-muted">Technical evidence generated by NDPA Lens</p>
+                </div>
+              </div>
+              <ul className="mt-10 divide-y divide-border border-t border-border">
+                {TEAM.slice(1).map((t) => (
+                  <li key={t.title} className="grid gap-1 py-5 sm:grid-cols-[14rem_1fr] sm:gap-6">
+                    <h3 className="font-medium tracking-tight">{t.title}</h3>
+                    <p className="leading-relaxed text-muted">{t.body}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
 
         {/* Deadline */}
-        <section aria-label="CAR filing deadline" className="grain bg-ink text-white">
+        <section aria-label="CAR filing deadline" className="bg-ink text-white">
           <div className="mx-auto flex max-w-[1240px] flex-col gap-8 px-5 py-20 sm:px-8 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="font-display text-5xl leading-none tracking-tight sm:text-7xl">

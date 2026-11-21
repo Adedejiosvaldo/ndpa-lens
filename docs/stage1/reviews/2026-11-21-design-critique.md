@@ -52,3 +52,31 @@ Requested by the owner at Step 10a. The direction under review is "evidence-grad
 ## Open items for the owner
 - The real hero visual should be a rendered pack page (Step 25) or a findings-screen screenshot (Step 23).
 - Social proof and pricing stay off the page until there's real evidence.
+
+## Round 2 (21 Nov 2026): competitor clarity review and new skills
+
+**Competitors checked in Chrome**, with computed styles read from each page:
+- **Asiri** (#f2f5fa background, navy #211b55, Poppins 600) names NDPA 2023 first and puts real UI under the hero.
+- **Vanta** is white with a lilac hero and one aubergine band; its headline is a serif.
+- **Drata** is the only fully dark site (#09090a, Geist 600).
+- **OneTrust** is white with near-black bands and a mint block.
+
+Three of the four keep the page light and make their one bold block **brand-coloured**, not black.
+
+**Skills added:**
+- `web-design-guidelines` (Vercel) and `impeccable` (pbakaus; written playbooks only, since its launcher downloads a native binary and was deliberately not run).
+- `apple-design` (Emil Kowalski) was installed but not needed: there's no gesture UI on the landing page.
+- `ui-ux-pro-max` was skipped (a style catalogue; we have a direction). `ui-taste` was skipped (no inspectable source).
+
+| # | Before | After | Why |
+|---|---|---|---|
+| 25 | Near-black #0b0d12 deadline band and auth panel | Emerald-black #052b21 (muted text #9fc3b6) | The one dark block should carry the brand, as Vanta and Asiri do |
+| 26 | Hero didn't name the law or the audience | Subtext: "For NDPC-licensed DPCOs… mapped to NDPA 2023 and GAID 2025" | Every competitor names its frameworks up front |
+| 27 | No coverage section | Coverage strip: 20 checks by NDPA area (consent 8, transparency 3, rights 2, security 4, transfers 3, from the PRD §5.2 catalogue) | The framework-grid pattern, built from real data |
+| 28 | No positioning against workspaces | "Compliance workspaces help a company run its programme. NDPA Lens does one job for the auditor…" | Separates us from Asiri without naming it |
+| 29 | Hero kicker "For NDPC-licensed DPCOs…" | Removed; the audience moves into the subtext | impeccable craft floor: a kicker is a ban |
+| 30 | `feTurbulence` grain on hero, band, auth panel and 404 | Removed | impeccable: turbulence grain reads as amateur |
+| 31 | Teams section: four same-size icon cards | One featured item with a branded pack-cover visual, then a plain list | impeccable: same-size icon cards are the lazy container |
+| 32 | Cards with a border and a wide shadow (ghost card) | One elevation: border on cards, shadow only on the pack mock | impeccable: declare elevation once |
+| 33 | Browser surfaces left as defaults | Themed `::selection`, accent caret, `color-scheme`, `scrollbar-color`, `touch-action: manipulation` | impeccable "browser surfaces"; Vercel touch rules |
+| — | Vercel: Title Case on headings and buttons | **Declined:** sentence case kept | PRD §3.1 asks for British English with sentence case |

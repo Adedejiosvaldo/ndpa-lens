@@ -59,7 +59,7 @@ export function HeroPack() {
     <div ref={root} className="relative [perspective:1400px]" aria-label="Sample evidence pack (illustrative)" role="img">
       <div data-stack className="relative mx-auto aspect-[4/5] w-full max-w-[460px] [transform-style:preserve-3d]">
         {/* Page 3 — data flows */}
-        <div data-pack-page style={{ "--i": 0 } as React.CSSProperties} className="absolute inset-x-6 top-0 rounded-lg border border-border bg-surface p-5 shadow-[var(--shadow-paper)] [transform:translateZ(-60px)_rotate(4deg)]">
+        <div data-pack-page style={{ "--i": 0 } as React.CSSProperties} className="absolute inset-x-6 top-0 rounded-lg bg-surface p-5 shadow-[var(--shadow-paper)] [transform:translateZ(-60px)_rotate(4deg)]">
           <p className="font-mono text-[10px] tracking-wide text-muted">C · CROSS-BORDER DATA FLOWS</p>
           <ul className="mt-3 space-y-2 font-mono text-[11px]">
             <li className="flex justify-between"><span>connect.facebook.net</span><span className="text-muted">IE · before consent</span></li>
@@ -68,7 +68,7 @@ export function HeroPack() {
           </ul>
         </div>
         {/* Page 2 — a finding */}
-        <div data-pack-page style={{ "--i": 1 } as React.CSSProperties} className="absolute inset-x-2 top-[29%] rounded-lg border border-border bg-bg p-5 shadow-[var(--shadow-paper)] [transform:translateZ(-20px)_rotate(-2deg)]">
+        <div data-pack-page style={{ "--i": 1 } as React.CSSProperties} className="absolute inset-x-2 top-[29%] rounded-lg bg-bg p-5 shadow-[var(--shadow-paper)] [transform:translateZ(-20px)_rotate(-2deg)]">
           <div className="flex items-center justify-between">
             <p className="font-mono text-[10px] tracking-wide text-muted">B-01 · CONSENT</p>
             <span className="rounded px-2 py-0.5 text-[11px] font-semibold" style={{ color: "var(--sev-critical)", background: "var(--sev-critical-bg)" }}>
@@ -84,7 +84,7 @@ export function HeroPack() {
           <p className="mt-2 text-xs text-muted">NDPA s.25–26 · lawful basis and consent</p>
         </div>
         {/* Page 1 — white-label cover */}
-        <div data-pack-page style={{ "--i": 2 } as React.CSSProperties} className="absolute inset-x-0 bottom-0 rounded-lg border border-border bg-bg p-6 shadow-[var(--shadow-lift)]">
+        <div data-pack-page style={{ "--i": 2 } as React.CSSProperties} className="absolute inset-x-0 bottom-0 rounded-lg bg-bg p-6 shadow-[var(--shadow-lift)]">
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold" style={{ color: "#7a2e1d" }}>
               Adeyemi &amp; Co

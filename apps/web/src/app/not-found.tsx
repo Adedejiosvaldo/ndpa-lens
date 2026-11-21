@@ -6,7 +6,7 @@ export const metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (
-    <div className="grain flex min-h-dvh flex-col px-6 py-8 sm:px-12">
+    <div className="flex min-h-dvh flex-col px-6 py-8 sm:px-12">
       <Brand />
       <main id="main" tabIndex={-1} className="flex flex-1 flex-col justify-center">
         <p className="font-mono text-xs text-muted">404 · NO RECORD</p>

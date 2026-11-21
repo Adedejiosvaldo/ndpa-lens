@@ -11,7 +11,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         </main>
         <p className="text-xs text-muted">Technical evidence, not legal advice. Your DPCO remains responsible for the audit conclusion.</p>
       </div>
-      <aside className="grain relative hidden overflow-hidden bg-ink p-12 text-white lg:flex lg:flex-col lg:justify-between" aria-label="About NDPA Lens">
+      <aside className="relative hidden overflow-hidden bg-ink p-12 text-white lg:flex lg:flex-col lg:justify-between" aria-label="About NDPA Lens">
         <p className="font-mono text-xs tracking-wide text-ink-muted">EXHIBIT · WEBSITE BEHAVIOUR · NDPA 2023</p>
         <div className="max-w-md">
           <p className="font-display text-4xl leading-[1.1] tracking-tight">Evidence a lawyer can stand behind.</p>
