@@ -1,6 +1,7 @@
 import type { NdpaArea, Severity } from "@ndpa/schema";
 import type { EvidenceBundle, PageCapture } from "@ndpa/scan-engine";
 import { classifyHost, VENDOR_LIST_VERSION } from "@ndpa/vendors";
+import type { AssistItem, AssistItemId, PolicyAssist } from "./assist.js";
 
 /**
  * A finding as the checks produce it. Pages are referred to by their bundle
@@ -31,6 +32,8 @@ export interface CheckFinding {
   remediation: string;
   pageKeys: string[];
   evidence: CheckEvidence[];
+  /** Set when the result relies on the LLM reading of the policy (PRD §5.2: always labelled). */
+  assisted?: { model: string; promptVersion: string };
   provenance: { checkVersion: string; engineVersion: string; vendorListVersion: string };
 }
 
@@ -41,10 +44,42 @@ export interface CheckDef {
   severity: Severity;
   /** Draft legal reference (PRD §5.2: confirmed by the legal reviewer before launch). */
   legalRef: string;
-  run(b: EvidenceBundle): Array<Omit<CheckFinding, "checkId" | "area" | "legalRef" | "provenance" | "severity"> & { severity?: Severity }>;
+  run(b: EvidenceBundle, ctx: CheckContext): Array<Omit<CheckFinding, "checkId" | "area" | "legalRef" | "provenance" | "severity"> & { severity?: Severity }>;
+}
+
+export interface CheckContext {
+  /** Stored LLM reading of the policy, replayed (null: rules only). */
+  assist: PolicyAssist | null;
 }
 
 type Page = Omit<PageCapture, "html">;
+
+/**
+ * Combine a rules verdict on a policy item with the stored LLM reading.
+ * Rules finding it wins outright; otherwise a confident, quote-backed LLM
+ * answer decides (assisted), a doubtful one means needs-review, and with no
+ * LLM reading the rules verdict stands.
+ */
+export function decidePolicyItem(
+  ruleStatus: "found" | "partial" | "missing",
+  ctx: CheckContext,
+  id: AssistItemId,
+): { status: "pass" | "fail" | "needs_review"; item: AssistItem | null } {
+  if (ruleStatus === "found") return { status: "pass", item: null };
+  const item = ctx.assist?.items.find((i) => i.id === id) ?? null;
+  if (!item) return { status: ruleStatus === "partial" ? "needs_review" : "fail", item: null };
+  if (!item.usable) return { status: "needs_review", item };
+  return { status: item.present ? "pass" : "fail", item };
+}
+
+/** The "assisted" label and llm_output evidence for a result that used the LLM reading. */
+export function assistedFields(ctx: CheckContext, item: AssistItem | null): { assisted?: CheckFinding["assisted"]; evidence: CheckEvidence[] } {
+  if (!item || !ctx.assist) return { evidence: [] };
+  return {
+    assisted: { model: ctx.assist.model, promptVersion: ctx.assist.promptVersion },
+    evidence: [{ kind: "llm_output", sha256: ctx.assist.rawSha256, pointer: item.id }],
+  };
+}
 
 export const desktop = (b: EvidenceBundle) => b.pages.filter((p) => p.device === "desktop");
 export const inState = (b: EvidenceBundle, state: string) => desktop(b).filter((p) => p.consentState === state);

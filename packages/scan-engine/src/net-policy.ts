@@ -66,19 +66,29 @@ export async function vetHost(hostname: string, policy: NetPolicy): Promise<stri
 }
 
 /** undici dispatcher whose every connection goes through vetHost. */
-export function createDispatcher(policy: NetPolicy): Agent {
+/**
+ * `tls.insecure` skips certificate validation. Only preflight uses it, after a
+ * certificate error, so a site with a broken certificate still gets its
+ * headers recorded; the certificate itself is judged separately (C-19).
+ */
+export function createDispatcher(policy: NetPolicy, tls: { ca?: string; insecure?: boolean } = {}): Agent {
   return new Agent({
     connect: {
       timeout: 10_000,
-      lookup: (hostname, _opts, cb) => {
+      ...(tls.ca ? { ca: tls.ca } : {}),
+      ...(tls.insecure ? { rejectUnauthorized: false } : {}),
+      // Node asks for every address (`all: true`) when it races IPv4/IPv6 for
+      // TLS, and for one address otherwise; answer in the form it asked for.
+      lookup: ((hostname: string, opts: { all?: boolean }, cb: (...a: unknown[]) => void) => {
         vetHost(hostname, policy).then(
           (addrs) => {
-            const address = addrs[0]!;
-            cb(null, address, isIP(address) === 6 ? 6 : 4);
+            const entries = addrs.map((address) => ({ address, family: isIP(address) === 6 ? 6 : 4 }));
+            if (opts?.all) cb(null, entries);
+            else cb(null, entries[0]!.address, entries[0]!.family);
           },
-          (err) => cb(err as NodeJS.ErrnoException, "", 4),
+          (err) => cb(err, opts?.all ? [] : "", 4),
         );
-      },
+      }) as never,
     },
     headersTimeout: LIMITS.timeoutMs,
     bodyTimeout: LIMITS.timeoutMs,

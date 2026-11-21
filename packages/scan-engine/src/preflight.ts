@@ -23,6 +23,8 @@ export interface Preflight {
   reachable: boolean;
   status: number | null;
   redirects: Hop[];
+  /** The main request only worked with certificate checks off (see tls for why). */
+  certificateBypassed: boolean;
   /** Did http:// redirect to https:// (C-15)? null if not tested. */
   httpRedirectsToHttps: boolean | null;
   headers: Record<string, string>;
@@ -72,6 +74,15 @@ function disallowsAll(robots: string): boolean {
   return false;
 }
 
+const CERT_ERROR = /CERT|certificate|SELF_SIGNED|ALTNAME|UNABLE_TO_(GET|VERIFY)/i;
+function isCertificateError(e: unknown): boolean {
+  for (let x: unknown = e, i = 0; x && i < 4; x = (x as { cause?: unknown }).cause, i++) {
+    const { code, message } = x as { code?: string; message?: string };
+    if (CERT_ERROR.test(`${code ?? ""} ${message ?? ""}`)) return true;
+  }
+  return false;
+}
+
 /**
  * PRD §5.1 step 1: resolve, reach, record TLS, headers, robots and the scan's
  * egress IP. Fails with ScanAbort for private or unresolvable targets.
@@ -83,14 +94,27 @@ export async function preflight(
   // Tests run fixture servers on high ports; production targets are limited to 80 and 443.
   const requestedUrl = opts.policy.allowPrivate ? new URL(rawUrl).toString() : normalizeTargetUrl(rawUrl);
   const url = new URL(requestedUrl);
-  const dispatcher = createDispatcher(opts.policy);
+  let dispatcher = createDispatcher(opts.policy, { ca: opts.tlsCa });
+  const opened = [dispatcher];
   try {
     const addresses = await vetHost(url.hostname, opts.policy);
     let main: Awaited<ReturnType<typeof guardedGet>> | null = null;
+    let certificateBypassed = false;
     try {
       main = await guardedGet(requestedUrl, { policy: opts.policy, dispatcher, budget: opts.budget });
     } catch (e) {
       if ((e as Error).name === "ScanAbort") throw e;
+      if (isCertificateError(e)) {
+        // Record headers anyway; the certificate problem is reported by C-19.
+        dispatcher = createDispatcher(opts.policy, { ca: opts.tlsCa, insecure: true });
+        opened.push(dispatcher);
+        try {
+          main = await guardedGet(requestedUrl, { policy: opts.policy, dispatcher, budget: opts.budget });
+          certificateBypassed = true;
+        } catch (e2) {
+          if ((e2 as Error).name === "ScanAbort") throw e2;
+        }
+      }
     }
     const finalUrl = main?.url ?? requestedUrl;
     const httpsTarget = new URL(finalUrl).protocol === "https:";
@@ -138,6 +162,7 @@ export async function preflight(
       reachable: !!main && main.status < 500,
       status: main?.status ?? null,
       redirects: main?.chain ?? [],
+      certificateBypassed,
       httpRedirectsToHttps,
       headers: main?.headers ?? {},
       tls: tlsInfo,
@@ -146,6 +171,6 @@ export async function preflight(
       checkedAt: new Date().toISOString(),
     };
   } finally {
-    await dispatcher.close();
+    await Promise.all(opened.map((d) => d.close()));
   }
 }

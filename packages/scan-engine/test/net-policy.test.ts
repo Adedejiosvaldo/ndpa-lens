@@ -29,7 +29,7 @@ beforeAll(async () => {
   base = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
 
   const pems = await selfsigned.generate([{ name: "commonName", value: "harbour.test" }], { notAfterDate: new Date(Date.now() + 30 * 864e5), keySize: 2048 });
-  tlsServer = https.createServer({ key: pems.private, cert: pems.cert, minVersion: "TLSv1.2" }, (_q, r) => r.end("ok"));
+  tlsServer = https.createServer({ key: pems.private, cert: pems.cert, minVersion: "TLSv1.2" }, (_q, r) => r.writeHead(200, { "strict-transport-security": "max-age=31536000" }).end("ok"));
   await new Promise<void>((r) => tlsServer.listen(0, "127.0.0.1", r));
   tlsPort = (tlsServer.address() as AddressInfo).port;
 });
@@ -121,5 +121,25 @@ describe("preflight (PRD §5.1 step 1)", () => {
     expect(t.subject).toBe("harbour.test");
     expect(t.authorized).toBe(false);
     expect(t.daysToExpiry).toBeGreaterThanOrEqual(28);
+  });
+
+  it("still records headers when the certificate is bad, and says so", async () => {
+    const policy = { contactUrl: "https://ndpalens.test/scanner", resolve: async () => ["127.0.0.1"], allowPrivate: (ip: string) => ip === "127.0.0.1" };
+    const p = await preflight(`https://harbour.test:${tlsPort}/`, { policy });
+    expect(p.reachable).toBe(true);
+    expect(p.certificateBypassed).toBe(true);
+    expect(p.headers["strict-transport-security"]).toBe("max-age=31536000");
+    expect(p.tls.authorized).toBe(false);
+  });
+});
+
+describe("HTTPS through the guarded dispatcher", () => {
+  it("connects over TLS (Node's all-addresses lookup) and still vets the address", async () => {
+    const { createDispatcher, guardedGet } = await import("../src/net-policy.js");
+    const ok = { contactUrl: "x", resolve: async () => ["127.0.0.1"], allowPrivate: (ip: string) => ip === "127.0.0.1" };
+    const r = await guardedGet(`https://harbour.test:${tlsPort}/`, { policy: ok, dispatcher: createDispatcher(ok, { insecure: true }) });
+    expect(r.status).toBe(200);
+    const meta = { contactUrl: "x", resolve: async () => ["169.254.169.254"] };
+    await expect(guardedGet(`https://harbour.test:${tlsPort}/`, { policy: meta, dispatcher: createDispatcher(meta, { insecure: true }) })).rejects.toThrow(/private or internal/);
   });
 });

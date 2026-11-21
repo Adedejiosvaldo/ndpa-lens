@@ -1,6 +1,7 @@
 import { evaluatePolicyClausesByRules, isNonEssentialCookie } from "@ndpa/scan-engine";
+import type { AssistItemId } from "../assist.js";
 import { classifyHost } from "@ndpa/vendors";
-import { type CheckDef, desktop, evidenceFor, home, inState, list, nonEssentialRequests, uniq } from "../core.js";
+import { assistedFields, type CheckDef, decidePolicyItem, desktop, evidenceFor, home, inState, list, nonEssentialRequests, uniq } from "../core.js";
 
 const NG = "NG";
 
@@ -235,7 +236,7 @@ export const C07: CheckDef = {
 };
 
 /** PRD C-08 items mapped to the engine's NDPA clause rules. */
-const C08_ITEMS: Array<{ ruleId: string; item: string; fix: string }> = [
+const C08_ITEMS: Array<{ ruleId: AssistItemId; item: string; fix: string }> = [
   { ruleId: "controller-dpo", item: "who the data controller is", fix: "Name the company that decides how data is used, with its address." },
   { ruleId: "purpose-lawful-basis", item: "why data is used and the lawful basis", fix: "List each purpose and the lawful basis for it (consent, contract, legal obligation…)." },
   { ruleId: "retention-period", item: "how long data is kept", fix: "State how long each kind of data is kept, or how that is decided." },
@@ -250,7 +251,7 @@ export const C08: CheckDef = {
   area: "transparency",
   severity: "medium",
   legalRef: "NDPA 2023 s.27. Draft, pending legal review.",
-  run(b) {
+  run(b, ctx) {
     if (!b.policy.found) {
       return [
         {
@@ -264,20 +265,27 @@ export const C08: CheckDef = {
         },
       ];
     }
-    const policyEv = b.evidence.filter((e) => e.kind === "policy_text").map((e) => ({ kind: "policy_text" as const, sha256: e.sha256 }));
+    const policyEv = policyEvidence(b);
     const clauses = evaluatePolicyClausesByRules(b.policy.text, true);
     return C08_ITEMS.map(({ ruleId, item, fix }) => {
       const c = clauses.find((x) => x.id === ruleId);
-      const status = c?.status === "found" ? "pass" : c?.status === "partial" ? "needs_review" : "fail";
+      const { status, item: ai } = decidePolicyItem(c?.status === "found" ? "found" : c?.status === "partial" ? "partial" : "missing", ctx, ruleId);
+      const a = assistedFields(ctx, ai);
+      const explanation = ai?.quote && ai.quoteVerified
+        ? `The policy says: “${ai.quote.slice(0, 200)}”.`
+        : c?.evidence
+          ? `Closest match in the policy: “${c.evidence.slice(0, 200)}”.`
+          : `No wording about ${item} was found in the policy.`;
       return {
         subId: ruleId,
         status,
-        title: status === "pass" ? `The policy explains ${item}` : status === "fail" ? `The privacy policy doesn't explain ${item}` : `The policy only partly explains ${item}`,
+        title: status === "pass" ? `The policy explains ${item}` : status === "fail" ? `The privacy policy doesn't explain ${item}` : `Check whether the policy explains ${item}`,
         whyItMatters: "Visitors are entitled to this information before their data is collected.",
-        explanation: c?.evidence ? `Closest match in the policy: “${c.evidence.slice(0, 200)}”.` : `No wording about ${item} was found in the policy.`,
-        remediation: fix,
+        explanation,
+        remediation: status === "pass" ? "No action needed." : fix,
         pageKeys: [],
-        evidence: policyEv.map((e) => ({ ...e, pointer: ruleId })),
+        evidence: [...policyEv.map((e) => ({ ...e, pointer: ruleId })), ...a.evidence],
+        ...(a.assisted ? { assisted: a.assisted } : {}),
       };
     });
   },
@@ -292,15 +300,32 @@ export const C09: CheckDef = {
   area: "rights",
   severity: "medium",
   legalRef: "NDPA 2023 s.32 (Data Protection Officer). Draft, pending legal review.",
-  run(b) {
+  run(b, ctx) {
     const text = b.policy.text;
     const at = text.search(DPO_RE);
     const nearby = at >= 0 ? text.slice(Math.max(0, at - 200), at + 300) : "";
-    if (at >= 0 && CONTACT_RE.test(nearby)) {
-      return [pass("A DPO contact is published", "The policy names a Data Protection Officer with contact details.", [])];
+    const { status, item } = decidePolicyItem(at >= 0 && CONTACT_RE.test(nearby) ? "found" : at >= 0 ? "partial" : "missing", ctx, "dpo-contact");
+    const a = assistedFields(ctx, item);
+    if (status === "pass") {
+      return [{ ...pass("A DPO contact is published", item?.quote ? `The policy says: “${item.quote.slice(0, 200)}”.` : "The policy names a Data Protection Officer with contact details.", []), ...a }];
+    }
+    if (status === "needs_review") {
+      return [
+        {
+          status,
+          title: "Check whether a DPO contact is published",
+          whyItMatters: "Data subjects and the NDPC need a direct way to reach the DPO.",
+          explanation: "The policy mentions a Data Protection Officer, but we couldn't confirm a way to contact them.",
+          remediation: "Publish the DPO's name or role with a dedicated email address, such as dpo@yourdomain.ng.",
+          pageKeys: [],
+          evidence: [...policyEvidence(b), ...a.evidence],
+          ...(a.assisted ? { assisted: a.assisted } : {}),
+        },
+      ];
     }
     return [
       {
+        ...(a.assisted ? { assisted: a.assisted } : {}),
         status: "fail",
         title: "No Data Protection Officer contact is published",
         whyItMatters: "Data subjects and the NDPC need a direct way to reach the DPO.",
@@ -311,7 +336,7 @@ export const C09: CheckDef = {
             : "No privacy policy was found, so no Data Protection Officer contact was published where visitors would look.",
         remediation: "Publish the DPO's name or role with a dedicated email address, such as dpo@yourdomain.ng.",
         pageKeys: [],
-        evidence: b.evidence.filter((e) => e.kind === "policy_text").map((e) => ({ kind: "policy_text" as const, sha256: e.sha256 })),
+        evidence: [...policyEvidence(b), ...a.evidence],
       },
     ];
   },
@@ -323,7 +348,7 @@ export const C10: CheckDef = {
   area: "transfers",
   severity: "high",
   legalRef: "NDPA 2023 s.41–43 (cross-border transfers). Draft, pending legal review.",
-  run(b) {
+  run(b, ctx) {
     const foreign = b.flows
       .map((f) => {
         const v = classifyHost(f.host);
@@ -336,24 +361,47 @@ export const C10: CheckDef = {
     const clauses = b.policy.found ? evaluatePolicyClausesByRules(b.policy.text, true) : [];
     const transfer = clauses.find((c) => c.id === "cross-border-transfer");
     const countries = uniq(foreign.map((f) => f.country!)).sort();
-    if (transfer?.status === "found") {
-      return [pass("Transfers abroad are disclosed", `Data goes to ${list(countries)}, and the policy states the basis for transfers outside Nigeria.`, [])];
+    const { status, item } = b.policy.found
+      ? decidePolicyItem(transfer?.status === "found" ? "found" : transfer?.status === "partial" ? "partial" : "missing", ctx, "cross-border-transfer")
+      : { status: "fail" as const, item: null };
+    const a = assistedFields(ctx, item);
+    if (status === "pass") {
+      return [{ ...pass("Transfers abroad are disclosed", `Data goes to ${list(countries)}, and the policy states the basis for transfers outside Nigeria.`, []), ...a }];
+    }
+    if (status === "needs_review") {
+      return [
+        {
+          status,
+          title: `Data goes abroad (${list(countries, 3)}): check the stated transfer basis`,
+          whyItMatters: "Personal data may leave Nigeria only on a lawful basis that visitors are told about.",
+          explanation: `The site sends visitor data to ${list(uniq(foreign.map((f) => f.vendor)))} in ${list(countries)}. The policy mentions transfers, but we couldn't confirm it states a basis.`,
+          remediation: "State which countries data goes to and the safeguard relied on (for example adequacy or contractual clauses).",
+          pageKeys: [],
+          evidence: [...policyEvidence(b, "cross-border-transfer"), ...a.evidence],
+          ...(a.assisted ? { assisted: a.assisted } : {}),
+        },
+      ];
     }
     return [
       {
+        ...(a.assisted ? { assisted: a.assisted } : {}),
         status: "fail",
         title: `Data goes abroad (${list(countries, 3)}) with no stated transfer basis`,
         whyItMatters: "Personal data may leave Nigeria only on a lawful basis that visitors are told about.",
         explanation: `The site sends visitor data to ${list(uniq(foreign.map((f) => f.vendor)))} in ${list(countries)}, but the privacy policy doesn't explain transfers outside Nigeria.`,
         remediation: "State in the policy which countries data goes to and the safeguard relied on (for example adequacy or contractual clauses), or keep the data in Nigeria.",
         pageKeys: [],
-        evidence: b.evidence.filter((e) => e.kind === "policy_text").map((e) => ({ kind: "policy_text" as const, sha256: e.sha256, pointer: "cross-border-transfer" })),
+        evidence: [...policyEvidence(b, "cross-border-transfer"), ...a.evidence],
       },
     ];
   },
 };
 
-function pass(title: string, explanation: string, pageKeys: string[]) {
+export function policyEvidence(b: { evidence: Array<{ kind: string; sha256: string }> }, pointer?: string) {
+  return b.evidence.filter((e) => e.kind === "policy_text").map((e) => ({ kind: "policy_text" as const, sha256: e.sha256, ...(pointer ? { pointer } : {}) }));
+}
+
+export function pass(title: string, explanation: string, pageKeys: string[]) {
   return { status: "pass" as const, title, whyItMatters: "Checked and found compliant.", explanation, remediation: "No action needed.", pageKeys, evidence: [] };
 }
 

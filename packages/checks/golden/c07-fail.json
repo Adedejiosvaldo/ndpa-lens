@@ -1,6 +1,6 @@
 {
  "schema": "ndpa-lens/bundle@1",
- "engineVersion": "1.0.0",
+ "engineVersion": "1.1.0",
  "target": {
   "url": "https://c07-fail.fixtures.test:443/",
   "hostname": "c07-fail.fixtures.test"
@@ -12,19 +12,36 @@
   "addresses": [
    "127.0.0.1"
   ],
-  "reachable": false,
-  "status": null,
-  "redirects": [],
+  "reachable": true,
+  "status": 200,
+  "redirects": [
+   {
+    "url": "https://c07-fail.fixtures.test:443/",
+    "status": 200
+   }
+  ],
+  "certificateBypassed": false,
   "httpRedirectsToHttps": null,
-  "headers": {},
+  "headers": {
+   "content-type": "text/html; charset=utf-8",
+   "strict-transport-security": "max-age=31536000; includeSubDomains",
+   "content-security-policy": "default-src 'self' https: 'unsafe-inline'; frame-ancestors 'none'",
+   "x-frame-options": "DENY",
+   "x-content-type-options": "nosniff",
+   "referrer-policy": "strict-origin-when-cross-origin",
+   "date": "Sat, 21 Nov 2026 12:26:19 GMT",
+   "connection": "keep-alive",
+   "keep-alive": "timeout=5",
+   "transfer-encoding": "chunked"
+  },
   "tls": {
    "protocol": "TLSv1.3",
    "authorized": true,
    "authorizationError": null,
    "subject": "baseline.fixtures.test",
    "issuer": "NDPA Lens Fixtures CA",
-   "validFrom": "2026-11-20T12:15:45.000Z",
-   "validTo": "2027-02-19T12:15:45.000Z",
+   "validFrom": "2026-11-20T12:25:30.000Z",
+   "validTo": "2027-02-19T12:25:30.000Z",
    "daysToExpiry": 89,
    "altNames": [
     "*.fixtures.test",
@@ -36,15 +53,15 @@
    ]
   },
   "robots": {
-   "status": null,
-   "body": null,
+   "status": 200,
+   "body": "User-agent: *\nAllow: /\n",
    "disallowsAll": false
   },
   "egress": {
    "ip": null,
    "source": "none"
   },
-  "checkedAt": "2026-11-21T12:16:35.217Z"
+  "checkedAt": "2026-11-21T12:26:19.834Z"
  },
  "discovered": [
   {
@@ -193,8 +210,8 @@
      "pageId": "p00",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "8732d111d5b4d2fc3a77b1eb421c0ec5ac36274494d85201ff6e95bdedaf69d2",
-     "bytes": 2596
+     "sha256": "777f9f81b0b4ceebc9e027d850cbb8188b016f7cd12412596d655f46d2df5d04",
+     "bytes": 2608
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p00/none/cookies.json",
@@ -211,12 +228,12 @@
      "pageId": "p00",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "115220f00a83b7ee485ec6ba0027aa68bb5f0282afaaed0fa4f4e79a04a60e83",
+     "sha256": "931c0a183dfa62464f87f76cb1437602d42964fc225a18bb0aadb3be49c091d9",
      "bytes": 1311
     }
    ],
-   "capturedAt": "2026-11-21T12:16:35.217Z",
-   "durationMs": 633
+   "capturedAt": "2026-11-21T12:26:19.835Z",
+   "durationMs": 646
   },
   {
    "pageId": "p00",
@@ -269,7 +286,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799396.484725,
+     "expires": 1826799981.098045,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -338,8 +355,8 @@
      "pageId": "p00",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "439410dfe60a45ba25a149afa4cce79062d3b6d5c1d57acd488ca888c0b116c6",
-     "bytes": 4950
+     "sha256": "da87906325ef66bfa7ddf5abf11fa7fa70c90a6522f547f5d2a4315f93dc1b61",
+     "bytes": 4976
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p00/reject/cookies.json",
@@ -347,7 +364,7 @@
      "pageId": "p00",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "692bd75164666b3e7ec4a5763f8af8a2e2c7dc392c4d24e25b6a9cb9ea9f8880",
+     "sha256": "d32337c62dd280202ba4ad6454b62372cef9cfe34c6a18c500dd57527838dd9b",
      "bytes": 309
     },
     {
@@ -356,12 +373,12 @@
      "pageId": "p00",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "60aa21231745af3bd71620c68c098125b453b430d98452350f9a54204e345912",
+     "sha256": "162e1c5afc0c8e939228ec5daa580d0b5a056c1844017edf779130388c9df452",
      "bytes": 1008
     }
    ],
-   "capturedAt": "2026-11-21T12:16:35.850Z",
-   "durationMs": 1781
+   "capturedAt": "2026-11-21T12:26:20.481Z",
+   "durationMs": 1713
   },
   {
    "pageId": "p00",
@@ -458,7 +475,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799396.491085,
+     "expires": 1826799981.127413,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -544,8 +561,8 @@
      "pageId": "p00",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "7bc5375982fcfeca349eb09ad2ed01f1ca8dda17689f6cac7abdc9118849aa2f",
-     "bytes": 10427
+     "sha256": "cad297d584f5f29c3c974cbf7028b94542fce1d47088b443b7b50bc812d26090",
+     "bytes": 10439
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p00/accept/cookies.json",
@@ -553,7 +570,7 @@
      "pageId": "p00",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "880b6eaf1d649a5796552656434ea7f0f110d7260ec5dd9eeb57980f2258a389",
+     "sha256": "cfcf3aa90b4dfb335810a4f5812be73a7c54276f324a218994a289399f72b49d",
      "bytes": 309
     },
     {
@@ -562,12 +579,12 @@
      "pageId": "p00",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "8fe468255f481c678679418eee9f81a3c25db5a0373b54b8987cb5c301c8783c",
+     "sha256": "06d5c9162d85a0bc8f5069a5c1736c925f317b03ea4ab813b3cfcd9bfa6e39ee",
      "bytes": 2712
     }
    ],
-   "capturedAt": "2026-11-21T12:16:35.851Z",
-   "durationMs": 1801
+   "capturedAt": "2026-11-21T12:26:20.481Z",
+   "durationMs": 1806
   },
   {
    "pageId": "p00m",
@@ -683,8 +700,8 @@
      "pageId": "p00m",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "551bdd2492d93da8ac14e9028ef3747f61ec7d5c0093290334dd9999d4b9da44",
-     "bytes": 2615
+     "sha256": "8c8d9d6c698fd2437b0dd4e9cdb619eb83a927ebb5707307b891a2164c1b3069",
+     "bytes": 2614
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p00m/none/cookies.json",
@@ -701,12 +718,12 @@
      "pageId": "p00m",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "8fab245471c6f439fb04093a6e90089a192693fb61d3d1612f3081affc92a22e",
+     "sha256": "2085a66abf698c107979cefc519f83506d7191915455981c652e05581683fbc1",
      "bytes": 1310
     }
    ],
-   "capturedAt": "2026-11-21T12:16:40.002Z",
-   "durationMs": 846
+   "capturedAt": "2026-11-21T12:26:24.650Z",
+   "durationMs": 831
   },
   {
    "pageId": "p01",
@@ -843,7 +860,7 @@
      "pageId": "p01",
      "consentState": "none",
      "contentType": "text/html",
-     "sha256": "e1f3342d711572736faa8c6bea29c8aa4b7ec889aa7fe1d28c9b4bf4d2bcd4a8",
+     "sha256": "0a6568612980fa3cc049a077979bda83b9e730241eebf3e2242bc27d19d58d6a",
      "bytes": 2593
     },
     {
@@ -870,8 +887,8 @@
      "pageId": "p01",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "ecee7d3ad26ec0eb77bedf8fe99f28f71ec7a5a9570aac9c285c5f904db7a694",
-     "bytes": 2606
+     "sha256": "4977ea09dae486f86fec4b4fc3c9aa37d3965d0dc03d7470e2a8c48351bbd275",
+     "bytes": 2604
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p01/none/cookies.json",
@@ -888,12 +905,12 @@
      "pageId": "p01",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "b2da33dfe790ffaebca88d08fa4844f16d1fb14945415b4cd9487f0658df4e60",
+     "sha256": "5b9869d0b5183f1af76f7035173ea6ee9173afe1f1f6bbdd89adb3a6491f32da",
      "bytes": 2387
     }
    ],
-   "capturedAt": "2026-11-21T12:16:35.851Z",
-   "durationMs": 689
+   "capturedAt": "2026-11-21T12:26:20.481Z",
+   "durationMs": 678
   },
   {
    "pageId": "p01",
@@ -946,7 +963,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799396.484609,
+     "expires": 1826799981.098359,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -1036,7 +1053,7 @@
      "pageId": "p01",
      "consentState": "reject",
      "contentType": "text/html",
-     "sha256": "7aa481683cacfd70d8658359f87be332c5211bb8618e1f8d111019599b4095de",
+     "sha256": "9f6581d315082867541062c2bd8ea35a2c03ebb766185acd8a42f1f1166dfb93",
      "bytes": 2658
     },
     {
@@ -1063,8 +1080,8 @@
      "pageId": "p01",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "e450562fa47dd8235b1d4a6686d034cc84924edc5e84a78b29ada3c4ddfc23de",
-     "bytes": 4962
+     "sha256": "f231629c3acefe65d55e0148321777795bca5735c8ea03cadfa61a1b8d34851f",
+     "bytes": 4961
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p01/reject/cookies.json",
@@ -1072,7 +1089,7 @@
      "pageId": "p01",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "e15b65aad37e7281dd60f392b0c7c104b3bc2a61f4b83f021b5f36c72893ee37",
+     "sha256": "27cb0f98376a1288dcc22f7c129fddc68d85c15533395e776389413ac6ba9e76",
      "bytes": 309
     },
     {
@@ -1081,12 +1098,12 @@
      "pageId": "p01",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "e100b9e008fd39405b967848420e8233f2b6ac9ed27afc305182ef54449151ed",
+     "sha256": "7525e08f771c2d0fe5f4c9c12bae1a6596724ae6799634814a8640c09652e302",
      "bytes": 2090
     }
    ],
-   "capturedAt": "2026-11-21T12:16:35.851Z",
-   "durationMs": 1781
+   "capturedAt": "2026-11-21T12:26:20.481Z",
+   "durationMs": 1730
   },
   {
    "pageId": "p01",
@@ -1183,7 +1200,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799397.120137,
+     "expires": 1826799981.740045,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -1290,7 +1307,7 @@
      "pageId": "p01",
      "consentState": "accept",
      "contentType": "text/html",
-     "sha256": "78ae337f8b4fb6eb991e96f4dde9c68c3e817b6f05e7842f5315e774b2e69f00",
+     "sha256": "79c62256c91f9b96eeb6cf497b83c7ab81dbe46e688a0a8e904dbaa7a9e4c104",
      "bytes": 2871
     },
     {
@@ -1317,8 +1334,8 @@
      "pageId": "p01",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "7f3451a23256dd61516c886ff727f75a136d6140d6c23598e9947723832721ea",
-     "bytes": 10411
+     "sha256": "7f9aa151ab2e2d3297d860724c1b3ae83a2b7c4a59497cdf198320eca97736ba",
+     "bytes": 10437
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p01/accept/cookies.json",
@@ -1326,7 +1343,7 @@
      "pageId": "p01",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "f49d04b3a957b9310595ba0de3c1e87c597c9b953fa1824c88a7612c25619f76",
+     "sha256": "c0944223b15d78c01c528d290243e7bc3a3f7d2ed61f6f227f3ecb69836058f1",
      "bytes": 309
     },
     {
@@ -1335,12 +1352,12 @@
      "pageId": "p01",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "64e6914ab95c1fc6e714d63103902315c1cdeb8971ee9bfce23175184b680f26",
+     "sha256": "0fa85eaea25346be44f79dd63026ee6bc387ad5874620c6ff29ecc8edc3712ee",
      "bytes": 3794
     }
    ],
-   "capturedAt": "2026-11-21T12:16:36.540Z",
-   "durationMs": 1697
+   "capturedAt": "2026-11-21T12:26:21.159Z",
+   "durationMs": 1715
   },
   {
    "pageId": "p02",
@@ -1456,8 +1473,8 @@
      "pageId": "p02",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "e71df0398b4a34491b826bc642771dcc2638074e4640a976704e3a815c7c5111",
-     "bytes": 2598
+     "sha256": "3e5df77af276d011c1ee924f3a13faff477f24bee5780e9cf79ac48205ab1b42",
+     "bytes": 2599
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p02/none/cookies.json",
@@ -1474,12 +1491,12 @@
      "pageId": "p02",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "df5391cc6525d840bd2e55ec90f53bbf16f60f4b4200c409fb1f3f9d9cd223b7",
+     "sha256": "2e46029f3fb24f4238b9fd34344c126bfb2b16ca4e124a2a3ece576aec5c6784",
      "bytes": 1319
     }
    ],
-   "capturedAt": "2026-11-21T12:16:37.633Z",
-   "durationMs": 677
+   "capturedAt": "2026-11-21T12:26:22.194Z",
+   "durationMs": 683
   },
   {
    "pageId": "p02",
@@ -1532,7 +1549,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799398.245568,
+     "expires": 1826799982.872838,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -1601,8 +1618,8 @@
      "pageId": "p02",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "92c91220b91895e77bf46cf592d4d592bcf02d29f80d235ac19eb2e5fbcc452a",
-     "bytes": 4970
+     "sha256": "444d88450bcdfdccc27e549eaf019abb9768330e60b28dd3a60ba3698cb0e881",
+     "bytes": 4956
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p02/reject/cookies.json",
@@ -1610,7 +1627,7 @@
      "pageId": "p02",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "f67bd67cad0b7987054eaf4f8a7ffd0568621efde20c041bd0ce5eb3d96136b8",
+     "sha256": "05d5db4a560fe6f540aa8fb5ec3ffbffbf415eed88d0561a1b003a6c91b11e20",
      "bytes": 309
     },
     {
@@ -1619,12 +1636,12 @@
      "pageId": "p02",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "b029f986285de888c8692884efb01701e20b2347dc453ceca425569c48097ec1",
+     "sha256": "8b257891decf108a5ebfe7128afacec22ea80e1262ee09a3b80939e9c1951e2f",
      "bytes": 1024
     }
    ],
-   "capturedAt": "2026-11-21T12:16:37.633Z",
-   "durationMs": 1713
+   "capturedAt": "2026-11-21T12:26:22.212Z",
+   "durationMs": 1799
   },
   {
    "pageId": "p02",
@@ -1688,7 +1705,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799398.278998,
+     "expires": 1826799982.902294,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -1762,7 +1779,7 @@
      "pageId": "p02",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "17c473ba6d96bea320d77f271623adb493de6dc48154ce69e363a0c187d0deec",
+     "sha256": "cc2a28a097b5e327143539ac7b7f72017343d9943950cb8f4a8cdc17d89fd2d8",
      "bytes": 6276
     },
     {
@@ -1771,7 +1788,7 @@
      "pageId": "p02",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "066a5037a7aaa67917c1587917d5aafa8db8e392462ee500a18ea465d13291b0",
+     "sha256": "e7f071aba6772eeaa8047ebc573a4cc9ec11cf3dd2bb4c7cc5dcf27726b7135f",
      "bytes": 309
     },
     {
@@ -1780,12 +1797,12 @@
      "pageId": "p02",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "5d08cfd0d3297b114482511ec09e0e1946252fbc3d356298fd1c143e165cb1d1",
+     "sha256": "1ca486f058a3fe0bcd8a494a79231346db00d1d26a86b6279905bc57568c91f8",
      "bytes": 1443
     }
    ],
-   "capturedAt": "2026-11-21T12:16:37.653Z",
-   "durationMs": 1718
+   "capturedAt": "2026-11-21T12:26:22.287Z",
+   "durationMs": 1725
   },
   {
    "pageId": "p03",
@@ -1903,8 +1920,8 @@
      "pageId": "p03",
      "consentState": "none",
      "contentType": "text/html",
-     "sha256": "a712d26cfd60f6846b90021482ab74b0dc70ef3bd1f95544dba8236f7158746e",
-     "bytes": 2261
+     "sha256": "cd8f5bccaa1000802755a37c54b8cc9f113b914ec00d0011b1a949eacfdac279",
+     "bytes": 2262
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p03/none/screenshot_fold.png",
@@ -1930,8 +1947,8 @@
      "pageId": "p03",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "e297d97c52f2d86dd643c2f4b8fda328cedea0c75f77353564bab0051f9d96f8",
-     "bytes": 2593
+     "sha256": "595c9d82c81e5ba36d2ffa79beb9518d1bafc90f5b6b8e8b3fb2818a43cdec23",
+     "bytes": 2605
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p03/none/cookies.json",
@@ -1948,12 +1965,12 @@
      "pageId": "p03",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "d6ca17bea06c30c3ebe35f2e0ff89b2107689180a6984faabb1f944878df0b62",
+     "sha256": "19a916ba2ba7df23b8d69cdc6b1fd54b202392c0178568c19d2304ff812f5571",
      "bytes": 2001
     }
    ],
-   "capturedAt": "2026-11-21T12:16:38.238Z",
-   "durationMs": 641
+   "capturedAt": "2026-11-21T12:26:22.875Z",
+   "durationMs": 632
   },
   {
    "pageId": "p03",
@@ -2006,7 +2023,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799398.89147,
+     "expires": 1826799983.472763,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -2077,8 +2094,8 @@
      "pageId": "p03",
      "consentState": "reject",
      "contentType": "text/html",
-     "sha256": "e4f106c8740a7b23f08cc458335ae94fde7a289962102dcf8c8dc2915de35a1f",
-     "bytes": 2326
+     "sha256": "1b8f4a6f5b396c01e6b0ff2dfc5eb84f9297a4e498329560f6f7f7fdb7e7d964",
+     "bytes": 2327
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p03/reject/screenshot_fold.png",
@@ -2104,8 +2121,8 @@
      "pageId": "p03",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "d4d214dec2aed3f8b3a69422bdf6602e2fb40ef115099965f559155e6c0f39b0",
-     "bytes": 4962
+     "sha256": "cc42cd80a731c3b73fc5b0865cfc9d4619072c066fc3350025fd2a83a192b974",
+     "bytes": 4948
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p03/reject/cookies.json",
@@ -2113,8 +2130,8 @@
      "pageId": "p03",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "cd58ad61066aeeb7ea4ab3faa694ae8d1c29e3d4c099850784ec5341506b520b",
-     "bytes": 308
+     "sha256": "59441679c71275758a1a7511cc3fdac6cfbb9f813b0ad5222bc46b2908de1c6c",
+     "bytes": 309
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p03/reject/forms.json",
@@ -2122,12 +2139,12 @@
      "pageId": "p03",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "733a38854d102fd2dff7bbda561a2cf6e742b49097e8793d3d8f9e452147f5c8",
+     "sha256": "b70bb89c205996c1ff14e7176a7600913cc8717734881637e2caee7dcc541d45",
      "bytes": 1703
     }
    ],
-   "capturedAt": "2026-11-21T12:16:38.311Z",
-   "durationMs": 1687
+   "capturedAt": "2026-11-21T12:26:22.878Z",
+   "durationMs": 1690
   },
   {
    "pageId": "p03",
@@ -2175,43 +2192,10 @@
      "blocked": null
     },
     {
-     "url": "https://www.googletagmanager.com/gtag/js?id=G-FIXTURE",
-     "host": "www.googletagmanager.com",
-     "method": "GET",
-     "resourceType": "script",
-     "phase": "after-choice",
-     "thirdParty": true,
-     "postData": null,
-     "status": null,
-     "blocked": "net::ERR_CONNECTION_REFUSED"
-    },
-    {
-     "url": "https://connect.facebook.net/en_US/fbevents.js",
-     "host": "connect.facebook.net",
-     "method": "GET",
-     "resourceType": "script",
-     "phase": "after-choice",
-     "thirdParty": true,
-     "postData": null,
-     "status": null,
-     "blocked": "net::ERR_CONNECTION_REFUSED"
-    },
-    {
      "url": "https://static.hotjar.com/c/hotjar-1234.js",
      "host": "static.hotjar.com",
      "method": "GET",
      "resourceType": "script",
-     "phase": "after-choice",
-     "thirdParty": true,
-     "postData": null,
-     "status": null,
-     "blocked": "net::ERR_CONNECTION_REFUSED"
-    },
-    {
-     "url": "https://www.facebook.com/tr?id=1234567890&ev=PageView",
-     "host": "www.facebook.com",
-     "method": "GET",
-     "resourceType": "image",
      "phase": "after-choice",
      "thirdParty": true,
      "postData": null,
@@ -2224,7 +2208,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799399.469925,
+     "expires": 1826799984.088202,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -2234,18 +2218,6 @@
    ],
    "localStorage": {},
    "console": [
-    {
-     "type": "error",
-     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
-    },
-    {
-     "type": "error",
-     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
-    },
-    {
-     "type": "error",
-     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
-    },
     {
      "type": "error",
      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
@@ -2312,8 +2284,8 @@
      "pageId": "p03",
      "consentState": "accept",
      "contentType": "text/html",
-     "sha256": "467d6a7a2eb4309a268125b772b30578b5106f3ff946964574df81d5fcabc1a7",
-     "bytes": 2539
+     "sha256": "e5adcab3804c0ff52c6fc85b2e7d07ec73ced0c972992070686f6fbc0f75c92e",
+     "bytes": 2393
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p03/accept/screenshot_fold.png",
@@ -2339,8 +2311,8 @@
      "pageId": "p03",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "ad66f4da0d12d7681443bea393edd6c8bc4cf6300fc2a9ae30ceae5e702f6252",
-     "bytes": 10418
+     "sha256": "44b22081dd549507e3143be35a1d61230c49bfcd7b49212ce64639d42e252cb9",
+     "bytes": 6251
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p03/accept/cookies.json",
@@ -2348,7 +2320,7 @@
      "pageId": "p03",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "35e8a63c6e66b96d1ad81fad8da4af80f6e14f0fbac9c0984ff202e48e076d7c",
+     "sha256": "9b1d4a1b0d0a5e6e2754019d3eed9796700994a027d7ee442c73ac1815d0315d",
      "bytes": 309
     },
     {
@@ -2357,12 +2329,12 @@
      "pageId": "p03",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "83b68a04dbecef072d863c7e744361edc7421a80469a60ecea65b29d7328f42b",
-     "bytes": 3407
+     "sha256": "383a01358ced92eb1ab25cd18c8e50996ca845aac3057e42b89e635c5f0b3936",
+     "bytes": 2122
     }
    ],
-   "capturedAt": "2026-11-21T12:16:38.879Z",
-   "durationMs": 1718
+   "capturedAt": "2026-11-21T12:26:23.508Z",
+   "durationMs": 1693
   },
   {
    "pageId": "p04",
@@ -2478,8 +2450,8 @@
      "pageId": "p04",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "422b78f251e9313806a93f2d3ea04a6d031997c84874779f99421492ac52010a",
-     "bytes": 2596
+     "sha256": "86824b1e70fb89b360eaa4e8ae9fd85fff43444a6fd5605844922402910f9fa9",
+     "bytes": 2597
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p04/none/cookies.json",
@@ -2496,12 +2468,12 @@
      "pageId": "p04",
      "consentState": "none",
      "contentType": "application/json",
-     "sha256": "8ebe2cb4a741e8e5986b1f1e6179b5c531697bfead3c84bc3876b9788e9b3a4d",
+     "sha256": "f3973cbbd32b7266d32aa7744ddd5719cd7381d6f90d7f85ff751c8265e369a3",
      "bytes": 1319
     }
    ],
-   "capturedAt": "2026-11-21T12:16:39.347Z",
-   "durationMs": 654
+   "capturedAt": "2026-11-21T12:26:24.012Z",
+   "durationMs": 637
   },
   {
    "pageId": "p04",
@@ -2554,7 +2526,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799399.995144,
+     "expires": 1826799984.624669,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -2623,8 +2595,8 @@
      "pageId": "p04",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "bc41e4bfb3334eac2d92cb7f170d0b3abac7f007443fcd0c2dc1797e4fe9746f",
-     "bytes": 4967
+     "sha256": "e91da22e30df7096add79a90fe2a2607613e0ee5eea8edeb58a02904cda973cb",
+     "bytes": 4957
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p04/reject/cookies.json",
@@ -2632,7 +2604,7 @@
      "pageId": "p04",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "df0004c0c13d593e7ff09804165c3101da7ce368292eac70edf57009a77a9d58",
+     "sha256": "c554c7ab73bb3245ba039c68ddd14d4cbce64759e2478f4d84b99d3d3609d0e0",
      "bytes": 309
     },
     {
@@ -2641,12 +2613,12 @@
      "pageId": "p04",
      "consentState": "reject",
      "contentType": "application/json",
-     "sha256": "66743b99b5203c2ad4f2dcad2689240ec001d92ee43e02fdcfc57e90081e043b",
+     "sha256": "b9bd221f7676c931e91e49b827697a9da3df54a7f487d59f7aaab46881dd59a6",
      "bytes": 1023
     }
    ],
-   "capturedAt": "2026-11-21T12:16:39.372Z",
-   "durationMs": 1715
+   "capturedAt": "2026-11-21T12:26:24.012Z",
+   "durationMs": 1693
   },
   {
    "pageId": "p04",
@@ -2743,7 +2715,7 @@
      "name": "consent",
      "domain": "c07-fail.fixtures.test",
      "path": "/",
-     "expires": 1826799400.60432,
+     "expires": 1826799985.202617,
      "httpOnly": false,
      "secure": false,
      "sameSite": "Lax",
@@ -2829,8 +2801,8 @@
      "pageId": "p04",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "bb93bf272fe6ae3aab8b19dd5fdee0cf239af4be8941bddad962a7ae925c94ee",
-     "bytes": 10436
+     "sha256": "e649cc48be98d6c72e48ee6bd1971b949a5d950c1e958d199b8c6e9ad50fa412",
+     "bytes": 10430
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p04/accept/cookies.json",
@@ -2838,8 +2810,8 @@
      "pageId": "p04",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "03b03263b43740c0e403a008cfc796ff2731b6dab18fd31147e91ef4dac61777",
-     "bytes": 308
+     "sha256": "ed216f6725db73dbd93a51683962b49563c0fb5073df99455665e627a83eb8bf",
+     "bytes": 309
     },
     {
      "key": "orgs/org-golden/scans/scan-c07-fail/p04/accept/forms.json",
@@ -2847,12 +2819,12 @@
      "pageId": "p04",
      "consentState": "accept",
      "contentType": "application/json",
-     "sha256": "b8d819c8aba860b9ef8b943a0660ec5a8fe640ccac58da4ee82e01e1ca863ef3",
+     "sha256": "9bb09fd39069ae74d22541f0439148385ee275bb414ccfd8688fc07020f8ec03",
      "bytes": 2727
     }
    ],
-   "capturedAt": "2026-11-21T12:16:40.001Z",
-   "durationMs": 1697
+   "capturedAt": "2026-11-21T12:26:24.568Z",
+   "durationMs": 1723
   }
  ],
  "homeLinks": [
@@ -2894,7 +2866,7 @@
     "state": "accept",
     "phase": "after-choice"
    },
-   "requestCount": 4
+   "requestCount": 3
   },
   {
    "host": "static.hotjar.com",
@@ -2918,7 +2890,7 @@
     "state": "accept",
     "phase": "after-choice"
    },
-   "requestCount": 4
+   "requestCount": 3
   },
   {
    "host": "www.googletagmanager.com",
@@ -2930,7 +2902,7 @@
     "state": "accept",
     "phase": "after-choice"
    },
-   "requestCount": 4
+   "requestCount": 3
   }
  ],
  "evidence": [
@@ -2940,8 +2912,8 @@
    "pageId": null,
    "consentState": null,
    "contentType": "application/json",
-   "sha256": "371425619ec2f27500eaf75f93c15e6de82f23da578c2df51c48742149c129d7",
-   "bytes": 974
+   "sha256": "c1d9f6498f84b148994012b1e4ae74692ca6e8807b5445ebcdea22936142c42f",
+   "bytes": 1611
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p00/none/dom.html",
@@ -2976,8 +2948,8 @@
    "pageId": "p00",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "8732d111d5b4d2fc3a77b1eb421c0ec5ac36274494d85201ff6e95bdedaf69d2",
-   "bytes": 2596
+   "sha256": "777f9f81b0b4ceebc9e027d850cbb8188b016f7cd12412596d655f46d2df5d04",
+   "bytes": 2608
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p00/none/cookies.json",
@@ -2994,7 +2966,7 @@
    "pageId": "p00",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "115220f00a83b7ee485ec6ba0027aa68bb5f0282afaaed0fa4f4e79a04a60e83",
+   "sha256": "931c0a183dfa62464f87f76cb1437602d42964fc225a18bb0aadb3be49c091d9",
    "bytes": 1311
   },
   {
@@ -3003,7 +2975,7 @@
    "pageId": "p01",
    "consentState": "none",
    "contentType": "text/html",
-   "sha256": "e1f3342d711572736faa8c6bea29c8aa4b7ec889aa7fe1d28c9b4bf4d2bcd4a8",
+   "sha256": "0a6568612980fa3cc049a077979bda83b9e730241eebf3e2242bc27d19d58d6a",
    "bytes": 2593
   },
   {
@@ -3030,8 +3002,8 @@
    "pageId": "p01",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "ecee7d3ad26ec0eb77bedf8fe99f28f71ec7a5a9570aac9c285c5f904db7a694",
-   "bytes": 2606
+   "sha256": "4977ea09dae486f86fec4b4fc3c9aa37d3965d0dc03d7470e2a8c48351bbd275",
+   "bytes": 2604
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p01/none/cookies.json",
@@ -3048,7 +3020,7 @@
    "pageId": "p01",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "b2da33dfe790ffaebca88d08fa4844f16d1fb14945415b4cd9487f0658df4e60",
+   "sha256": "5b9869d0b5183f1af76f7035173ea6ee9173afe1f1f6bbdd89adb3a6491f32da",
    "bytes": 2387
   },
   {
@@ -3079,12 +3051,39 @@
    "bytes": 17656
   },
   {
+   "key": "orgs/org-golden/scans/scan-c07-fail/p00/reject/har.json",
+   "kind": "har",
+   "pageId": "p00",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "da87906325ef66bfa7ddf5abf11fa7fa70c90a6522f547f5d2a4315f93dc1b61",
+   "bytes": 4976
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c07-fail/p00/reject/cookies.json",
+   "kind": "cookies",
+   "pageId": "p00",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "d32337c62dd280202ba4ad6454b62372cef9cfe34c6a18c500dd57527838dd9b",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c07-fail/p00/reject/forms.json",
+   "kind": "forms",
+   "pageId": "p00",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "162e1c5afc0c8e939228ec5daa580d0b5a056c1844017edf779130388c9df452",
+   "bytes": 1008
+  },
+  {
    "key": "orgs/org-golden/scans/scan-c07-fail/p01/reject/dom.html",
    "kind": "dom",
    "pageId": "p01",
    "consentState": "reject",
    "contentType": "text/html",
-   "sha256": "7aa481683cacfd70d8658359f87be332c5211bb8618e1f8d111019599b4095de",
+   "sha256": "9f6581d315082867541062c2bd8ea35a2c03ebb766185acd8a42f1f1166dfb93",
    "bytes": 2658
   },
   {
@@ -3106,40 +3105,13 @@
    "bytes": 28557
   },
   {
-   "key": "orgs/org-golden/scans/scan-c07-fail/p00/reject/har.json",
-   "kind": "har",
-   "pageId": "p00",
-   "consentState": "reject",
-   "contentType": "application/json",
-   "sha256": "439410dfe60a45ba25a149afa4cce79062d3b6d5c1d57acd488ca888c0b116c6",
-   "bytes": 4950
-  },
-  {
-   "key": "orgs/org-golden/scans/scan-c07-fail/p00/reject/cookies.json",
-   "kind": "cookies",
-   "pageId": "p00",
-   "consentState": "reject",
-   "contentType": "application/json",
-   "sha256": "692bd75164666b3e7ec4a5763f8af8a2e2c7dc392c4d24e25b6a9cb9ea9f8880",
-   "bytes": 309
-  },
-  {
-   "key": "orgs/org-golden/scans/scan-c07-fail/p00/reject/forms.json",
-   "kind": "forms",
-   "pageId": "p00",
-   "consentState": "reject",
-   "contentType": "application/json",
-   "sha256": "60aa21231745af3bd71620c68c098125b453b430d98452350f9a54204e345912",
-   "bytes": 1008
-  },
-  {
    "key": "orgs/org-golden/scans/scan-c07-fail/p01/reject/har.json",
    "kind": "har",
    "pageId": "p01",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "e450562fa47dd8235b1d4a6686d034cc84924edc5e84a78b29ada3c4ddfc23de",
-   "bytes": 4962
+   "sha256": "f231629c3acefe65d55e0148321777795bca5735c8ea03cadfa61a1b8d34851f",
+   "bytes": 4961
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p01/reject/cookies.json",
@@ -3147,7 +3119,7 @@
    "pageId": "p01",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "e15b65aad37e7281dd60f392b0c7c104b3bc2a61f4b83f021b5f36c72893ee37",
+   "sha256": "27cb0f98376a1288dcc22f7c129fddc68d85c15533395e776389413ac6ba9e76",
    "bytes": 309
   },
   {
@@ -3156,7 +3128,7 @@
    "pageId": "p01",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "e100b9e008fd39405b967848420e8233f2b6ac9ed27afc305182ef54449151ed",
+   "sha256": "7525e08f771c2d0fe5f4c9c12bae1a6596724ae6799634814a8640c09652e302",
    "bytes": 2090
   },
   {
@@ -3192,8 +3164,8 @@
    "pageId": "p00",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "7bc5375982fcfeca349eb09ad2ed01f1ca8dda17689f6cac7abdc9118849aa2f",
-   "bytes": 10427
+   "sha256": "cad297d584f5f29c3c974cbf7028b94542fce1d47088b443b7b50bc812d26090",
+   "bytes": 10439
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p00/accept/cookies.json",
@@ -3201,7 +3173,7 @@
    "pageId": "p00",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "880b6eaf1d649a5796552656434ea7f0f110d7260ec5dd9eeb57980f2258a389",
+   "sha256": "cfcf3aa90b4dfb335810a4f5812be73a7c54276f324a218994a289399f72b49d",
    "bytes": 309
   },
   {
@@ -3210,7 +3182,7 @@
    "pageId": "p00",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "8fe468255f481c678679418eee9f81a3c25db5a0373b54b8987cb5c301c8783c",
+   "sha256": "06d5c9162d85a0bc8f5069a5c1736c925f317b03ea4ab813b3cfcd9bfa6e39ee",
    "bytes": 2712
   },
   {
@@ -3219,7 +3191,7 @@
    "pageId": "p01",
    "consentState": "accept",
    "contentType": "text/html",
-   "sha256": "78ae337f8b4fb6eb991e96f4dde9c68c3e817b6f05e7842f5315e774b2e69f00",
+   "sha256": "79c62256c91f9b96eeb6cf497b83c7ab81dbe46e688a0a8e904dbaa7a9e4c104",
    "bytes": 2871
   },
   {
@@ -3246,8 +3218,8 @@
    "pageId": "p01",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "7f3451a23256dd61516c886ff727f75a136d6140d6c23598e9947723832721ea",
-   "bytes": 10411
+   "sha256": "7f9aa151ab2e2d3297d860724c1b3ae83a2b7c4a59497cdf198320eca97736ba",
+   "bytes": 10437
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p01/accept/cookies.json",
@@ -3255,7 +3227,7 @@
    "pageId": "p01",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "f49d04b3a957b9310595ba0de3c1e87c597c9b953fa1824c88a7612c25619f76",
+   "sha256": "c0944223b15d78c01c528d290243e7bc3a3f7d2ed61f6f227f3ecb69836058f1",
    "bytes": 309
   },
   {
@@ -3264,7 +3236,7 @@
    "pageId": "p01",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "64e6914ab95c1fc6e714d63103902315c1cdeb8971ee9bfce23175184b680f26",
+   "sha256": "0fa85eaea25346be44f79dd63026ee6bc387ad5874620c6ff29ecc8edc3712ee",
    "bytes": 3794
   },
   {
@@ -3300,8 +3272,8 @@
    "pageId": "p02",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "e71df0398b4a34491b826bc642771dcc2638074e4640a976704e3a815c7c5111",
-   "bytes": 2598
+   "sha256": "3e5df77af276d011c1ee924f3a13faff477f24bee5780e9cf79ac48205ab1b42",
+   "bytes": 2599
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p02/none/cookies.json",
@@ -3318,7 +3290,7 @@
    "pageId": "p02",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "df5391cc6525d840bd2e55ec90f53bbf16f60f4b4200c409fb1f3f9d9cd223b7",
+   "sha256": "2e46029f3fb24f4238b9fd34344c126bfb2b16ca4e124a2a3ece576aec5c6784",
    "bytes": 1319
   },
   {
@@ -3327,8 +3299,8 @@
    "pageId": "p03",
    "consentState": "none",
    "contentType": "text/html",
-   "sha256": "a712d26cfd60f6846b90021482ab74b0dc70ef3bd1f95544dba8236f7158746e",
-   "bytes": 2261
+   "sha256": "cd8f5bccaa1000802755a37c54b8cc9f113b914ec00d0011b1a949eacfdac279",
+   "bytes": 2262
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p03/none/screenshot_fold.png",
@@ -3354,8 +3326,8 @@
    "pageId": "p03",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "e297d97c52f2d86dd643c2f4b8fda328cedea0c75f77353564bab0051f9d96f8",
-   "bytes": 2593
+   "sha256": "595c9d82c81e5ba36d2ffa79beb9518d1bafc90f5b6b8e8b3fb2818a43cdec23",
+   "bytes": 2605
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p03/none/cookies.json",
@@ -3372,7 +3344,7 @@
    "pageId": "p03",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "d6ca17bea06c30c3ebe35f2e0ff89b2107689180a6984faabb1f944878df0b62",
+   "sha256": "19a916ba2ba7df23b8d69cdc6b1fd54b202392c0178568c19d2304ff812f5571",
    "bytes": 2001
   },
   {
@@ -3408,8 +3380,8 @@
    "pageId": "p02",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "92c91220b91895e77bf46cf592d4d592bcf02d29f80d235ac19eb2e5fbcc452a",
-   "bytes": 4970
+   "sha256": "444d88450bcdfdccc27e549eaf019abb9768330e60b28dd3a60ba3698cb0e881",
+   "bytes": 4956
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p02/reject/cookies.json",
@@ -3417,7 +3389,7 @@
    "pageId": "p02",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "f67bd67cad0b7987054eaf4f8a7ffd0568621efde20c041bd0ce5eb3d96136b8",
+   "sha256": "05d5db4a560fe6f540aa8fb5ec3ffbffbf415eed88d0561a1b003a6c91b11e20",
    "bytes": 309
   },
   {
@@ -3426,7 +3398,7 @@
    "pageId": "p02",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "b029f986285de888c8692884efb01701e20b2347dc453ceca425569c48097ec1",
+   "sha256": "8b257891decf108a5ebfe7128afacec22ea80e1262ee09a3b80939e9c1951e2f",
    "bytes": 1024
   },
   {
@@ -3462,7 +3434,7 @@
    "pageId": "p02",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "17c473ba6d96bea320d77f271623adb493de6dc48154ce69e363a0c187d0deec",
+   "sha256": "cc2a28a097b5e327143539ac7b7f72017343d9943950cb8f4a8cdc17d89fd2d8",
    "bytes": 6276
   },
   {
@@ -3471,7 +3443,7 @@
    "pageId": "p02",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "066a5037a7aaa67917c1587917d5aafa8db8e392462ee500a18ea465d13291b0",
+   "sha256": "e7f071aba6772eeaa8047ebc573a4cc9ec11cf3dd2bb4c7cc5dcf27726b7135f",
    "bytes": 309
   },
   {
@@ -3480,7 +3452,7 @@
    "pageId": "p02",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "5d08cfd0d3297b114482511ec09e0e1946252fbc3d356298fd1c143e165cb1d1",
+   "sha256": "1ca486f058a3fe0bcd8a494a79231346db00d1d26a86b6279905bc57568c91f8",
    "bytes": 1443
   },
   {
@@ -3489,8 +3461,8 @@
    "pageId": "p03",
    "consentState": "reject",
    "contentType": "text/html",
-   "sha256": "e4f106c8740a7b23f08cc458335ae94fde7a289962102dcf8c8dc2915de35a1f",
-   "bytes": 2326
+   "sha256": "1b8f4a6f5b396c01e6b0ff2dfc5eb84f9297a4e498329560f6f7f7fdb7e7d964",
+   "bytes": 2327
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p03/reject/screenshot_fold.png",
@@ -3516,8 +3488,8 @@
    "pageId": "p03",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "d4d214dec2aed3f8b3a69422bdf6602e2fb40ef115099965f559155e6c0f39b0",
-   "bytes": 4962
+   "sha256": "cc42cd80a731c3b73fc5b0865cfc9d4619072c066fc3350025fd2a83a192b974",
+   "bytes": 4948
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p03/reject/cookies.json",
@@ -3525,8 +3497,8 @@
    "pageId": "p03",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "cd58ad61066aeeb7ea4ab3faa694ae8d1c29e3d4c099850784ec5341506b520b",
-   "bytes": 308
+   "sha256": "59441679c71275758a1a7511cc3fdac6cfbb9f813b0ad5222bc46b2908de1c6c",
+   "bytes": 309
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p03/reject/forms.json",
@@ -3534,7 +3506,7 @@
    "pageId": "p03",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "733a38854d102fd2dff7bbda561a2cf6e742b49097e8793d3d8f9e452147f5c8",
+   "sha256": "b70bb89c205996c1ff14e7176a7600913cc8717734881637e2caee7dcc541d45",
    "bytes": 1703
   },
   {
@@ -3570,8 +3542,8 @@
    "pageId": "p04",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "422b78f251e9313806a93f2d3ea04a6d031997c84874779f99421492ac52010a",
-   "bytes": 2596
+   "sha256": "86824b1e70fb89b360eaa4e8ae9fd85fff43444a6fd5605844922402910f9fa9",
+   "bytes": 2597
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p04/none/cookies.json",
@@ -3588,7 +3560,7 @@
    "pageId": "p04",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "8ebe2cb4a741e8e5986b1f1e6179b5c531697bfead3c84bc3876b9788e9b3a4d",
+   "sha256": "f3973cbbd32b7266d32aa7744ddd5719cd7381d6f90d7f85ff751c8265e369a3",
    "bytes": 1319
   },
   {
@@ -3597,8 +3569,8 @@
    "pageId": "p03",
    "consentState": "accept",
    "contentType": "text/html",
-   "sha256": "467d6a7a2eb4309a268125b772b30578b5106f3ff946964574df81d5fcabc1a7",
-   "bytes": 2539
+   "sha256": "e5adcab3804c0ff52c6fc85b2e7d07ec73ced0c972992070686f6fbc0f75c92e",
+   "bytes": 2393
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p03/accept/screenshot_fold.png",
@@ -3624,8 +3596,8 @@
    "pageId": "p03",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "ad66f4da0d12d7681443bea393edd6c8bc4cf6300fc2a9ae30ceae5e702f6252",
-   "bytes": 10418
+   "sha256": "44b22081dd549507e3143be35a1d61230c49bfcd7b49212ce64639d42e252cb9",
+   "bytes": 6251
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p03/accept/cookies.json",
@@ -3633,7 +3605,7 @@
    "pageId": "p03",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "35e8a63c6e66b96d1ad81fad8da4af80f6e14f0fbac9c0984ff202e48e076d7c",
+   "sha256": "9b1d4a1b0d0a5e6e2754019d3eed9796700994a027d7ee442c73ac1815d0315d",
    "bytes": 309
   },
   {
@@ -3642,8 +3614,8 @@
    "pageId": "p03",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "83b68a04dbecef072d863c7e744361edc7421a80469a60ecea65b29d7328f42b",
-   "bytes": 3407
+   "sha256": "383a01358ced92eb1ab25cd18c8e50996ca845aac3057e42b89e635c5f0b3936",
+   "bytes": 2122
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p00m/none/dom.html",
@@ -3678,8 +3650,8 @@
    "pageId": "p00m",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "551bdd2492d93da8ac14e9028ef3747f61ec7d5c0093290334dd9999d4b9da44",
-   "bytes": 2615
+   "sha256": "8c8d9d6c698fd2437b0dd4e9cdb619eb83a927ebb5707307b891a2164c1b3069",
+   "bytes": 2614
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p00m/none/cookies.json",
@@ -3696,7 +3668,7 @@
    "pageId": "p00m",
    "consentState": "none",
    "contentType": "application/json",
-   "sha256": "8fab245471c6f439fb04093a6e90089a192693fb61d3d1612f3081affc92a22e",
+   "sha256": "2085a66abf698c107979cefc519f83506d7191915455981c652e05581683fbc1",
    "bytes": 1310
   },
   {
@@ -3732,8 +3704,8 @@
    "pageId": "p04",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "bc41e4bfb3334eac2d92cb7f170d0b3abac7f007443fcd0c2dc1797e4fe9746f",
-   "bytes": 4967
+   "sha256": "e91da22e30df7096add79a90fe2a2607613e0ee5eea8edeb58a02904cda973cb",
+   "bytes": 4957
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p04/reject/cookies.json",
@@ -3741,7 +3713,7 @@
    "pageId": "p04",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "df0004c0c13d593e7ff09804165c3101da7ce368292eac70edf57009a77a9d58",
+   "sha256": "c554c7ab73bb3245ba039c68ddd14d4cbce64759e2478f4d84b99d3d3609d0e0",
    "bytes": 309
   },
   {
@@ -3750,7 +3722,7 @@
    "pageId": "p04",
    "consentState": "reject",
    "contentType": "application/json",
-   "sha256": "66743b99b5203c2ad4f2dcad2689240ec001d92ee43e02fdcfc57e90081e043b",
+   "sha256": "b9bd221f7676c931e91e49b827697a9da3df54a7f487d59f7aaab46881dd59a6",
    "bytes": 1023
   },
   {
@@ -3786,8 +3758,8 @@
    "pageId": "p04",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "bb93bf272fe6ae3aab8b19dd5fdee0cf239af4be8941bddad962a7ae925c94ee",
-   "bytes": 10436
+   "sha256": "e649cc48be98d6c72e48ee6bd1971b949a5d950c1e958d199b8c6e9ad50fa412",
+   "bytes": 10430
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p04/accept/cookies.json",
@@ -3795,8 +3767,8 @@
    "pageId": "p04",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "03b03263b43740c0e403a008cfc796ff2731b6dab18fd31147e91ef4dac61777",
-   "bytes": 308
+   "sha256": "ed216f6725db73dbd93a51683962b49563c0fb5073df99455665e627a83eb8bf",
+   "bytes": 309
   },
   {
    "key": "orgs/org-golden/scans/scan-c07-fail/p04/accept/forms.json",
@@ -3804,7 +3776,7 @@
    "pageId": "p04",
    "consentState": "accept",
    "contentType": "application/json",
-   "sha256": "b8d819c8aba860b9ef8b943a0660ec5a8fe640ccac58da4ee82e01e1ca863ef3",
+   "sha256": "9bb09fd39069ae74d22541f0439148385ee275bb414ccfd8688fc07020f8ec03",
    "bytes": 2727
   }
  ]
