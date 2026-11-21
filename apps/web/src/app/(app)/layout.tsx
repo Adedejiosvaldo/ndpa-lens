@@ -28,6 +28,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   const nav = org
     ? [
         { href: `/orgs/${org.orgId}`, label: "Overview" },
+        { href: `/orgs/${org.orgId}/clients`, label: "Clients" },
         { href: `/orgs/${org.orgId}/settings`, label: "Organisation" },
         ...(canAdmin
           ? [

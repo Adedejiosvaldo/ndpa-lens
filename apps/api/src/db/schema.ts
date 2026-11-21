@@ -41,6 +41,7 @@ export const memberRole = pgEnum("member_role", ["owner", "admin", "analyst", "v
 export const licenceStatus = pgEnum("licence_status", ["unsubmitted", "pending", "verified", "rejected"]);
 export const invitationStatus = pgEnum("invitation_status", ["pending", "accepted", "rejected", "canceled"]);
 export const actorType = pgEnum("actor_type", ["user", "platform_admin", "system", "public"]);
+export const ndpcTier = pgEnum("ndpc_tier", ["uhl", "ehl", "ohl", "unknown"]);
 
 // ---- global identity (not tenant-scoped) ----
 
@@ -232,4 +233,66 @@ export const auditLog = pgTable(
     createdAt: createdAt(),
   },
   (t) => [index("audit_log_org_created_idx").on(t.orgId, t.createdAt.desc()), index("audit_log_actor_idx").on(t.actorUserId)],
+);
+
+// ---- clients and domains (CLI-01..05, RLS-protected) ----
+
+export const clients = pgTable(
+  "clients",
+  {
+    id: id(),
+    orgId: uuid("org_id")
+      .notNull()
+      .references(() => organisations.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    rcNumber: text("rc_number"),
+    sector: text("sector").notNull(),
+    ndpcTier: ndpcTier("ndpc_tier").notNull().default("unknown"),
+    /** { name, email, phone } of the client's contact person. */
+    contact: jsonb("contact").notNull().default(sql`'{}'::jsonb`),
+    createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
+    createdAt: createdAt(),
+    archivedAt: timestamp("archived_at", { withTimezone: true }),
+  },
+  (t) => [index("clients_org_name_idx").on(t.orgId, t.name)],
+);
+
+export const domains = pgTable(
+  "domains",
+  {
+    id: id(),
+    orgId: uuid("org_id")
+      .notNull()
+      .references(() => organisations.id, { onDelete: "cascade" }),
+    clientId: uuid("client_id")
+      .notNull()
+      .references(() => clients.id, { onDelete: "cascade" }),
+    hostname: text("hostname").notNull(),
+    /** CLI-02: named pages to always scan (sign-up, checkout, contact, careers…). */
+    extraUrls: text("extra_urls").array().notNull().default(sql`'{}'::text[]`),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex("domains_org_hostname_uq").on(t.orgId, t.hostname), index("domains_client_idx").on(t.clientId)],
+);
+
+/** CLI-03: the DPCO confirms it is engaged by the client before the first scan of a domain. Append-only. */
+export const authorisations = pgTable(
+  "authorisations",
+  {
+    id: id(),
+    orgId: uuid("org_id")
+      .notNull()
+      .references(() => organisations.id, { onDelete: "cascade" }),
+    domainId: uuid("domain_id")
+      .notNull()
+      .references(() => domains.id, { onDelete: "cascade" }),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "restrict" }),
+    statementVersion: text("statement_version").notNull(),
+    statement: text("statement").notNull(),
+    ip: inet("ip"),
+    createdAt: createdAt(),
+  },
+  (t) => [index("authorisations_domain_idx").on(t.domainId)],
 );
