@@ -35,7 +35,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [ ] **15** [Evidence store, preflight and SSRF hardening](steps/15-evidence-preflight.md) — done 2026-11-21 — connect-time SSRF guard (found and fixed an IP-literal redirect hole), preflight (TLS, robots, headers, egress), evidence writer; 24 engine tests
 - [ ] **16** [Page discovery up to 25 pages](steps/16-discovery.md) — done 2026-11-21 — deterministic page discovery (home, named, ranked by type and keyword, cap 25); 5 tests
 - [ ] **17** [Capture in three consent states, plus form inspection](steps/17-consent-capture.md) — done 2026-11-21 — capture in none/reject/accept with request phases, CMP + heuristic banner, button prominence, forms (never submitted), browser SSRF interception, hashed evidence; 9 browser tests
-- [ ] **18** [`packages/vendors` and GeoIP](steps/18-vendors.md) — todo
+- [ ] **18** [`packages/vendors` and GeoIP](steps/18-vendors.md) — done 2026-11-21 — curated vendor list v2026-11-21.1 (77 vendors, NG payments), host classification, DB-IP Lite GeoIP wrapper; 5 tests
 - [ ] **19** [Labelled fixtures site](steps/19-fixtures-site.md) — todo
 - [ ] **20** [Checks C-01 to C-10 with golden tests](steps/20-checks-01-10.md) — todo
 - [ ] **21** [Checks C-11 to C-20 and the LLM policy classifier](steps/21-checks-11-20-llm.md) — todo
@@ -72,6 +72,8 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - **2026-11-21, MFA encryption key:** accept Better Auth's encryption keyed by `BETTER_AUTH_SECRET`. Treat that secret as long-lived and keep it in SOPS (Step 33); any rotation is a planned re-enrolment for all users. (Deviation from PRD §9.)
 - **2026-11-21, HIBP outage:** fail open. Sign-up and reset proceed without the check and log a warning.
 - **2026-11-21, GeoIP source:** DB-IP Lite (country and ASN, CC-BY, monthly, no key) instead of MaxMind GeoLite2. Packs credit DB-IP.
+
+- **2026-11-21, vendor list source (decided during Step 18; tell the owner):** curated in-house from public facts rather than seeded from DuckDuckGo Tracker Radar (CC BY-NC-SA 4.0, no commercial use) or Disconnect (GPL-3.0). Revisit only with a commercial licence.
 
 ## Owner tracks 👤 (not coded)
 
