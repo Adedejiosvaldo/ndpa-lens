@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { CheckStatus, ScanResult } from "@/types/audit";
+import type { CheckStatus, ScanResult } from "@ndpa/scan-engine/types";
 import type { DcpmiTierResult } from "@/lib/gaid-assessment";
 import { Comparison, ConsentTestPanel, PagesPanel, PolicyTab, TelemetryTab } from "./ReportTabs";
 import { Logo, checkLabel, cx, hostOf, scoreTone, toneText } from "./ui";

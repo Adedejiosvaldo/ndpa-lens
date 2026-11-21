@@ -12,13 +12,13 @@ import type {
   ScanProgress,
   ScanResult,
   TechnicalEvidence,
-} from "@/types/audit";
-import { analyzePrivacyPolicy } from "@/lib/policy-analyzer";
-import { fetchSiteIcon } from "@/lib/site-icon";
-import { captureWithBrowser, type BrowserCapture } from "@/lib/browser-capture";
-import { assertPublicUrl, normalizeTargetUrl, safeFetch, ScanAbort } from "@/lib/net-guard";
-import { inspectDomContent, looksBlocked } from "@/lib/page-inspect";
-import { detectTrackersFromUrls, getRootDomain, isNonEssentialCookie } from "@/lib/trackers";
+} from "@ndpa/scan-engine/types";
+import { analyzePrivacyPolicy } from "@ndpa/scan-engine";
+import { fetchSiteIcon } from "@ndpa/scan-engine";
+import { captureWithBrowser, type BrowserCapture } from "@ndpa/scan-engine";
+import { assertPublicUrl, normalizeTargetUrl, safeFetch, ScanAbort } from "@ndpa/scan-engine";
+import { inspectDomContent, looksBlocked } from "@ndpa/scan-engine";
+import { detectTrackersFromUrls, getRootDomain, isNonEssentialCookie } from "@ndpa/scan-engine";
 
 function parseSetCookieHeaders(
   setCookieHeaders: string[],

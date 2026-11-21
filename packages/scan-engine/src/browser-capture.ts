@@ -8,10 +8,10 @@ import type {
   PageKind,
   PageScan,
   ScanProgress,
-} from "@/types/audit";
-import { checkHost, ScanAbort } from "@/lib/net-guard";
-import { fetchSiteIconInBrowser } from "@/lib/site-icon";
-import { extractReadablePolicyText } from "@/lib/policy-analyzer";
+} from "./types.js";
+import { checkHost, ScanAbort } from "./net-guard.js";
+import { fetchSiteIconInBrowser } from "./site-icon.js";
+import { extractReadablePolicyText } from "./policy-analyzer.js";
 import {
   ACCEPT_RE,
   inspectDomContent,
@@ -19,14 +19,14 @@ import {
   pickSubpages,
   REJECT_RE,
   SETTINGS_RE,
-} from "@/lib/page-inspect";
+} from "./page-inspect.js";
 import {
   detectCmp,
   detectTrackersFromUrls,
   getRootDomain,
   isConsentModeDeniedPing,
   isNonEssentialCookie,
-} from "@/lib/trackers";
+} from "./trackers.js";
 
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 NDPALensAudit/1.0";

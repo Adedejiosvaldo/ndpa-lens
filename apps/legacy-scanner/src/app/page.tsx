@@ -15,8 +15,8 @@ import {
   Scale,
   Search,
 } from "lucide-react";
-import type { RemediationProfile, ScanResult, ScanStage } from "@/types/audit";
-import { checkWebsiteInput } from "@/lib/url-check";
+import type { RemediationProfile, ScanResult, ScanStage } from "@ndpa/scan-engine/types";
+import { checkWebsiteInput } from "@ndpa/scan-engine/url-check";
 import { SAMPLE_AUDITS } from "@/lib/sample-audit";
 import {
   buildRemediationPack,

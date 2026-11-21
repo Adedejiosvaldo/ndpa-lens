@@ -1,4 +1,4 @@
-import type { DetectedTracker } from "@/types/audit";
+import type { DetectedTracker } from "./types.js";
 
 interface TrackerSignature {
   name: string;

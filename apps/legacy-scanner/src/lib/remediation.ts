@@ -1,4 +1,4 @@
-import type { ClauseStatus, RemediationProfile, ScanResult } from "@/types/audit";
+import type { ClauseStatus, RemediationProfile, ScanResult } from "@ndpa/scan-engine/types";
 
 export type InternalComplianceAnswer = "Yes" | "Partial" | "No" | "Verify";
 

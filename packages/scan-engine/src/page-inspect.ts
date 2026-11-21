@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
-import type { FormFinding, PageKind } from "@/types/audit";
-import { getRootDomain } from "@/lib/trackers";
+import type { FormFinding, PageKind } from "./types.js";
+import { getRootDomain } from "./trackers.js";
 
 /** Words on a button that mean "say no" to non-essential cookies. */
 export const REJECT_RE =

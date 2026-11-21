@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { checkWebsiteInput } from "@/lib/url-check";
-import type { ScanResult, ScanStage } from "@/types/audit";
+import { checkWebsiteInput } from "@ndpa/scan-engine/url-check";
+import type { ScanResult, ScanStage } from "@ndpa/scan-engine/types";
 import {
   AlertCircle,
   ArrowRight,

@@ -31,7 +31,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 
 ## Phase 3 — Scan engine and checks
 
-- [ ] **14** [Extract `packages/scan-engine`](steps/14-extract-scan-engine.md) — todo
+- [ ] **14** [Extract `packages/scan-engine`](steps/14-extract-scan-engine.md) — done 2026-11-21 — `@ndpa/scan-engine` (git mv, history kept); legacy scan of example.com identical before/after; 11 unit tests + 2 known gaps pinned
 - [ ] **15** [Evidence store, preflight and SSRF hardening](steps/15-evidence-preflight.md) — todo
 - [ ] **16** [Page discovery up to 25 pages](steps/16-discovery.md) — todo
 - [ ] **17** [Capture in three consent states, plus form inspection](steps/17-consent-capture.md) — todo
@@ -92,6 +92,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 
 _Out-of-scope work found during a step goes here, with a reason._
 
+- [ ] **14a** Two engine gaps found by the new unit tests (Step 14), pinned as `it.fails` and to be fixed in Steps 15 and 17: (1) `normalizeTargetUrl("ftp://…")` isn't refused up front (it becomes host "ftp" and only DNS stops it); (2) OneTrust's standard loader `cdn.cookielaw.org/…/otSDKStub.js` isn't recognised from page source.
 - [ ] **07a** Global API rate limit, 300 requests a minute per session (PRD §8 conventions). Found in Step 07, which only rate-limits login and the email endpoints. Do it before Step 35's security gate.
 
 - [ ] **01a** Fix the Docker image build — found in Step 01. On `main`, the **Build and push image** job fails at `RUN corepack enable` (exit 127): the `mcr.microsoft.com/playwright:v1.64.1-noble` base image has no corepack. The likely fix is to install pnpm directly (`npm i -g pnpm@11.5.2`, matching `packageManager`). The same Dockerfile is used by `deploy/deploy.sh`, so manual VPS builds are probably broken too. Deferred by the owner on 2026-11-20 together with all VPS, image and deploy work. **Do it in Step 33.**
