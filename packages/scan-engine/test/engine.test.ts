@@ -34,8 +34,7 @@ describe("net-guard", () => {
     expect(() => normalizeTargetUrl("")).toThrow(ScanAbort);
   });
 
-  // Known gap (tracker 14a): another scheme is not refused here; it becomes a bogus host that DNS later rejects.
-  it.fails("refuses non-http schemes up front", () => {
+  it("refuses non-http schemes up front (tracker 14a, fixed in Step 15)", () => {
     expect(() => normalizeTargetUrl("ftp://harbour.ng")).toThrow(ScanAbort);
   });
 });
