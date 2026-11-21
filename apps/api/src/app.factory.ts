@@ -3,6 +3,7 @@ import type { INestApplication } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
+import expressLib from "express";
 import type { Express } from "express";
 import { Logger } from "nestjs-pino";
 import { AppModule } from "./app.module.js";
@@ -21,6 +22,8 @@ export function configureApp(app: INestApplication, config: AppConfig): INestApp
   express.disable("x-powered-by");
   express.set("trust proxy", config.TRUST_PROXY);
   app.use(cookieParser());
+  // BRAND-01: logos arrive as raw PNG or SVG bytes, at most 1 MB.
+  app.use("/v1/orgs/:orgId/branding/logo", expressLib.raw({ type: ["image/png", "image/svg+xml"], limit: "1mb" }));
   app.setGlobalPrefix("v1");
   app.enableShutdownHooks();
   // The web app (another origin in dev) calls the API with cookies.

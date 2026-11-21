@@ -10,7 +10,12 @@ describe("loadConfig", () => {
       BETTER_AUTH_SECRET: "x".repeat(32),
       SMTP_URL: "smtp://h:25",
       EMAIL_FROM: "a@b.c",
+      S3_ENDPOINT: "http://s3.test",
+      S3_BUCKET: "bucket",
+      S3_ACCESS_KEY_ID: "k",
+      S3_SECRET_ACCESS_KEY: "s",
     });
+    expect(c.S3_FORCE_PATH_STYLE).toBe(true);
     expect(c.PORT).toBe(4000);
     expect(c.NODE_ENV).toBe("development");
     expect(c.TRUST_PROXY).toBe("loopback");

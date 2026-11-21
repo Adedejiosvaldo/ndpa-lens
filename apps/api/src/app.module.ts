@@ -9,6 +9,7 @@ import { APP_CONFIG, type AppConfig } from "./config/config.js";
 import { DbService } from "./db/db.service.js";
 import { HealthController } from "./health/health.controller.js";
 import { OrgsModule } from "./orgs/orgs.module.js";
+import { StorageModule } from "./storage/storage.module.js";
 import { RedisService } from "./redis/redis.service.js";
 
 const REQUEST_ID_RE = /^[A-Za-z0-9._-]{1,128}$/;
@@ -35,6 +36,7 @@ export class AppModule {
             ...(config.NODE_ENV === "development" ? { transport: { target: "pino-pretty" } } : {}),
           },
         }),
+        StorageModule,
         AuthModule,
         OrgsModule,
       ],

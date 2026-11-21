@@ -2,6 +2,7 @@ import { type ChildProcess, execFileSync, spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { PostgreSqlContainer } from "@testcontainers/postgresql";
 import { RedisContainer } from "@testcontainers/redis";
+import { ObjectStore } from "@ndpa/storage";
 import { GenericContainer, Wait } from "testcontainers";
 import { API_URL, WEB_URL } from "./env";
 
@@ -30,11 +31,24 @@ async function waitFor(url: string, proc: ChildProcess, name: string) {
 }
 
 export default async function globalSetup() {
-  const [pg, redis, mailpit] = await Promise.all([
+  const S3_KEYS = { accessKeyId: "e2e-access", secretAccessKey: "e2e-secret-0123456789" };
+  const s3json = JSON.stringify({
+    identities: [{ name: "e2e", credentials: [{ accessKey: S3_KEYS.accessKeyId, secretKey: S3_KEYS.secretAccessKey }], actions: ["Admin", "Read", "List", "Tagging", "Write"] }],
+  });
+  const [pg, redis, mailpit, s3] = await Promise.all([
     new PostgreSqlContainer("postgres:16-alpine").start(),
     new RedisContainer("redis:7-alpine").start(),
     new GenericContainer("axllent/mailpit:v1.27").withExposedPorts(1025, 8025).withWaitStrategy(Wait.forListeningPorts()).start(),
+    new GenericContainer("chrislusf/seaweedfs:4.54")
+      .withCommand(["server", "-dir=/data", "-s3", "-s3.port=8333", "-s3.config=/etc/seaweedfs/s3.json"])
+      .withCopyContentToContainer([{ content: s3json, target: "/etc/seaweedfs/s3.json" }])
+      .withExposedPorts(8333)
+      .withWaitStrategy(Wait.forHttp("/healthz", 8333).forStatusCode(200))
+      .withStartupTimeout(120_000)
+      .start(),
   ]);
+  const s3Endpoint = `http://${s3.getHost()}:${s3.getMappedPort(8333)}`;
+  await new ObjectStore({ endpoint: s3Endpoint, region: "auto", bucket: "e2e-evidence", forcePathStyle: true, ...S3_KEYS }).ensureBucket();
   const owner = pg.getConnectionUri();
   const mailpitHttp = `http://${mailpit.getHost()}:${mailpit.getMappedPort(8025)}`;
   process.env.E2E_MAILPIT_URL = mailpitHttp;
@@ -62,6 +76,12 @@ export default async function globalSetup() {
       SMTP_URL: `smtp://${mailpit.getHost()}:${mailpit.getMappedPort(1025)}`,
       EMAIL_FROM: "NDPA Lens <no-reply@ndpa.test>",
       TRUST_PROXY: "loopback",
+      S3_ENDPOINT: s3Endpoint,
+      S3_REGION: "auto",
+      S3_BUCKET: "e2e-evidence",
+      S3_ACCESS_KEY_ID: S3_KEYS.accessKeyId,
+      S3_SECRET_ACCESS_KEY: S3_KEYS.secretAccessKey,
+      S3_FORCE_PATH_STYLE: "true",
     },
   });
   const web = spawn("pnpm", ["--filter", "web", "exec", "next", "start", "-p", new URL(WEB_URL).port], {
@@ -73,7 +93,7 @@ export default async function globalSetup() {
   const teardown = async () => {
     api.kill("SIGTERM");
     web.kill("SIGTERM");
-    await Promise.all([pg.stop(), redis.stop(), mailpit.stop()]);
+    await Promise.all([pg.stop(), redis.stop(), mailpit.stop(), s3.stop()]);
   };
   try {
     await waitFor(`${API_URL}/v1/health`, api, "API");

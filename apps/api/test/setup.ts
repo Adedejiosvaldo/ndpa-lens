@@ -53,6 +53,13 @@ export async function startDeps(): Promise<Deps> {
       EMAIL_FROM: "NDPA Lens <no-reply@ndpa.test>",
       // Tests simulate client IPs with X-Forwarded-For.
       TRUST_PROXY: true,
+      // Placeholder S3: the store never connects unless a test uses it (see seaweed.ts).
+      S3_ENDPOINT: "http://127.0.0.1:1",
+      S3_REGION: "auto",
+      S3_BUCKET: "test-bucket",
+      S3_ACCESS_KEY_ID: "unused",
+      S3_SECRET_ACCESS_KEY: "unused",
+      S3_FORCE_PATH_STYLE: true,
     },
   };
 }

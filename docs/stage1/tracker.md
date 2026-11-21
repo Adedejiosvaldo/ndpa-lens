@@ -26,7 +26,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 
 ## Phase 2 — Clients
 
-- [ ] **12** [Licence submission and white-label branding](steps/12-licence-branding.md) — todo
+- [ ] **12** [Licence submission and white-label branding](steps/12-licence-branding.md) — done 2026-11-21 — `@ndpa/storage` (S3/R2), licence submission, branding with safe logo upload and live cover preview; 7 API tests + e2e
 - [ ] **13** [Clients, domains and authorisation attestation](steps/13-clients-domains.md) — todo
 
 ## Phase 3 — Scan engine and checks

@@ -1,12 +1,13 @@
 import { Module, type OnModuleInit } from "@nestjs/common";
 import { SignupContext } from "../auth/signup-context.js";
+import { BrandingController } from "./branding.controller.js";
 import { InvitationsController } from "./invitations.controller.js";
 import { OrgGuard } from "./org.guard.js";
 import { OrgsController } from "./orgs.controller.js";
 import { OrgsService } from "./orgs.service.js";
 
 @Module({
-  controllers: [OrgsController, InvitationsController],
+  controllers: [OrgsController, InvitationsController, BrandingController],
   providers: [OrgsService, OrgGuard],
   exports: [OrgsService, OrgGuard],
 })

@@ -15,6 +15,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
     "@iconify-json/solar": "^1.2.16",
+    "@ndpa/storage": "workspace:*",
     "@playwright/test": "^1.65.1",
     "@tailwindcss/postcss": "^4.3.5",
     "@testcontainers/postgresql": "^12.2.2",
