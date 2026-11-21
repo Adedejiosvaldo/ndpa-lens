@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Findings review</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#047857}a:hover{color:#065f46}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1280px; height: 860px; box-sizing: border-box; background: #f6f7f9; color: #0b0d12; font-family: Geist, system-ui, sans-serif; font-size: 14px; display: flex; flex-direction: column;">
+  <header style="height: 56px; flex-shrink: 0; background: #ffffff; border-bottom: 1px solid #e2e5ea; display: flex; align-items: center; gap: 24px; padding: 0 32px;">
+    <span style="font-weight: 600; letter-spacing: -0.01em;">NDPA <span style="color: #047857;">Lens</span></span>
+    <span style="color: #4b5563; border-left: 1px solid #e2e5ea; padding-left: 16px;">Adeyemi &amp; Co</span>
+    <nav aria-label="Main" style="display: flex; gap: 4px;">
+      <a href="#" style="color: #4b5563; text-decoration: none; padding: 6px 12px; border-radius: 6px;">Clients</a>
+      <a href="#" style="color: #0b0d12; text-decoration: none; padding: 6px 12px; border-radius: 6px; background: #eceef2; font-weight: 500;">Scans</a>
+      <a href="#" style="color: #4b5563; text-decoration: none; padding: 6px 12px; border-radius: 6px;">Packs</a>
+    </nav>
+    <span style="margin-left: auto; color: #4b5563;">Funmi Adeyemi</span>
+  </header>
+
+  <div style="padding: 20px 32px 0; flex-shrink: 0;">
+    <p style="margin: 0; color: #4b5563;">Harbour Assurance Plc / harbourassurance.ng / Scan of 14 Feb 2027, 10:42 WAT</p>
+    <div style="margin-top: 10px; display: flex; align-items: center; gap: 16px; background: #ffffff; border: 1px solid #e2e5ea; border-radius: 12px; padding: 14px 18px;">
+      <h1 style="margin: 0; font-size: 20px; font-weight: 650; letter-spacing: -0.02em;">Findings</h1>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <span style="background: #fef3f2; color: #b42318; font-weight: 600; font-size: 12px; padding: 3px 8px; border-radius: 4px;">3 Critical</span>
+        <span style="background: #fffaeb; color: #b54708; font-weight: 600; font-size: 12px; padding: 3px 8px; border-radius: 4px;">5 High</span>
+        <span style="background: #fefbe8; color: #855a00; font-weight: 600; font-size: 12px; padding: 3px 8px; border-radius: 4px;">9 Medium</span>
+        <span style="color: #4b5563;">across 12 pages, 3 consent states</span>
+      </div>
+      <button type="button" style="margin-left: auto; height: 38px; padding: 0 18px; border: 0; border-radius: 6px; background: #047857; color: #ffffff; font-weight: 500; font-size: 14px;">Generate pack</button>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: 220px minmax(0, 1fr) 420px; gap: 20px; padding: 20px 32px 24px;">
+    <aside aria-label="Filters" style="display: flex; flex-direction: column; gap: 20px;">
+      <fieldset style="border: 0; margin: 0; padding: 0;">
+        <legend style="font-weight: 600; margin-bottom: 8px;">Severity</legend>
+        <label style="display: flex; gap: 8px; align-items: center; padding: 4px 0;"><input type="checkbox" checked> Critical <span style="margin-left: auto; color: #4b5563;">3</span></label>
+        <label style="display: flex; gap: 8px; align-items: center; padding: 4px 0;"><input type="checkbox" checked> High <span style="margin-left: auto; color: #4b5563;">5</span></label>
+        <label style="display: flex; gap: 8px; align-items: center; padding: 4px 0;"><input type="checkbox" checked> Medium <span style="margin-left: auto; color: #4b5563;">9</span></label>
+        <label style="display: flex; gap: 8px; align-items: center; padding: 4px 0;"><input type="checkbox"> Low <span style="margin-left: auto; color: #4b5563;">4</span></label>
+      </fieldset>
+      <fieldset style="border: 0; margin: 0; padding: 0;">
+        <legend style="font-weight: 600; margin-bottom: 8px;">NDPA area</legend>
+        <label style="display: flex; gap: 8px; align-items: center; padding: 4px 0;"><input type="checkbox" checked> Consent</label>
+        <label style="display: flex; gap: 8px; align-items: center; padding: 4px 0;"><input type="checkbox" checked> Transparency</label>
+        <label style="display: flex; gap: 8px; align-items: center; padding: 4px 0;"><input type="checkbox" checked> Rights</label>
+        <label style="display: flex; gap: 8px; align-items: center; padding: 4px 0;"><input type="checkbox" checked> Security</label>
+        <label style="display: flex; gap: 8px; align-items: center; padding: 4px 0;"><input type="checkbox" checked> Transfers</label>
+      </fieldset>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600;">Page
+        <select style="height: 36px; border: 1px solid #e2e5ea; border-radius: 6px; background: #ffffff; font: inherit; font-weight: 400; padding: 0 8px;"><option>All 12 pages</option></select>
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600;">Status
+        <select style="height: 36px; border: 1px solid #e2e5ea; border-radius: 6px; background: #ffffff; font: inherit; font-weight: 400; padding: 0 8px;"><option>Open</option></select>
+      </label>
+      <p style="margin: 0; font-size: 12px; color: #4b5563;">Keyboard: J and K move between findings, E opens evidence.</p>
+    </aside>
+
+    <section aria-label="Findings" style="display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+      <article style="background: #ffffff; border: 2px solid #047857; border-radius: 12px; padding: 16px 18px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="background: #fef3f2; color: #b42318; font-weight: 600; font-size: 12px; padding: 2px 8px; border-radius: 4px;">Critical</span>
+          <span style="color: #4b5563; font-size: 12px;">Consent / 9 of 12 pages</span>
+        </div>
+        <h2 style="margin: 8px 0 0; font-size: 16px; font-weight: 600; letter-spacing: -0.01em;">Meta Pixel loads before the visitor consents</h2>
+        <p style="margin: 4px 0 0; color: #4b5563; line-height: 1.5;">Tracking a visitor before they agree has no lawful basis under NDPA s.25 to 26.</p>
+        <div style="margin-top: 12px; display: flex; gap: 8px;">
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid #e2e5ea; border-radius: 6px; background: #ffffff; font-size: 13px;">View evidence</button>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid #e2e5ea; border-radius: 6px; background: #ffffff; font-size: 13px;">Mark false positive</button>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid #e2e5ea; border-radius: 6px; background: #ffffff; font-size: 13px;">Add note for client</button>
+        </div>
+      </article>
+      <article style="background: #ffffff; border: 1px solid #e2e5ea; border-radius: 12px; padding: 16px 18px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="background: #fef3f2; color: #b42318; font-weight: 600; font-size: 12px; padding: 2px 8px; border-radius: 4px;">Critical</span>
+          <span style="color: #4b5563; font-size: 12px;">Consent / 12 of 12 pages</span>
+        </div>
+        <h2 style="margin: 8px 0 0; font-size: 16px; font-weight: 600;">Google Analytics keeps running after “reject all”</h2>
+        <p style="margin: 4px 0 0; color: #4b5563; line-height: 1.5;">The reject button does not stop tracking, so refusal is not respected.</p>
+      </article>
+      <article style="background: #ffffff; border: 1px solid #e2e5ea; border-radius: 12px; padding: 16px 18px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="background: #fef3f2; color: #b42318; font-weight: 600; font-size: 12px; padding: 2px 8px; border-radius: 4px;">Critical</span>
+          <span style="color: #4b5563; font-size: 12px;">Transfers / checkout</span>
+        </div>
+        <h2 style="margin: 8px 0 0; font-size: 16px; font-weight: 600;">Hashed email sent to Meta from the checkout page</h2>
+        <p style="margin: 4px 0 0; color: #4b5563; line-height: 1.5;">Personal data leaves Nigeria in a third-party request with no disclosed basis.</p>
+      </article>
+      <article style="background: #ffffff; border: 1px solid #e2e5ea; border-radius: 12px; padding: 16px 18px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="background: #fffaeb; color: #b54708; font-weight: 600; font-size: 12px; padding: 2px 8px; border-radius: 4px;">High</span>
+          <span style="color: #4b5563; font-size: 12px;">Consent / homepage</span>
+        </div>
+        <h2 style="margin: 8px 0 0; font-size: 16px; font-weight: 600;">The banner has “Accept” but no equal “Reject”</h2>
+      </article>
+    </section>
+
+    <aside aria-label="Evidence" style="background: #ffffff; border: 1px solid #e2e5ea; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px; overflow: hidden;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <h2 style="margin: 0; font-size: 15px; font-weight: 600;">Evidence</h2>
+        <button type="button" aria-label="Close evidence" style="border: 0; background: transparent; color: #4b5563; font-size: 13px;">Close</button>
+      </div>
+      <div role="img" aria-label="Placeholder for the checkout page screenshot with the Meta Pixel request highlighted" style="height: 190px; border-radius: 8px; background: #eceef2; border: 1px dashed #b6bcc7; display: flex; align-items: center; justify-content: center; text-align: center; color: #4b5563; font-size: 12px; padding: 16px; box-sizing: border-box;">Screenshot of the checkout page, before any interaction, with the pixel request highlighted</div>
+      <dl style="margin: 0; display: grid; grid-template-columns: 110px minmax(0, 1fr); row-gap: 10px; column-gap: 12px; font-size: 13px;">
+        <dt style="color: #4b5563;">Request</dt>
+        <dd style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 12px; word-break: break-all;">GET connect.facebook.net/en_US/fbevents.js</dd>
+        <dt style="color: #4b5563;">Page</dt>
+        <dd style="margin: 0;">harbourassurance.ng/checkout</dd>
+        <dt style="color: #4b5563;">Consent state</dt>
+        <dd style="margin: 0;">No interaction (banner showing, nothing clicked)</dd>
+        <dt style="color: #4b5563;">Recorded</dt>
+        <dd style="margin: 0;">14 Feb 2027, 10:42:07 WAT</dd>
+        <dt style="color: #4b5563;">Destination</dt>
+        <dd style="margin: 0;">Meta Platforms, Ireland</dd>
+        <dt style="color: #4b5563;">Legal reference</dt>
+        <dd style="margin: 0;">NDPA s.25 to 26 (draft, pending legal review)</dd>
+        <dt style="color: #4b5563;">File hash</dt>
+        <dd style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 12px;">sha256 9f2c41ab…e70dc3f5</dd>
+      </dl>
+      <div style="border-top: 1px solid #e2e5ea; padding-top: 12px;">
+        <p style="margin: 0; font-weight: 600; font-size: 13px;">What to tell the client</p>
+        <p style="margin: 4px 0 0; color: #4b5563; line-height: 1.5; font-size: 13px;">Load the Meta Pixel only after the visitor clicks “Accept”. Most consent tools can hold the script until then.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":860}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
