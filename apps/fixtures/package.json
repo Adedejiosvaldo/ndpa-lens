@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "node src/cli.mjs",
     "typecheck": "true",
-    "test": "node --test src/"
+    "test": "node --test src/*.test.mjs"
   },
   "dependencies": {
     "selfsigned": "^5.5.0"
