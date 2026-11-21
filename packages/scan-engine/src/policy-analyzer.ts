@@ -126,9 +126,11 @@ export const NDPA_CLAUSE_RULES: ClauseRule[] = [
       /data\s+retention/i,
       /retain\s+(your\s+)?(personal\s+)?(data|information)\s+for\s+as\s+long\s+as/i,
       /retention\s+period/i,
+      // A stated period: "we retain policy records for six years".
+      /\b(retain|keep|store|hold)\b[^.]{0,80}?\bfor\s+(up\s+to\s+|at\s+least\s+)?(\d+|one|two|three|four|five|six|seven|eight|nine|ten|twelve)\s+(days?|weeks?|months?|years?)\b/i,
     ],
     partialPatterns: [
-      /how\s+long\s+we\s+keep\s+(your\s+)?(data|information)/i,
+      /how\s+long\s+we\s+(keep|retain|store)/i,
       /delete\s+or\s+anonymi[sz]e\s+your\s+(data|information)\s+when\s+no\s+longer/i,
     ],
   },

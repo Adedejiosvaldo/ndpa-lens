@@ -37,7 +37,7 @@ Status values: `todo` · `in progress (branch)` · `done YYYY-MM-DD — one-line
 - [ ] **17** [Capture in three consent states, plus form inspection](steps/17-consent-capture.md) — done 2026-11-21 — capture in none/reject/accept with request phases, CMP + heuristic banner, button prominence, forms (never submitted), browser SSRF interception, hashed evidence; 9 browser tests
 - [ ] **18** [`packages/vendors` and GeoIP](steps/18-vendors.md) — done 2026-11-21 — curated vendor list v2026-11-21.1 (77 vendors, NG payments), host classification, DB-IP Lite GeoIP wrapper; 5 tests
 - [ ] **19** [Labelled fixtures site](steps/19-fixtures-site.md) — done 2026-11-21 — HTTPS fixture site: compliant baseline + one fail variant per check (C-01..C-20), real tracker hostnames, own CA, expired-cert SNI; 3 tests
-- [ ] **20** [Checks C-01 to C-10 with golden tests](steps/20-checks-01-10.md) — todo
+- [ ] **20** [Checks C-01 to C-10 with golden tests](steps/20-checks-01-10.md) — done 2026-11-21 — `collectEvidence` bundle + `@ndpa/checks` C-01..C-10 as pure versioned functions; golden bundles from all 21 fixture variants; 24 tests
 - [ ] **21** [Checks C-11 to C-20 and the LLM policy classifier](steps/21-checks-11-20-llm.md) — todo
 - [ ] **22** [Scan worker, scans API and SSE](steps/22-worker-scan.md) — todo
 - [ ] **23** [Scan progress and findings review UI](steps/23-scan-ui.md) — todo

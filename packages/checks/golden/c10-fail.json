@@ -1,0 +1,4570 @@
+{
+ "schema": "ndpa-lens/bundle@1",
+ "engineVersion": "1.0.0",
+ "target": {
+  "url": "https://c10-fail.fixtures.test:443/",
+  "hostname": "c10-fail.fixtures.test"
+ },
+ "preflight": {
+  "requestedUrl": "https://c10-fail.fixtures.test:443/",
+  "finalUrl": "https://c10-fail.fixtures.test:443/",
+  "hostname": "c10-fail.fixtures.test",
+  "addresses": [
+   "127.0.0.1"
+  ],
+  "reachable": false,
+  "status": null,
+  "redirects": [],
+  "httpRedirectsToHttps": null,
+  "headers": {},
+  "tls": {
+   "protocol": "TLSv1.3",
+   "authorized": true,
+   "authorizationError": null,
+   "subject": "baseline.fixtures.test",
+   "issuer": "NDPA Lens Fixtures CA",
+   "validFrom": "2026-11-20T12:15:45.000Z",
+   "validTo": "2027-02-19T12:15:45.000Z",
+   "daysToExpiry": 89,
+   "altNames": [
+    "*.fixtures.test",
+    "www.googletagmanager.com",
+    "www.google-analytics.com",
+    "connect.facebook.net",
+    "www.facebook.com",
+    "static.hotjar.com"
+   ]
+  },
+  "robots": {
+   "status": null,
+   "body": null,
+   "disallowsAll": false
+  },
+  "egress": {
+   "ip": null,
+   "source": "none"
+  },
+  "checkedAt": "2026-11-21T12:16:55.918Z"
+ },
+ "discovered": [
+  {
+   "url": "https://c10-fail.fixtures.test:443/",
+   "pageType": "home",
+   "source": "home",
+   "score": 1000
+  },
+  {
+   "url": "https://c10-fail.fixtures.test:443/privacy",
+   "pageType": "policy",
+   "source": "link",
+   "score": 100
+  },
+  {
+   "url": "https://c10-fail.fixtures.test:443/signup",
+   "pageType": "signup",
+   "source": "link",
+   "score": 90
+  },
+  {
+   "url": "https://c10-fail.fixtures.test:443/checkout",
+   "pageType": "checkout",
+   "source": "link",
+   "score": 85
+  },
+  {
+   "url": "https://c10-fail.fixtures.test:443/login",
+   "pageType": "login",
+   "source": "link",
+   "score": 80
+  },
+  {
+   "url": "https://c10-fail.fixtures.test:443/contact",
+   "pageType": "contact",
+   "source": "link",
+   "score": 70
+  }
+ ],
+ "pages": [
+  {
+   "pageId": "p00",
+   "url": "https://c10-fail.fixtures.test:443/",
+   "finalUrl": "https://c10-fail.fixtures.test:443/",
+   "pageType": "home",
+   "consentState": "none",
+   "device": "desktop",
+   "status": 200,
+   "title": "Harbour Fixtures",
+   "choice": null,
+   "banner": {
+    "found": true,
+    "cmp": null,
+    "aboveFold": true,
+    "prominent": false,
+    "text": "We use cookies and similar tracking technologies to measure visits and show relevant adverts. You can accept or reject non-essential cookies. Accept all Reject all",
+    "buttons": [
+     {
+      "role": "accept",
+      "label": "Accept all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4930,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "role": "reject",
+      "label": "Reject all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4780,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [],
+   "localStorage": {},
+   "console": [],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/dom.html",
+     "kind": "dom",
+     "pageId": "p00",
+     "consentState": "none",
+     "contentType": "text/html",
+     "sha256": "4dc040d787f9e5379da96591e61ed6c27bb81ba653a58261ba1e00c83c98641f",
+     "bytes": 2142
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p00",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "a10bea0b87d3e6526ad67e8be11ba01d12d9f65844ce08caebf0513c14f2775c",
+     "bytes": 31139
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p00",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "a10bea0b87d3e6526ad67e8be11ba01d12d9f65844ce08caebf0513c14f2775c",
+     "bytes": 31139
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/har.json",
+     "kind": "har",
+     "pageId": "p00",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "89a7c42464a8ec7cca56275372ab2804c518d7025fe4250c9ee2190eeb813b85",
+     "bytes": 2597
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/cookies.json",
+     "kind": "cookies",
+     "pageId": "p00",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+     "bytes": 41
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/forms.json",
+     "kind": "forms",
+     "pageId": "p00",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "5a2abefe8a211680da2e63d539dec5cd4fc1a2cb0da8b646d4d6532d89642eea",
+     "bytes": 1311
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:55.918Z",
+   "durationMs": 633
+  },
+  {
+   "pageId": "p00",
+   "url": "https://c10-fail.fixtures.test:443/",
+   "finalUrl": "https://c10-fail.fixtures.test:443/",
+   "pageType": "home",
+   "consentState": "reject",
+   "device": "desktop",
+   "status": 200,
+   "title": "Harbour Fixtures",
+   "choice": {
+    "attempted": "reject",
+    "clicked": true,
+    "label": "Reject all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799417.194623,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/dom.html",
+     "kind": "dom",
+     "pageId": "p00",
+     "consentState": "reject",
+     "contentType": "text/html",
+     "sha256": "7913fbbf19abe4e7f94cadfeef137233a1358b7e5334d8d01804204b1e43e760",
+     "bytes": 2207
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p00",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "d689a5104a260ad089c70d98d643923128c736e68bb99f1c80581cb3808a6385",
+     "bytes": 19012
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p00",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "d689a5104a260ad089c70d98d643923128c736e68bb99f1c80581cb3808a6385",
+     "bytes": 19012
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/har.json",
+     "kind": "har",
+     "pageId": "p00",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "3a53821fa4a1d42240e418d9772641560d32776fd72098afd1e86ded9937dce0",
+     "bytes": 4949
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/cookies.json",
+     "kind": "cookies",
+     "pageId": "p00",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "a400b5bafcee63608fcad6cd176899333b1289d80ff1acac6839a392c67f89d0",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/forms.json",
+     "kind": "forms",
+     "pageId": "p00",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "ee9df29d15be13372142cef67e44434824884986cf0ca85a3a5b1f0a93a2960e",
+     "bytes": 1008
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:56.552Z",
+   "durationMs": 1814
+  },
+  {
+   "pageId": "p00",
+   "url": "https://c10-fail.fixtures.test:443/",
+   "finalUrl": "https://c10-fail.fixtures.test:443/",
+   "pageType": "home",
+   "consentState": "accept",
+   "device": "desktop",
+   "status": 200,
+   "title": "Harbour Fixtures",
+   "choice": {
+    "attempted": "accept",
+    "clicked": true,
+    "label": "Accept all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-FIXTURE",
+     "host": "www.googletagmanager.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://connect.facebook.net/en_US/fbevents.js",
+     "host": "connect.facebook.net",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://static.hotjar.com/c/hotjar-1234.js",
+     "host": "static.hotjar.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://www.facebook.com/tr?id=1234567890&ev=PageView",
+     "host": "www.facebook.com",
+     "method": "GET",
+     "resourceType": "image",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799417.166571,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/dom.html",
+     "kind": "dom",
+     "pageId": "p00",
+     "consentState": "accept",
+     "contentType": "text/html",
+     "sha256": "4513b2192eeb0ff36227aaf10975744e7e443ca7b5927146b384d6f8664464c1",
+     "bytes": 2420
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p00",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "d689a5104a260ad089c70d98d643923128c736e68bb99f1c80581cb3808a6385",
+     "bytes": 19012
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p00",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "d689a5104a260ad089c70d98d643923128c736e68bb99f1c80581cb3808a6385",
+     "bytes": 19012
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/har.json",
+     "kind": "har",
+     "pageId": "p00",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "8fa647eedd2a638fdb8bf4cac8c09e94414235eeb172d612a81e376be1af1c5b",
+     "bytes": 10414
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/cookies.json",
+     "kind": "cookies",
+     "pageId": "p00",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "366915cb853951564728ebe55ad5413d11b5efc269d65d6151a30ffd1f8c5d17",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/forms.json",
+     "kind": "forms",
+     "pageId": "p00",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "23bc5c80604f3996903027e6dee320d40b7fa40636e5a8be1eb00c6b7108b5e0",
+     "bytes": 2712
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:56.552Z",
+   "durationMs": 1695
+  },
+  {
+   "pageId": "p00m",
+   "url": "https://c10-fail.fixtures.test:443/",
+   "finalUrl": "https://c10-fail.fixtures.test:443/",
+   "pageType": "home",
+   "consentState": "none",
+   "device": "mobile",
+   "status": 200,
+   "title": "Harbour Fixtures",
+   "choice": null,
+   "banner": {
+    "found": true,
+    "cmp": null,
+    "aboveFold": true,
+    "prominent": false,
+    "text": "We use cookies and similar tracking technologies to measure visits and show relevant adverts. You can accept or reject non-essential cookies. Accept all Reject all",
+    "buttons": [
+     {
+      "role": "accept",
+      "label": "Accept all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4930,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "role": "reject",
+      "label": "Reject all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4780,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [],
+   "localStorage": {},
+   "console": [],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/dom.html",
+     "kind": "dom",
+     "pageId": "p00m",
+     "consentState": "none",
+     "contentType": "text/html",
+     "sha256": "4dc040d787f9e5379da96591e61ed6c27bb81ba653a58261ba1e00c83c98641f",
+     "bytes": 2142
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p00m",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "7ac969c50f7db3c6cc0c87b0aa9c9e4bdd8e462b3663071f83239a5ea3a3d54e",
+     "bytes": 45073
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p00m",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "34ddc3c96c361e00472aaf0c0af170e7876dffa0e88dd03fcea34ce81f55c29d",
+     "bytes": 130353
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/har.json",
+     "kind": "har",
+     "pageId": "p00m",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "fa4f0049ccaf55dbf5a7bd900d1d8ab7e41f5dadfc6f704af28086fad21ee90f",
+     "bytes": 2604
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/cookies.json",
+     "kind": "cookies",
+     "pageId": "p00m",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+     "bytes": 41
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/forms.json",
+     "kind": "forms",
+     "pageId": "p00m",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "d9dac584a23e0822f00994d4a545151fc7d097939abb93c76b78400f86af771a",
+     "bytes": 1310
+    }
+   ],
+   "capturedAt": "2026-11-21T12:17:01.801Z",
+   "durationMs": 844
+  },
+  {
+   "pageId": "p01",
+   "url": "https://c10-fail.fixtures.test:443/privacy",
+   "finalUrl": "https://c10-fail.fixtures.test:443/privacy",
+   "pageType": "policy",
+   "consentState": "none",
+   "device": "desktop",
+   "status": 200,
+   "title": "Privacy notice",
+   "choice": null,
+   "banner": {
+    "found": true,
+    "cmp": null,
+    "aboveFold": true,
+    "prominent": false,
+    "text": "We use cookies and similar tracking technologies to measure visits and show relevant adverts. You can accept or reject non-essential cookies. Accept all Reject all",
+    "buttons": [
+     {
+      "role": "accept",
+      "label": "Accept all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4930,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "role": "reject",
+      "label": "Reject all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4780,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/privacy",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [],
+   "localStorage": {},
+   "console": [],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/rights-request",
+     "text": "rights request form"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/dom.html",
+     "kind": "dom",
+     "pageId": "p01",
+     "consentState": "none",
+     "contentType": "text/html",
+     "sha256": "184c6ef7b27dda609901f0d47c5f537916f043cd9bc507295a9d402e3ee507dc",
+     "bytes": 3257
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p01",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "6bba45d4620198cf50bdce6b1eeaa9675db326b178f2378fa5144cc24838be9e",
+     "bytes": 109721
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p01",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "6bba45d4620198cf50bdce6b1eeaa9675db326b178f2378fa5144cc24838be9e",
+     "bytes": 109721
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/har.json",
+     "kind": "har",
+     "pageId": "p01",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "9f9e4587e7c0bcae434dd4ef7b22d01436f2c9ca8331a224e83f8d999f8422b4",
+     "bytes": 2602
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/cookies.json",
+     "kind": "cookies",
+     "pageId": "p01",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+     "bytes": 41
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/forms.json",
+     "kind": "forms",
+     "pageId": "p01",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "7b60e4b89f8d1ad57da740273ee193ab610f7046efc38a3908c422738a365660",
+     "bytes": 1323
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:56.552Z",
+   "durationMs": 673
+  },
+  {
+   "pageId": "p01",
+   "url": "https://c10-fail.fixtures.test:443/privacy",
+   "finalUrl": "https://c10-fail.fixtures.test:443/privacy",
+   "pageType": "policy",
+   "consentState": "reject",
+   "device": "desktop",
+   "status": 200,
+   "title": "Privacy notice",
+   "choice": {
+    "attempted": "reject",
+    "clicked": true,
+    "label": "Reject all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/privacy",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/privacy",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799417.19516,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/rights-request",
+     "text": "rights request form"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/dom.html",
+     "kind": "dom",
+     "pageId": "p01",
+     "consentState": "reject",
+     "contentType": "text/html",
+     "sha256": "3da2dc30832803330a406f1f595d2288590510dab0efd7a31762a68d6dcd0984",
+     "bytes": 3322
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p01",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "fb619b101fc6ad539054047bd96fd4ea9eef9d46c86eeb9d0a55528b435532db",
+     "bytes": 98415
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p01",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "fb619b101fc6ad539054047bd96fd4ea9eef9d46c86eeb9d0a55528b435532db",
+     "bytes": 98415
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/har.json",
+     "kind": "har",
+     "pageId": "p01",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "32ae0a403ff1ae7ebf032ab0a3616bf434bf3a02143eea4d01dda61debdad293",
+     "bytes": 4962
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/cookies.json",
+     "kind": "cookies",
+     "pageId": "p01",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "c95e81a944452415916c73a08dbf977cd4cb62eddf8da346e4a0f4a8f3fbec87",
+     "bytes": 308
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/forms.json",
+     "kind": "forms",
+     "pageId": "p01",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "2456476c7dbfbb7ca4ee9a048e5929228ee2db662ab13dfdcb562530d8d6932b",
+     "bytes": 1027
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:56.552Z",
+   "durationMs": 1753
+  },
+  {
+   "pageId": "p01",
+   "url": "https://c10-fail.fixtures.test:443/privacy",
+   "finalUrl": "https://c10-fail.fixtures.test:443/privacy",
+   "pageType": "policy",
+   "consentState": "accept",
+   "device": "desktop",
+   "status": 200,
+   "title": "Privacy notice",
+   "choice": {
+    "attempted": "accept",
+    "clicked": true,
+    "label": "Accept all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/privacy",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/privacy",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-FIXTURE",
+     "host": "www.googletagmanager.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://connect.facebook.net/en_US/fbevents.js",
+     "host": "connect.facebook.net",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://static.hotjar.com/c/hotjar-1234.js",
+     "host": "static.hotjar.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://www.facebook.com/tr?id=1234567890&ev=PageView",
+     "host": "www.facebook.com",
+     "method": "GET",
+     "resourceType": "image",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799417.806114,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/rights-request",
+     "text": "rights request form"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/dom.html",
+     "kind": "dom",
+     "pageId": "p01",
+     "consentState": "accept",
+     "contentType": "text/html",
+     "sha256": "e1e136b16116afa05c60b857893c44f0e179e641d34f0f3d143e9ab8df820d19",
+     "bytes": 3535
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p01",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "fb619b101fc6ad539054047bd96fd4ea9eef9d46c86eeb9d0a55528b435532db",
+     "bytes": 98415
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p01",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "fb619b101fc6ad539054047bd96fd4ea9eef9d46c86eeb9d0a55528b435532db",
+     "bytes": 98415
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/har.json",
+     "kind": "har",
+     "pageId": "p01",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "49fdbf21fc5bc0233642bf700b03d5e5fa20e8e696edf1a0a7559ac49f6b59c2",
+     "bytes": 10437
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/cookies.json",
+     "kind": "cookies",
+     "pageId": "p01",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "e8590166292e135873a427971a38202c26c046a8c9834627876c74b2c8ac0d25",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/forms.json",
+     "kind": "forms",
+     "pageId": "p01",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "a6859d1bef591994ff63a1970d96509b13616e2c0cd1b62696daaaf5bdacda80",
+     "bytes": 2731
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:57.225Z",
+   "durationMs": 1715
+  },
+  {
+   "pageId": "p02",
+   "url": "https://c10-fail.fixtures.test:443/signup",
+   "finalUrl": "https://c10-fail.fixtures.test:443/signup",
+   "pageType": "signup",
+   "consentState": "none",
+   "device": "desktop",
+   "status": 200,
+   "title": "Create an account",
+   "choice": null,
+   "banner": {
+    "found": true,
+    "cmp": null,
+    "aboveFold": true,
+    "prominent": false,
+    "text": "We use cookies and similar tracking technologies to measure visits and show relevant adverts. You can accept or reject non-essential cookies. Accept all Reject all",
+    "buttons": [
+     {
+      "role": "accept",
+      "label": "Accept all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4930,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "role": "reject",
+      "label": "Reject all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4780,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/signup",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [],
+   "localStorage": {},
+   "console": [],
+   "forms": [
+    {
+     "action": "https://c10-fail.fixtures.test:443/signup",
+     "method": "post",
+     "fields": [
+      {
+       "tag": "input",
+       "type": "text",
+       "name": "fullname",
+       "autocomplete": "name",
+       "label": "Full name",
+       "required": false,
+       "personal": true
+      },
+      {
+       "tag": "input",
+       "type": "email",
+       "name": "email",
+       "autocomplete": "email",
+       "label": "Email",
+       "required": false,
+       "personal": true
+      },
+      {
+       "tag": "input",
+       "type": "tel",
+       "name": "phone",
+       "autocomplete": "tel",
+       "label": "Phone",
+       "required": false,
+       "personal": true
+      }
+     ],
+     "checkboxes": [
+      {
+       "label": "Send me offers and marketing updates",
+       "checked": false,
+       "consentLike": true
+      }
+     ],
+     "privacyLinkNearSubmit": true,
+     "submitLabel": "Create account",
+     "actionScheme": "https"
+    }
+   ],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "privacy notice"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/dom.html",
+     "kind": "dom",
+     "pageId": "p02",
+     "consentState": "none",
+     "contentType": "text/html",
+     "sha256": "a0654c5a55a46aa43067cc90eb04176f108572af6b534bd89b44ec77281ef101",
+     "bytes": 2631
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p02",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "63f09748eb97587a4028c514353f1842df0671014eff24f024b80f83fcd74632",
+     "bytes": 41279
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p02",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "63f09748eb97587a4028c514353f1842df0671014eff24f024b80f83fcd74632",
+     "bytes": 41279
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/har.json",
+     "kind": "har",
+     "pageId": "p02",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "5023a6c4496bb9a3515d39e4f96fd58f8026bc037d366821b338d83a8e8b75d5",
+     "bytes": 2604
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/cookies.json",
+     "kind": "cookies",
+     "pageId": "p02",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+     "bytes": 41
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/forms.json",
+     "kind": "forms",
+     "pageId": "p02",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "81e17effdd0e7d9debc3612c82f313b17fc437eb5c96e3b68259d13fd0f29f22",
+     "bytes": 2387
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:58.247Z",
+   "durationMs": 694
+  },
+  {
+   "pageId": "p02",
+   "url": "https://c10-fail.fixtures.test:443/signup",
+   "finalUrl": "https://c10-fail.fixtures.test:443/signup",
+   "pageType": "signup",
+   "consentState": "reject",
+   "device": "desktop",
+   "status": 200,
+   "title": "Create an account",
+   "choice": {
+    "attempted": "reject",
+    "clicked": true,
+    "label": "Reject all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/signup",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/signup",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799418.952598,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [],
+   "forms": [
+    {
+     "action": "https://c10-fail.fixtures.test:443/signup",
+     "method": "post",
+     "fields": [
+      {
+       "tag": "input",
+       "type": "text",
+       "name": "fullname",
+       "autocomplete": "name",
+       "label": "Full name",
+       "required": false,
+       "personal": true
+      },
+      {
+       "tag": "input",
+       "type": "email",
+       "name": "email",
+       "autocomplete": "email",
+       "label": "Email",
+       "required": false,
+       "personal": true
+      },
+      {
+       "tag": "input",
+       "type": "tel",
+       "name": "phone",
+       "autocomplete": "tel",
+       "label": "Phone",
+       "required": false,
+       "personal": true
+      }
+     ],
+     "checkboxes": [
+      {
+       "label": "Send me offers and marketing updates",
+       "checked": false,
+       "consentLike": true
+      }
+     ],
+     "privacyLinkNearSubmit": true,
+     "submitLabel": "Create account",
+     "actionScheme": "https"
+    }
+   ],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "privacy notice"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/dom.html",
+     "kind": "dom",
+     "pageId": "p02",
+     "consentState": "reject",
+     "contentType": "text/html",
+     "sha256": "75c4fb9c1141bf75077e87d39f7dbcacb41855ffdf4fa84f13951c8bebe8519f",
+     "bytes": 2696
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p02",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "2dd844467d036ab8edf540d2248e28d064f1d16c6d76701638324e856bc483e4",
+     "bytes": 29915
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p02",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "2dd844467d036ab8edf540d2248e28d064f1d16c6d76701638324e856bc483e4",
+     "bytes": 29915
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/har.json",
+     "kind": "har",
+     "pageId": "p02",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "9b2de8b75da8eefd92c6850142c30f75098698de9a9eb4120b87dd9f7c43f902",
+     "bytes": 4971
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/cookies.json",
+     "kind": "cookies",
+     "pageId": "p02",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "04755e3a806dce6dfcd5a88e329a0bc74ab8d70e272201491b93167f828aae82",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/forms.json",
+     "kind": "forms",
+     "pageId": "p02",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "65a217a7d84471e56263e5e26578f49d9facae1d1746889ef6ee354c40226fdb",
+     "bytes": 2090
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:58.306Z",
+   "durationMs": 1753
+  },
+  {
+   "pageId": "p02",
+   "url": "https://c10-fail.fixtures.test:443/signup",
+   "finalUrl": "https://c10-fail.fixtures.test:443/signup",
+   "pageType": "signup",
+   "consentState": "accept",
+   "device": "desktop",
+   "status": 200,
+   "title": "Create an account",
+   "choice": {
+    "attempted": "accept",
+    "clicked": true,
+    "label": "Accept all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/signup",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/signup",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-FIXTURE",
+     "host": "www.googletagmanager.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://connect.facebook.net/en_US/fbevents.js",
+     "host": "connect.facebook.net",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://static.hotjar.com/c/hotjar-1234.js",
+     "host": "static.hotjar.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://www.facebook.com/tr?id=1234567890&ev=PageView",
+     "host": "www.facebook.com",
+     "method": "GET",
+     "resourceType": "image",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799418.985713,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "forms": [
+    {
+     "action": "https://c10-fail.fixtures.test:443/signup",
+     "method": "post",
+     "fields": [
+      {
+       "tag": "input",
+       "type": "text",
+       "name": "fullname",
+       "autocomplete": "name",
+       "label": "Full name",
+       "required": false,
+       "personal": true
+      },
+      {
+       "tag": "input",
+       "type": "email",
+       "name": "email",
+       "autocomplete": "email",
+       "label": "Email",
+       "required": false,
+       "personal": true
+      },
+      {
+       "tag": "input",
+       "type": "tel",
+       "name": "phone",
+       "autocomplete": "tel",
+       "label": "Phone",
+       "required": false,
+       "personal": true
+      }
+     ],
+     "checkboxes": [
+      {
+       "label": "Send me offers and marketing updates",
+       "checked": false,
+       "consentLike": true
+      }
+     ],
+     "privacyLinkNearSubmit": true,
+     "submitLabel": "Create account",
+     "actionScheme": "https"
+    }
+   ],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "privacy notice"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/dom.html",
+     "kind": "dom",
+     "pageId": "p02",
+     "consentState": "accept",
+     "contentType": "text/html",
+     "sha256": "2cd5e258b59af2cc90ec77400f268b1748441b4dafeac1e329db0fca06248f0f",
+     "bytes": 2909
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p02",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "2dd844467d036ab8edf540d2248e28d064f1d16c6d76701638324e856bc483e4",
+     "bytes": 29915
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p02",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "2dd844467d036ab8edf540d2248e28d064f1d16c6d76701638324e856bc483e4",
+     "bytes": 29915
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/har.json",
+     "kind": "har",
+     "pageId": "p02",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "4f4a5999dbdf7edc9f27362067cd9b6fd04db82649084dfd6c537b6bec8e70c7",
+     "bytes": 10439
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/cookies.json",
+     "kind": "cookies",
+     "pageId": "p02",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "bc6aad5173ad9d3d3cdf120bac7864635155e2878057637c8ae4f61b2e1aa567",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/forms.json",
+     "kind": "forms",
+     "pageId": "p02",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "020e8ddcc0a8868e7e420936c8991afb74fe72218835ec17bab2e73fbedacaed",
+     "bytes": 3794
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:58.367Z",
+   "durationMs": 1723
+  },
+  {
+   "pageId": "p03",
+   "url": "https://c10-fail.fixtures.test:443/checkout",
+   "finalUrl": "https://c10-fail.fixtures.test:443/checkout",
+   "pageType": "checkout",
+   "consentState": "none",
+   "device": "desktop",
+   "status": 200,
+   "title": "Checkout",
+   "choice": null,
+   "banner": {
+    "found": true,
+    "cmp": null,
+    "aboveFold": true,
+    "prominent": false,
+    "text": "We use cookies and similar tracking technologies to measure visits and show relevant adverts. You can accept or reject non-essential cookies. Accept all Reject all",
+    "buttons": [
+     {
+      "role": "accept",
+      "label": "Accept all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4930,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "role": "reject",
+      "label": "Reject all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4780,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/checkout",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [],
+   "localStorage": {},
+   "console": [],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/dom.html",
+     "kind": "dom",
+     "pageId": "p03",
+     "consentState": "none",
+     "contentType": "text/html",
+     "sha256": "7ec4f864256837c0d44745b0551b801cede7942d4410a3af0e18d2da9cb3f68e",
+     "bytes": 2122
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p03",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "3d8ef462659d4a27cbe11b5e9b56edd630b80a01afd793b00060187ca5853e85",
+     "bytes": 30270
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p03",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "3d8ef462659d4a27cbe11b5e9b56edd630b80a01afd793b00060187ca5853e85",
+     "bytes": 30270
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/har.json",
+     "kind": "har",
+     "pageId": "p03",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "8a0c0bc26f0e1e4b9917849915395788b47a9f01c248b4296e28e2983d35dda7",
+     "bytes": 2596
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/cookies.json",
+     "kind": "cookies",
+     "pageId": "p03",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+     "bytes": 41
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/forms.json",
+     "kind": "forms",
+     "pageId": "p03",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "7503644e35229b1a8db5617c6824047b3a7ff27f9c7b809ea46ef3082a75181a",
+     "bytes": 1319
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:58.941Z",
+   "durationMs": 642
+  },
+  {
+   "pageId": "p03",
+   "url": "https://c10-fail.fixtures.test:443/checkout",
+   "finalUrl": "https://c10-fail.fixtures.test:443/checkout",
+   "pageType": "checkout",
+   "consentState": "reject",
+   "device": "desktop",
+   "status": 200,
+   "title": "Checkout",
+   "choice": {
+    "attempted": "reject",
+    "clicked": true,
+    "label": "Reject all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/checkout",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/checkout",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799419.535348,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/dom.html",
+     "kind": "dom",
+     "pageId": "p03",
+     "consentState": "reject",
+     "contentType": "text/html",
+     "sha256": "744114b3ec6755623b0fc93b56c627936de58739d179572745d686dd03e39e69",
+     "bytes": 2187
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p03",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "949f15b0eb7a2a852246d0963179cbb36746822714cb4f183894e2e3e7cef457",
+     "bytes": 18122
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p03",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "949f15b0eb7a2a852246d0963179cbb36746822714cb4f183894e2e3e7cef457",
+     "bytes": 18122
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/har.json",
+     "kind": "har",
+     "pageId": "p03",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "eb95e3d9a90370ce9be1bc51f241f41ec995cfbedfd846fc8cc12d7961832f32",
+     "bytes": 4970
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/cookies.json",
+     "kind": "cookies",
+     "pageId": "p03",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "701bf7e7186e91f93191dca4fc8ba6c6df5c918477f06618ecbb3cf9224f28e5",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/forms.json",
+     "kind": "forms",
+     "pageId": "p03",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "ce48d6fb70c6ca7a8ca7e5ddae5c2dd7818bcc4dba240e80c0d1c039e92d698b",
+     "bytes": 1024
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:58.941Z",
+   "durationMs": 1694
+  },
+  {
+   "pageId": "p03",
+   "url": "https://c10-fail.fixtures.test:443/checkout",
+   "finalUrl": "https://c10-fail.fixtures.test:443/checkout",
+   "pageType": "checkout",
+   "consentState": "accept",
+   "device": "desktop",
+   "status": 200,
+   "title": "Checkout",
+   "choice": {
+    "attempted": "accept",
+    "clicked": true,
+    "label": "Accept all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/checkout",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/checkout",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://static.hotjar.com/c/hotjar-1234.js",
+     "host": "static.hotjar.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799420.16578,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/dom.html",
+     "kind": "dom",
+     "pageId": "p03",
+     "consentState": "accept",
+     "contentType": "text/html",
+     "sha256": "c956156ca23c163cc822c4c26f4fcf122953473704ad982dd5df042c16a418bc",
+     "bytes": 2253
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p03",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "949f15b0eb7a2a852246d0963179cbb36746822714cb4f183894e2e3e7cef457",
+     "bytes": 18122
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p03",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "949f15b0eb7a2a852246d0963179cbb36746822714cb4f183894e2e3e7cef457",
+     "bytes": 18122
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/har.json",
+     "kind": "har",
+     "pageId": "p03",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "22caff4d8e51bbaf6592259b4c968efed630489332a85c0701a06519ac5d8641",
+     "bytes": 6276
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/cookies.json",
+     "kind": "cookies",
+     "pageId": "p03",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "cc92c827cec6669fc35c88c288621dbe77584cfc84e71c88a02346cd8f4715a6",
+     "bytes": 308
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/forms.json",
+     "kind": "forms",
+     "pageId": "p03",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "3d92c9d9cb333db412b0a9fbff538d3a6fa8f0dd08888a6f006fda9a85e3a0e2",
+     "bytes": 1443
+    }
+   ],
+   "capturedAt": "2026-11-21T12:16:59.583Z",
+   "durationMs": 1686
+  },
+  {
+   "pageId": "p04",
+   "url": "https://c10-fail.fixtures.test:443/login",
+   "finalUrl": "https://c10-fail.fixtures.test:443/login",
+   "pageType": "login",
+   "consentState": "none",
+   "device": "desktop",
+   "status": 200,
+   "title": "Log in",
+   "choice": null,
+   "banner": {
+    "found": true,
+    "cmp": null,
+    "aboveFold": true,
+    "prominent": false,
+    "text": "We use cookies and similar tracking technologies to measure visits and show relevant adverts. You can accept or reject non-essential cookies. Accept all Reject all",
+    "buttons": [
+     {
+      "role": "accept",
+      "label": "Accept all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4930,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "role": "reject",
+      "label": "Reject all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4780,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/login",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [],
+   "localStorage": {},
+   "console": [],
+   "forms": [
+    {
+     "action": "https://c10-fail.fixtures.test:443/login",
+     "method": "post",
+     "fields": [
+      {
+       "tag": "input",
+       "type": "email",
+       "name": "email",
+       "autocomplete": "",
+       "label": "Email",
+       "required": false,
+       "personal": true
+      },
+      {
+       "tag": "input",
+       "type": "password",
+       "name": "password",
+       "autocomplete": "",
+       "label": "Password",
+       "required": false,
+       "personal": false
+      }
+     ],
+     "checkboxes": [],
+     "privacyLinkNearSubmit": false,
+     "submitLabel": "Log in",
+     "actionScheme": "https"
+    }
+   ],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/dom.html",
+     "kind": "dom",
+     "pageId": "p04",
+     "consentState": "none",
+     "contentType": "text/html",
+     "sha256": "f319a506219083db83446aed81c1c38d33eeaa040d5fa66df9b976be5c6fa2c1",
+     "bytes": 2299
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p04",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "e671468c2a1bbbbca89ee9097fe71ae08d6355642f4d6a6988d80b3c55a0dd8e",
+     "bytes": 27893
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p04",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "e671468c2a1bbbbca89ee9097fe71ae08d6355642f4d6a6988d80b3c55a0dd8e",
+     "bytes": 27893
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/har.json",
+     "kind": "har",
+     "pageId": "p04",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "d0675d0139f13f1e774a0273f49a9b52f2e6897b5c9a1744313326512f070e2a",
+     "bytes": 2591
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/cookies.json",
+     "kind": "cookies",
+     "pageId": "p04",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+     "bytes": 41
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/forms.json",
+     "kind": "forms",
+     "pageId": "p04",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "6951c10fe691c14d747847fb222407094d5aa7781f2b5cf6889a84ac58611235",
+     "bytes": 2001
+    }
+   ],
+   "capturedAt": "2026-11-21T12:17:00.061Z",
+   "durationMs": 648
+  },
+  {
+   "pageId": "p04",
+   "url": "https://c10-fail.fixtures.test:443/login",
+   "finalUrl": "https://c10-fail.fixtures.test:443/login",
+   "pageType": "login",
+   "consentState": "reject",
+   "device": "desktop",
+   "status": 200,
+   "title": "Log in",
+   "choice": {
+    "attempted": "reject",
+    "clicked": true,
+    "label": "Reject all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/login",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/login",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799420.708741,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [],
+   "forms": [
+    {
+     "action": "https://c10-fail.fixtures.test:443/login",
+     "method": "post",
+     "fields": [
+      {
+       "tag": "input",
+       "type": "email",
+       "name": "email",
+       "autocomplete": "",
+       "label": "Email",
+       "required": false,
+       "personal": true
+      },
+      {
+       "tag": "input",
+       "type": "password",
+       "name": "password",
+       "autocomplete": "",
+       "label": "Password",
+       "required": false,
+       "personal": false
+      }
+     ],
+     "checkboxes": [],
+     "privacyLinkNearSubmit": false,
+     "submitLabel": "Log in",
+     "actionScheme": "https"
+    }
+   ],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/dom.html",
+     "kind": "dom",
+     "pageId": "p04",
+     "consentState": "reject",
+     "contentType": "text/html",
+     "sha256": "28debadc09db496e402e8d7e95d3166813cd02a4b60a5bb231cd3331a051f3d1",
+     "bytes": 2364
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p04",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "b797b13c20b1eb757bd09aa23826e76ca5ed29288c0d535eea2fd6da890d7dc3",
+     "bytes": 15766
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p04",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "b797b13c20b1eb757bd09aa23826e76ca5ed29288c0d535eea2fd6da890d7dc3",
+     "bytes": 15766
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/har.json",
+     "kind": "har",
+     "pageId": "p04",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "c0dd280a947481bebc0b7e11b525100f4fd3a2709a2ba8366188715ab8951e11",
+     "bytes": 4949
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/cookies.json",
+     "kind": "cookies",
+     "pageId": "p04",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "35abf3b5815a97c348c1b557779d5cd8d142d6a093f4c9c5b4ed38ba00a928f5",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/forms.json",
+     "kind": "forms",
+     "pageId": "p04",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "565658c76975d9ab6232bc5301984e8694811191f26535438b641c59a97e6997",
+     "bytes": 1703
+    }
+   ],
+   "capturedAt": "2026-11-21T12:17:00.091Z",
+   "durationMs": 1710
+  },
+  {
+   "pageId": "p04",
+   "url": "https://c10-fail.fixtures.test:443/login",
+   "finalUrl": "https://c10-fail.fixtures.test:443/login",
+   "pageType": "login",
+   "consentState": "accept",
+   "device": "desktop",
+   "status": 200,
+   "title": "Log in",
+   "choice": {
+    "attempted": "accept",
+    "clicked": true,
+    "label": "Accept all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/login",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/login",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-FIXTURE",
+     "host": "www.googletagmanager.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://connect.facebook.net/en_US/fbevents.js",
+     "host": "connect.facebook.net",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://static.hotjar.com/c/hotjar-1234.js",
+     "host": "static.hotjar.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://www.facebook.com/tr?id=1234567890&ev=PageView",
+     "host": "www.facebook.com",
+     "method": "GET",
+     "resourceType": "image",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799421.275059,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "forms": [
+    {
+     "action": "https://c10-fail.fixtures.test:443/login",
+     "method": "post",
+     "fields": [
+      {
+       "tag": "input",
+       "type": "email",
+       "name": "email",
+       "autocomplete": "",
+       "label": "Email",
+       "required": false,
+       "personal": true
+      },
+      {
+       "tag": "input",
+       "type": "password",
+       "name": "password",
+       "autocomplete": "",
+       "label": "Password",
+       "required": false,
+       "personal": false
+      }
+     ],
+     "checkboxes": [],
+     "privacyLinkNearSubmit": false,
+     "submitLabel": "Log in",
+     "actionScheme": "https"
+    }
+   ],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/dom.html",
+     "kind": "dom",
+     "pageId": "p04",
+     "consentState": "accept",
+     "contentType": "text/html",
+     "sha256": "8fba01b1dfd271b0da2c3a3c8608b1577dcabd10f3fa0d94d0e718ffbd689296",
+     "bytes": 2577
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p04",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "b797b13c20b1eb757bd09aa23826e76ca5ed29288c0d535eea2fd6da890d7dc3",
+     "bytes": 15766
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p04",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "b797b13c20b1eb757bd09aa23826e76ca5ed29288c0d535eea2fd6da890d7dc3",
+     "bytes": 15766
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/har.json",
+     "kind": "har",
+     "pageId": "p04",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "48b57860532d8336e10d5e85b69df0584f00176c20f1dc073eb160f7c1044caf",
+     "bytes": 10416
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/cookies.json",
+     "kind": "cookies",
+     "pageId": "p04",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "aec674641bf68717c0b8486fdf28e6d4d6b42022c0a42ce0a5a2e25a92b90d0b",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/forms.json",
+     "kind": "forms",
+     "pageId": "p04",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "a7b3715f5a1e74a7dae2480a55fbd3e7cdcd20e9b04ed8725f11fb419005cbf1",
+     "bytes": 3407
+    }
+   ],
+   "capturedAt": "2026-11-21T12:17:00.635Z",
+   "durationMs": 1749
+  },
+  {
+   "pageId": "p05",
+   "url": "https://c10-fail.fixtures.test:443/contact",
+   "finalUrl": "https://c10-fail.fixtures.test:443/contact",
+   "pageType": "contact",
+   "consentState": "none",
+   "device": "desktop",
+   "status": 200,
+   "title": "Contact us",
+   "choice": null,
+   "banner": {
+    "found": true,
+    "cmp": null,
+    "aboveFold": true,
+    "prominent": false,
+    "text": "We use cookies and similar tracking technologies to measure visits and show relevant adverts. You can accept or reject non-essential cookies. Accept all Reject all",
+    "buttons": [
+     {
+      "role": "accept",
+      "label": "Accept all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4930,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "role": "reject",
+      "label": "Reject all",
+      "visible": true,
+      "inViewport": true,
+      "area": 4780,
+      "fontSize": 16,
+      "background": "rgb(0, 170, 85)",
+      "color": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/contact",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [],
+   "localStorage": {},
+   "console": [],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/dom.html",
+     "kind": "dom",
+     "pageId": "p05",
+     "consentState": "none",
+     "contentType": "text/html",
+     "sha256": "b04292e68ce0909d4a79155710a498870ed633ef0496c77c8d4a7538ffca9396",
+     "bytes": 2147
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p05",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "f9dab0909364a7d1f3e29fc308d0c88783146e7164596d7393e546c47abb3687",
+     "bytes": 32718
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p05",
+     "consentState": "none",
+     "contentType": "image/png",
+     "sha256": "f9dab0909364a7d1f3e29fc308d0c88783146e7164596d7393e546c47abb3687",
+     "bytes": 32718
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/har.json",
+     "kind": "har",
+     "pageId": "p05",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "ec20f7272b7dfbe6e0989b79744f05bfddf817685768d50cf9f30fe97f6d66ff",
+     "bytes": 2598
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/cookies.json",
+     "kind": "cookies",
+     "pageId": "p05",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+     "bytes": 41
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/forms.json",
+     "kind": "forms",
+     "pageId": "p05",
+     "consentState": "none",
+     "contentType": "application/json",
+     "sha256": "116e28370e77d77e95a580d0d93c3dddf8136ece507c0dcd42e9420a273cecdf",
+     "bytes": 1319
+    }
+   ],
+   "capturedAt": "2026-11-21T12:17:00.710Z",
+   "durationMs": 628
+  },
+  {
+   "pageId": "p05",
+   "url": "https://c10-fail.fixtures.test:443/contact",
+   "finalUrl": "https://c10-fail.fixtures.test:443/contact",
+   "pageType": "contact",
+   "consentState": "reject",
+   "device": "desktop",
+   "status": 200,
+   "title": "Contact us",
+   "choice": {
+    "attempted": "reject",
+    "clicked": true,
+    "label": "Reject all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/contact",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/contact",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799421.855075,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/dom.html",
+     "kind": "dom",
+     "pageId": "p05",
+     "consentState": "reject",
+     "contentType": "text/html",
+     "sha256": "3c7bbdb4d7228889053f35bf36f68399d39783a30313f55017956d342a4b89fb",
+     "bytes": 2212
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p05",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "9f7097244ae95bc175426c0fc820156fedb0a48938d3ad2b99fb50a755d5f133",
+     "bytes": 20594
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p05",
+     "consentState": "reject",
+     "contentType": "image/png",
+     "sha256": "9f7097244ae95bc175426c0fc820156fedb0a48938d3ad2b99fb50a755d5f133",
+     "bytes": 20594
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/har.json",
+     "kind": "har",
+     "pageId": "p05",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "3af1b98d7eb9c24162a4faa724fade43c40662a0648edb7d32a37efba6e775ae",
+     "bytes": 4968
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/cookies.json",
+     "kind": "cookies",
+     "pageId": "p05",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "691992905b85fd5863483730eaff4c6a9133ef96ebd370f97457313cfddf9be8",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/forms.json",
+     "kind": "forms",
+     "pageId": "p05",
+     "consentState": "reject",
+     "contentType": "application/json",
+     "sha256": "9076ed87a1d5023d69c90c3f7561e60d0cafdd8891245137bec2e3b27d09c747",
+     "bytes": 1023
+    }
+   ],
+   "capturedAt": "2026-11-21T12:17:01.269Z",
+   "durationMs": 1681
+  },
+  {
+   "pageId": "p05",
+   "url": "https://c10-fail.fixtures.test:443/contact",
+   "finalUrl": "https://c10-fail.fixtures.test:443/contact",
+   "pageType": "contact",
+   "consentState": "accept",
+   "device": "desktop",
+   "status": 200,
+   "title": "Contact us",
+   "choice": {
+    "attempted": "accept",
+    "clicked": true,
+    "label": "Accept all"
+   },
+   "banner": {
+    "found": false,
+    "cmp": null,
+    "aboveFold": false,
+    "prominent": false,
+    "text": null,
+    "buttons": []
+   },
+   "requests": [
+    {
+     "url": "https://c10-fail.fixtures.test:443/contact",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "initial",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://c10-fail.fixtures.test:443/contact",
+     "host": "c10-fail.fixtures.test",
+     "method": "GET",
+     "resourceType": "document",
+     "phase": "after-choice",
+     "thirdParty": false,
+     "postData": null,
+     "status": 200,
+     "blocked": null
+    },
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-FIXTURE",
+     "host": "www.googletagmanager.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://connect.facebook.net/en_US/fbevents.js",
+     "host": "connect.facebook.net",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://static.hotjar.com/c/hotjar-1234.js",
+     "host": "static.hotjar.com",
+     "method": "GET",
+     "resourceType": "script",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "url": "https://www.facebook.com/tr?id=1234567890&ev=PageView",
+     "host": "www.facebook.com",
+     "method": "GET",
+     "resourceType": "image",
+     "phase": "after-choice",
+     "thirdParty": true,
+     "postData": null,
+     "status": null,
+     "blocked": "net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "cookies": [
+    {
+     "name": "consent",
+     "domain": "c10-fail.fixtures.test",
+     "path": "/",
+     "expires": 1826799421.920045,
+     "httpOnly": false,
+     "secure": false,
+     "sameSite": "Lax",
+     "setBeforeChoice": false,
+     "thirdParty": false
+    }
+   ],
+   "localStorage": {},
+   "console": [
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+     "type": "error",
+     "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+    }
+   ],
+   "forms": [],
+   "mixedContent": [],
+   "links": [
+    {
+     "href": "https://c10-fail.fixtures.test:443/",
+     "text": "Home"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/signup",
+     "text": "Sign up"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/login",
+     "text": "Log in"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/checkout",
+     "text": "Checkout"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/contact",
+     "text": "Contact"
+    },
+    {
+     "href": "https://c10-fail.fixtures.test:443/privacy",
+     "text": "Privacy policy"
+    }
+   ],
+   "policyLink": "https://c10-fail.fixtures.test:443/privacy",
+   "evidence": [
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/dom.html",
+     "kind": "dom",
+     "pageId": "p05",
+     "consentState": "accept",
+     "contentType": "text/html",
+     "sha256": "3660fae76888628b7b99a5e2ed72cd7ee5fc6e98bd6801ad3ea0da4b261081d5",
+     "bytes": 2425
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/screenshot_fold.png",
+     "kind": "screenshot_fold",
+     "pageId": "p05",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "9f7097244ae95bc175426c0fc820156fedb0a48938d3ad2b99fb50a755d5f133",
+     "bytes": 20594
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/screenshot.png",
+     "kind": "screenshot",
+     "pageId": "p05",
+     "consentState": "accept",
+     "contentType": "image/png",
+     "sha256": "9f7097244ae95bc175426c0fc820156fedb0a48938d3ad2b99fb50a755d5f133",
+     "bytes": 20594
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/har.json",
+     "kind": "har",
+     "pageId": "p05",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "7fef08a01964a0bbfc96b2ea820a40af9db14e3cfee26ac4eb90e0bb8dc4242b",
+     "bytes": 10447
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/cookies.json",
+     "kind": "cookies",
+     "pageId": "p05",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "96cce3a4273801064eb2f8fe331c4e3bf2f9e06f61114f2f090902607a27cd06",
+     "bytes": 309
+    },
+    {
+     "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/forms.json",
+     "kind": "forms",
+     "pageId": "p05",
+     "consentState": "accept",
+     "contentType": "application/json",
+     "sha256": "0a63a0b3e0f5e81b698d7b463484c08d7842c362cf289492017725f7c1adc086",
+     "bytes": 2727
+    }
+   ],
+   "capturedAt": "2026-11-21T12:17:01.338Z",
+   "durationMs": 1692
+  }
+ ],
+ "homeLinks": [
+  {
+   "href": "https://c10-fail.fixtures.test:443/",
+   "text": "Home"
+  },
+  {
+   "href": "https://c10-fail.fixtures.test:443/signup",
+   "text": "Sign up"
+  },
+  {
+   "href": "https://c10-fail.fixtures.test:443/login",
+   "text": "Log in"
+  },
+  {
+   "href": "https://c10-fail.fixtures.test:443/checkout",
+   "text": "Checkout"
+  },
+  {
+   "href": "https://c10-fail.fixtures.test:443/contact",
+   "text": "Contact"
+  },
+  {
+   "href": "https://c10-fail.fixtures.test:443/privacy",
+   "text": "Privacy policy"
+  }
+ ],
+ "policy": {
+  "url": "https://c10-fail.fixtures.test:443/privacy",
+  "title": "Privacy notice",
+  "text": "Privacy notice Harbour Fixtures Ltd (RC 123456), 12 Marina, Lagos, is the data controller for personal data collected on this website. Our Data Protection Officer is Ngozi Eze. Contact the DPO at dpo@fixtures.test. Why we use your data and our lawful basis We process personal data to provide insurance quotes and manage policies, on the lawful basis of contract, legal obligation and, for marketing, your consent, under the Nigeria Data Protection Act 2023. Who we share it withWe share data with our reinsurers, payment providers and analytics providers acting as processors. How long we keep itWe retain policy records for six years after the policy ends, then delete them. Your rightsYou have the right to access, rectify, erase and port your data, to object, and to withdraw consent at any time. To make a request, email privacy@fixtures.test or use our rights request form. ComplaintsYou may lodge a complaint with the Nigeria Data Protection Commission (NDPC). We use cookies and similar tracking technologies to measure visits and show relevant adverts. You can accept or reject non-essential cookies. Accept all Reject all",
+  "found": true
+ },
+ "flows": [
+  {
+   "host": "connect.facebook.net",
+   "ip": "127.0.0.1",
+   "country": null,
+   "asn": null,
+   "asOrg": null,
+   "firstSeen": {
+    "state": "accept",
+    "phase": "after-choice"
+   },
+   "requestCount": 5
+  },
+  {
+   "host": "static.hotjar.com",
+   "ip": "127.0.0.1",
+   "country": null,
+   "asn": null,
+   "asOrg": null,
+   "firstSeen": {
+    "state": "accept",
+    "phase": "after-choice"
+   },
+   "requestCount": 6
+  },
+  {
+   "host": "www.facebook.com",
+   "ip": "127.0.0.1",
+   "country": null,
+   "asn": null,
+   "asOrg": null,
+   "firstSeen": {
+    "state": "accept",
+    "phase": "after-choice"
+   },
+   "requestCount": 5
+  },
+  {
+   "host": "www.googletagmanager.com",
+   "ip": "127.0.0.1",
+   "country": null,
+   "asn": null,
+   "asOrg": null,
+   "firstSeen": {
+    "state": "accept",
+    "phase": "after-choice"
+   },
+   "requestCount": 5
+  }
+ ],
+ "evidence": [
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/preflight.json",
+   "kind": "preflight",
+   "pageId": null,
+   "consentState": null,
+   "contentType": "application/json",
+   "sha256": "46e2314adb539ac2780186cb9af2481ace75ebb733488be1dffcbd7f1abf5c33",
+   "bytes": 974
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/dom.html",
+   "kind": "dom",
+   "pageId": "p00",
+   "consentState": "none",
+   "contentType": "text/html",
+   "sha256": "4dc040d787f9e5379da96591e61ed6c27bb81ba653a58261ba1e00c83c98641f",
+   "bytes": 2142
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p00",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "a10bea0b87d3e6526ad67e8be11ba01d12d9f65844ce08caebf0513c14f2775c",
+   "bytes": 31139
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p00",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "a10bea0b87d3e6526ad67e8be11ba01d12d9f65844ce08caebf0513c14f2775c",
+   "bytes": 31139
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/har.json",
+   "kind": "har",
+   "pageId": "p00",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "89a7c42464a8ec7cca56275372ab2804c518d7025fe4250c9ee2190eeb813b85",
+   "bytes": 2597
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/cookies.json",
+   "kind": "cookies",
+   "pageId": "p00",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+   "bytes": 41
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/none/forms.json",
+   "kind": "forms",
+   "pageId": "p00",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "5a2abefe8a211680da2e63d539dec5cd4fc1a2cb0da8b646d4d6532d89642eea",
+   "bytes": 1311
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/dom.html",
+   "kind": "dom",
+   "pageId": "p01",
+   "consentState": "none",
+   "contentType": "text/html",
+   "sha256": "184c6ef7b27dda609901f0d47c5f537916f043cd9bc507295a9d402e3ee507dc",
+   "bytes": 3257
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p01",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "6bba45d4620198cf50bdce6b1eeaa9675db326b178f2378fa5144cc24838be9e",
+   "bytes": 109721
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p01",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "6bba45d4620198cf50bdce6b1eeaa9675db326b178f2378fa5144cc24838be9e",
+   "bytes": 109721
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/har.json",
+   "kind": "har",
+   "pageId": "p01",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "9f9e4587e7c0bcae434dd4ef7b22d01436f2c9ca8331a224e83f8d999f8422b4",
+   "bytes": 2602
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/cookies.json",
+   "kind": "cookies",
+   "pageId": "p01",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+   "bytes": 41
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/none/forms.json",
+   "kind": "forms",
+   "pageId": "p01",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "7b60e4b89f8d1ad57da740273ee193ab610f7046efc38a3908c422738a365660",
+   "bytes": 1323
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/dom.html",
+   "kind": "dom",
+   "pageId": "p00",
+   "consentState": "accept",
+   "contentType": "text/html",
+   "sha256": "4513b2192eeb0ff36227aaf10975744e7e443ca7b5927146b384d6f8664464c1",
+   "bytes": 2420
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p00",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "d689a5104a260ad089c70d98d643923128c736e68bb99f1c80581cb3808a6385",
+   "bytes": 19012
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p00",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "d689a5104a260ad089c70d98d643923128c736e68bb99f1c80581cb3808a6385",
+   "bytes": 19012
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/har.json",
+   "kind": "har",
+   "pageId": "p00",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "8fa647eedd2a638fdb8bf4cac8c09e94414235eeb172d612a81e376be1af1c5b",
+   "bytes": 10414
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/cookies.json",
+   "kind": "cookies",
+   "pageId": "p00",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "366915cb853951564728ebe55ad5413d11b5efc269d65d6151a30ffd1f8c5d17",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/accept/forms.json",
+   "kind": "forms",
+   "pageId": "p00",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "23bc5c80604f3996903027e6dee320d40b7fa40636e5a8be1eb00c6b7108b5e0",
+   "bytes": 2712
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/dom.html",
+   "kind": "dom",
+   "pageId": "p01",
+   "consentState": "reject",
+   "contentType": "text/html",
+   "sha256": "3da2dc30832803330a406f1f595d2288590510dab0efd7a31762a68d6dcd0984",
+   "bytes": 3322
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p01",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "fb619b101fc6ad539054047bd96fd4ea9eef9d46c86eeb9d0a55528b435532db",
+   "bytes": 98415
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p01",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "fb619b101fc6ad539054047bd96fd4ea9eef9d46c86eeb9d0a55528b435532db",
+   "bytes": 98415
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/har.json",
+   "kind": "har",
+   "pageId": "p01",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "32ae0a403ff1ae7ebf032ab0a3616bf434bf3a02143eea4d01dda61debdad293",
+   "bytes": 4962
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/cookies.json",
+   "kind": "cookies",
+   "pageId": "p01",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "c95e81a944452415916c73a08dbf977cd4cb62eddf8da346e4a0f4a8f3fbec87",
+   "bytes": 308
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/reject/forms.json",
+   "kind": "forms",
+   "pageId": "p01",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "2456476c7dbfbb7ca4ee9a048e5929228ee2db662ab13dfdcb562530d8d6932b",
+   "bytes": 1027
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/dom.html",
+   "kind": "dom",
+   "pageId": "p00",
+   "consentState": "reject",
+   "contentType": "text/html",
+   "sha256": "7913fbbf19abe4e7f94cadfeef137233a1358b7e5334d8d01804204b1e43e760",
+   "bytes": 2207
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p00",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "d689a5104a260ad089c70d98d643923128c736e68bb99f1c80581cb3808a6385",
+   "bytes": 19012
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p00",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "d689a5104a260ad089c70d98d643923128c736e68bb99f1c80581cb3808a6385",
+   "bytes": 19012
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/har.json",
+   "kind": "har",
+   "pageId": "p00",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "3a53821fa4a1d42240e418d9772641560d32776fd72098afd1e86ded9937dce0",
+   "bytes": 4949
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/cookies.json",
+   "kind": "cookies",
+   "pageId": "p00",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "a400b5bafcee63608fcad6cd176899333b1289d80ff1acac6839a392c67f89d0",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00/reject/forms.json",
+   "kind": "forms",
+   "pageId": "p00",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "ee9df29d15be13372142cef67e44434824884986cf0ca85a3a5b1f0a93a2960e",
+   "bytes": 1008
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/dom.html",
+   "kind": "dom",
+   "pageId": "p01",
+   "consentState": "accept",
+   "contentType": "text/html",
+   "sha256": "e1e136b16116afa05c60b857893c44f0e179e641d34f0f3d143e9ab8df820d19",
+   "bytes": 3535
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p01",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "fb619b101fc6ad539054047bd96fd4ea9eef9d46c86eeb9d0a55528b435532db",
+   "bytes": 98415
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p01",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "fb619b101fc6ad539054047bd96fd4ea9eef9d46c86eeb9d0a55528b435532db",
+   "bytes": 98415
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/dom.html",
+   "kind": "dom",
+   "pageId": "p02",
+   "consentState": "none",
+   "contentType": "text/html",
+   "sha256": "a0654c5a55a46aa43067cc90eb04176f108572af6b534bd89b44ec77281ef101",
+   "bytes": 2631
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p02",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "63f09748eb97587a4028c514353f1842df0671014eff24f024b80f83fcd74632",
+   "bytes": 41279
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p02",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "63f09748eb97587a4028c514353f1842df0671014eff24f024b80f83fcd74632",
+   "bytes": 41279
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/har.json",
+   "kind": "har",
+   "pageId": "p01",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "49fdbf21fc5bc0233642bf700b03d5e5fa20e8e696edf1a0a7559ac49f6b59c2",
+   "bytes": 10437
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/cookies.json",
+   "kind": "cookies",
+   "pageId": "p01",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "e8590166292e135873a427971a38202c26c046a8c9834627876c74b2c8ac0d25",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p01/accept/forms.json",
+   "kind": "forms",
+   "pageId": "p01",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "a6859d1bef591994ff63a1970d96509b13616e2c0cd1b62696daaaf5bdacda80",
+   "bytes": 2731
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/har.json",
+   "kind": "har",
+   "pageId": "p02",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "5023a6c4496bb9a3515d39e4f96fd58f8026bc037d366821b338d83a8e8b75d5",
+   "bytes": 2604
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/cookies.json",
+   "kind": "cookies",
+   "pageId": "p02",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+   "bytes": 41
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/none/forms.json",
+   "kind": "forms",
+   "pageId": "p02",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "81e17effdd0e7d9debc3612c82f313b17fc437eb5c96e3b68259d13fd0f29f22",
+   "bytes": 2387
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/dom.html",
+   "kind": "dom",
+   "pageId": "p03",
+   "consentState": "none",
+   "contentType": "text/html",
+   "sha256": "7ec4f864256837c0d44745b0551b801cede7942d4410a3af0e18d2da9cb3f68e",
+   "bytes": 2122
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p03",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "3d8ef462659d4a27cbe11b5e9b56edd630b80a01afd793b00060187ca5853e85",
+   "bytes": 30270
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p03",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "3d8ef462659d4a27cbe11b5e9b56edd630b80a01afd793b00060187ca5853e85",
+   "bytes": 30270
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/har.json",
+   "kind": "har",
+   "pageId": "p03",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "8a0c0bc26f0e1e4b9917849915395788b47a9f01c248b4296e28e2983d35dda7",
+   "bytes": 2596
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/cookies.json",
+   "kind": "cookies",
+   "pageId": "p03",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+   "bytes": 41
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/none/forms.json",
+   "kind": "forms",
+   "pageId": "p03",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "7503644e35229b1a8db5617c6824047b3a7ff27f9c7b809ea46ef3082a75181a",
+   "bytes": 1319
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/dom.html",
+   "kind": "dom",
+   "pageId": "p02",
+   "consentState": "reject",
+   "contentType": "text/html",
+   "sha256": "75c4fb9c1141bf75077e87d39f7dbcacb41855ffdf4fa84f13951c8bebe8519f",
+   "bytes": 2696
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p02",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "2dd844467d036ab8edf540d2248e28d064f1d16c6d76701638324e856bc483e4",
+   "bytes": 29915
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p02",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "2dd844467d036ab8edf540d2248e28d064f1d16c6d76701638324e856bc483e4",
+   "bytes": 29915
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/har.json",
+   "kind": "har",
+   "pageId": "p02",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "9b2de8b75da8eefd92c6850142c30f75098698de9a9eb4120b87dd9f7c43f902",
+   "bytes": 4971
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/cookies.json",
+   "kind": "cookies",
+   "pageId": "p02",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "04755e3a806dce6dfcd5a88e329a0bc74ab8d70e272201491b93167f828aae82",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/reject/forms.json",
+   "kind": "forms",
+   "pageId": "p02",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "65a217a7d84471e56263e5e26578f49d9facae1d1746889ef6ee354c40226fdb",
+   "bytes": 2090
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/dom.html",
+   "kind": "dom",
+   "pageId": "p02",
+   "consentState": "accept",
+   "contentType": "text/html",
+   "sha256": "2cd5e258b59af2cc90ec77400f268b1748441b4dafeac1e329db0fca06248f0f",
+   "bytes": 2909
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p02",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "2dd844467d036ab8edf540d2248e28d064f1d16c6d76701638324e856bc483e4",
+   "bytes": 29915
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p02",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "2dd844467d036ab8edf540d2248e28d064f1d16c6d76701638324e856bc483e4",
+   "bytes": 29915
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/har.json",
+   "kind": "har",
+   "pageId": "p02",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "4f4a5999dbdf7edc9f27362067cd9b6fd04db82649084dfd6c537b6bec8e70c7",
+   "bytes": 10439
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/cookies.json",
+   "kind": "cookies",
+   "pageId": "p02",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "bc6aad5173ad9d3d3cdf120bac7864635155e2878057637c8ae4f61b2e1aa567",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p02/accept/forms.json",
+   "kind": "forms",
+   "pageId": "p02",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "020e8ddcc0a8868e7e420936c8991afb74fe72218835ec17bab2e73fbedacaed",
+   "bytes": 3794
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/dom.html",
+   "kind": "dom",
+   "pageId": "p03",
+   "consentState": "reject",
+   "contentType": "text/html",
+   "sha256": "744114b3ec6755623b0fc93b56c627936de58739d179572745d686dd03e39e69",
+   "bytes": 2187
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p03",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "949f15b0eb7a2a852246d0963179cbb36746822714cb4f183894e2e3e7cef457",
+   "bytes": 18122
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p03",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "949f15b0eb7a2a852246d0963179cbb36746822714cb4f183894e2e3e7cef457",
+   "bytes": 18122
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/har.json",
+   "kind": "har",
+   "pageId": "p03",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "eb95e3d9a90370ce9be1bc51f241f41ec995cfbedfd846fc8cc12d7961832f32",
+   "bytes": 4970
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/cookies.json",
+   "kind": "cookies",
+   "pageId": "p03",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "701bf7e7186e91f93191dca4fc8ba6c6df5c918477f06618ecbb3cf9224f28e5",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/reject/forms.json",
+   "kind": "forms",
+   "pageId": "p03",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "ce48d6fb70c6ca7a8ca7e5ddae5c2dd7818bcc4dba240e80c0d1c039e92d698b",
+   "bytes": 1024
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/dom.html",
+   "kind": "dom",
+   "pageId": "p04",
+   "consentState": "none",
+   "contentType": "text/html",
+   "sha256": "f319a506219083db83446aed81c1c38d33eeaa040d5fa66df9b976be5c6fa2c1",
+   "bytes": 2299
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p04",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "e671468c2a1bbbbca89ee9097fe71ae08d6355642f4d6a6988d80b3c55a0dd8e",
+   "bytes": 27893
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p04",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "e671468c2a1bbbbca89ee9097fe71ae08d6355642f4d6a6988d80b3c55a0dd8e",
+   "bytes": 27893
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/har.json",
+   "kind": "har",
+   "pageId": "p04",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "d0675d0139f13f1e774a0273f49a9b52f2e6897b5c9a1744313326512f070e2a",
+   "bytes": 2591
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/cookies.json",
+   "kind": "cookies",
+   "pageId": "p04",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+   "bytes": 41
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/none/forms.json",
+   "kind": "forms",
+   "pageId": "p04",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "6951c10fe691c14d747847fb222407094d5aa7781f2b5cf6889a84ac58611235",
+   "bytes": 2001
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/dom.html",
+   "kind": "dom",
+   "pageId": "p03",
+   "consentState": "accept",
+   "contentType": "text/html",
+   "sha256": "c956156ca23c163cc822c4c26f4fcf122953473704ad982dd5df042c16a418bc",
+   "bytes": 2253
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p03",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "949f15b0eb7a2a852246d0963179cbb36746822714cb4f183894e2e3e7cef457",
+   "bytes": 18122
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p03",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "949f15b0eb7a2a852246d0963179cbb36746822714cb4f183894e2e3e7cef457",
+   "bytes": 18122
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/har.json",
+   "kind": "har",
+   "pageId": "p03",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "22caff4d8e51bbaf6592259b4c968efed630489332a85c0701a06519ac5d8641",
+   "bytes": 6276
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/cookies.json",
+   "kind": "cookies",
+   "pageId": "p03",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "cc92c827cec6669fc35c88c288621dbe77584cfc84e71c88a02346cd8f4715a6",
+   "bytes": 308
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p03/accept/forms.json",
+   "kind": "forms",
+   "pageId": "p03",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "3d92c9d9cb333db412b0a9fbff538d3a6fa8f0dd08888a6f006fda9a85e3a0e2",
+   "bytes": 1443
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/dom.html",
+   "kind": "dom",
+   "pageId": "p05",
+   "consentState": "none",
+   "contentType": "text/html",
+   "sha256": "b04292e68ce0909d4a79155710a498870ed633ef0496c77c8d4a7538ffca9396",
+   "bytes": 2147
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p05",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "f9dab0909364a7d1f3e29fc308d0c88783146e7164596d7393e546c47abb3687",
+   "bytes": 32718
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p05",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "f9dab0909364a7d1f3e29fc308d0c88783146e7164596d7393e546c47abb3687",
+   "bytes": 32718
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/har.json",
+   "kind": "har",
+   "pageId": "p05",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "ec20f7272b7dfbe6e0989b79744f05bfddf817685768d50cf9f30fe97f6d66ff",
+   "bytes": 2598
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/cookies.json",
+   "kind": "cookies",
+   "pageId": "p05",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+   "bytes": 41
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/none/forms.json",
+   "kind": "forms",
+   "pageId": "p05",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "116e28370e77d77e95a580d0d93c3dddf8136ece507c0dcd42e9420a273cecdf",
+   "bytes": 1319
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/dom.html",
+   "kind": "dom",
+   "pageId": "p04",
+   "consentState": "reject",
+   "contentType": "text/html",
+   "sha256": "28debadc09db496e402e8d7e95d3166813cd02a4b60a5bb231cd3331a051f3d1",
+   "bytes": 2364
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p04",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "b797b13c20b1eb757bd09aa23826e76ca5ed29288c0d535eea2fd6da890d7dc3",
+   "bytes": 15766
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p04",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "b797b13c20b1eb757bd09aa23826e76ca5ed29288c0d535eea2fd6da890d7dc3",
+   "bytes": 15766
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/har.json",
+   "kind": "har",
+   "pageId": "p04",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "c0dd280a947481bebc0b7e11b525100f4fd3a2709a2ba8366188715ab8951e11",
+   "bytes": 4949
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/cookies.json",
+   "kind": "cookies",
+   "pageId": "p04",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "35abf3b5815a97c348c1b557779d5cd8d142d6a093f4c9c5b4ed38ba00a928f5",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/reject/forms.json",
+   "kind": "forms",
+   "pageId": "p04",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "565658c76975d9ab6232bc5301984e8694811191f26535438b641c59a97e6997",
+   "bytes": 1703
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/dom.html",
+   "kind": "dom",
+   "pageId": "p04",
+   "consentState": "accept",
+   "contentType": "text/html",
+   "sha256": "8fba01b1dfd271b0da2c3a3c8608b1577dcabd10f3fa0d94d0e718ffbd689296",
+   "bytes": 2577
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p04",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "b797b13c20b1eb757bd09aa23826e76ca5ed29288c0d535eea2fd6da890d7dc3",
+   "bytes": 15766
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p04",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "b797b13c20b1eb757bd09aa23826e76ca5ed29288c0d535eea2fd6da890d7dc3",
+   "bytes": 15766
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/har.json",
+   "kind": "har",
+   "pageId": "p04",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "48b57860532d8336e10d5e85b69df0584f00176c20f1dc073eb160f7c1044caf",
+   "bytes": 10416
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/cookies.json",
+   "kind": "cookies",
+   "pageId": "p04",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "aec674641bf68717c0b8486fdf28e6d4d6b42022c0a42ce0a5a2e25a92b90d0b",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p04/accept/forms.json",
+   "kind": "forms",
+   "pageId": "p04",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "a7b3715f5a1e74a7dae2480a55fbd3e7cdcd20e9b04ed8725f11fb419005cbf1",
+   "bytes": 3407
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/dom.html",
+   "kind": "dom",
+   "pageId": "p00m",
+   "consentState": "none",
+   "contentType": "text/html",
+   "sha256": "4dc040d787f9e5379da96591e61ed6c27bb81ba653a58261ba1e00c83c98641f",
+   "bytes": 2142
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p00m",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "7ac969c50f7db3c6cc0c87b0aa9c9e4bdd8e462b3663071f83239a5ea3a3d54e",
+   "bytes": 45073
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p00m",
+   "consentState": "none",
+   "contentType": "image/png",
+   "sha256": "34ddc3c96c361e00472aaf0c0af170e7876dffa0e88dd03fcea34ce81f55c29d",
+   "bytes": 130353
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/har.json",
+   "kind": "har",
+   "pageId": "p00m",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "fa4f0049ccaf55dbf5a7bd900d1d8ab7e41f5dadfc6f704af28086fad21ee90f",
+   "bytes": 2604
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/cookies.json",
+   "kind": "cookies",
+   "pageId": "p00m",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "a5179cf01485ec25edf51f3f65c0700d4e7738e34e413eb9ff8cf85865e93643",
+   "bytes": 41
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p00m/none/forms.json",
+   "kind": "forms",
+   "pageId": "p00m",
+   "consentState": "none",
+   "contentType": "application/json",
+   "sha256": "d9dac584a23e0822f00994d4a545151fc7d097939abb93c76b78400f86af771a",
+   "bytes": 1310
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/dom.html",
+   "kind": "dom",
+   "pageId": "p05",
+   "consentState": "reject",
+   "contentType": "text/html",
+   "sha256": "3c7bbdb4d7228889053f35bf36f68399d39783a30313f55017956d342a4b89fb",
+   "bytes": 2212
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p05",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "9f7097244ae95bc175426c0fc820156fedb0a48938d3ad2b99fb50a755d5f133",
+   "bytes": 20594
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p05",
+   "consentState": "reject",
+   "contentType": "image/png",
+   "sha256": "9f7097244ae95bc175426c0fc820156fedb0a48938d3ad2b99fb50a755d5f133",
+   "bytes": 20594
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/har.json",
+   "kind": "har",
+   "pageId": "p05",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "3af1b98d7eb9c24162a4faa724fade43c40662a0648edb7d32a37efba6e775ae",
+   "bytes": 4968
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/cookies.json",
+   "kind": "cookies",
+   "pageId": "p05",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "691992905b85fd5863483730eaff4c6a9133ef96ebd370f97457313cfddf9be8",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/reject/forms.json",
+   "kind": "forms",
+   "pageId": "p05",
+   "consentState": "reject",
+   "contentType": "application/json",
+   "sha256": "9076ed87a1d5023d69c90c3f7561e60d0cafdd8891245137bec2e3b27d09c747",
+   "bytes": 1023
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/dom.html",
+   "kind": "dom",
+   "pageId": "p05",
+   "consentState": "accept",
+   "contentType": "text/html",
+   "sha256": "3660fae76888628b7b99a5e2ed72cd7ee5fc6e98bd6801ad3ea0da4b261081d5",
+   "bytes": 2425
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/screenshot_fold.png",
+   "kind": "screenshot_fold",
+   "pageId": "p05",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "9f7097244ae95bc175426c0fc820156fedb0a48938d3ad2b99fb50a755d5f133",
+   "bytes": 20594
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/screenshot.png",
+   "kind": "screenshot",
+   "pageId": "p05",
+   "consentState": "accept",
+   "contentType": "image/png",
+   "sha256": "9f7097244ae95bc175426c0fc820156fedb0a48938d3ad2b99fb50a755d5f133",
+   "bytes": 20594
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/har.json",
+   "kind": "har",
+   "pageId": "p05",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "7fef08a01964a0bbfc96b2ea820a40af9db14e3cfee26ac4eb90e0bb8dc4242b",
+   "bytes": 10447
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/cookies.json",
+   "kind": "cookies",
+   "pageId": "p05",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "96cce3a4273801064eb2f8fe331c4e3bf2f9e06f61114f2f090902607a27cd06",
+   "bytes": 309
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/p05/accept/forms.json",
+   "kind": "forms",
+   "pageId": "p05",
+   "consentState": "accept",
+   "contentType": "application/json",
+   "sha256": "0a63a0b3e0f5e81b698d7b463484c08d7842c362cf289492017725f7c1adc086",
+   "bytes": 2727
+  },
+  {
+   "key": "orgs/org-golden/scans/scan-c10-fail/policy_text.txt",
+   "kind": "policy_text",
+   "pageId": null,
+   "consentState": null,
+   "contentType": "text/plain",
+   "sha256": "0828a9416c40d0c7da849df92014f46b9935262ca4ef5079b6d82814d10f0d00",
+   "bytes": 1131
+  }
+ ]
+}

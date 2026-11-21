@@ -285,6 +285,37 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/checks:
+    dependencies:
+      '@ndpa/scan-engine':
+        specifier: workspace:*
+        version: link:../scan-engine
+      '@ndpa/schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@ndpa/vendors':
+        specifier: workspace:*
+        version: link:../vendors
+    devDependencies:
+      '@types/node':
+        specifier: ^22.20.5
+        version: 22.20.5
+      fixtures:
+        specifier: workspace:*
+        version: link:../../apps/fixtures
+      playwright:
+        specifier: ^1.65.1
+        version: 1.65.1
+      tsup:
+        specifier: ^9.0.0
+        version: 9.0.0(@swc/core@1.16.22)(jiti@2.7.0)(postcss@8.5.32)(tsx@4.23.15)(typescript@5.9.3)(yaml@2.9.1)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^5.1.1
+        version: 5.1.1(@types/node@22.20.5)(vite@8.3.8(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
+
   packages/scan-engine:
     dependencies:
       '@ndpa/schema':
