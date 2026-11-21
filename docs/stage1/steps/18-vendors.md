@@ -12,7 +12,7 @@ Classify third-party hosts and locate them for the data-flow map.
 **In**
 - Versioned vendor list (name, hostnames, category, HQ country), seeded from DuckDuckGo Tracker Radar or Disconnect plus Nigerian vendors (Paystack, Flutterwave, Termii…)
 - Unknown hosts flagged for review
-- GeoLite2 country and ASN lookup (licence key in env)
+- DB-IP Lite country and ASN lookup (owner decision 2026-11-21: no key; CC-BY attribution in packs)
 - Script to rebuild the list
 
 **Out**
